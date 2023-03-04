@@ -14,10 +14,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'WriteFolio',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: const Color(0xff6750A4),
-        primarySwatch: Colors.blue,
+        // primarySwatch: Colors.blue,
       ),
       home: const WriteFolioApp(),
     );
