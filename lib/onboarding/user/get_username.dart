@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:logger/logger.dart';
-import 'package:writefolio/services/user_service.dart';
+import '../../animations/onboarding_pulse_animation.dart';
+import 'verify_user.dart';
 
 var logger = Logger(); //debugging variable
 
@@ -51,7 +51,7 @@ class _GetUsernameState extends State<GetUsername> {
                                 child: Text(
                                   "Get Started",
                                   style: GoogleFonts.lora(
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 35,
                                   ),
                                 ),
@@ -69,9 +69,9 @@ class _GetUsernameState extends State<GetUsername> {
               alignment: Alignment.center,
               child: Stack(
                 children: [
-                  Align(
+                  const Align(
                     alignment: Alignment.center,
-                    child: Image.asset("assets/images/Grad.png"),
+                    child: OnboardingPulseAnimation(),
                   ),
                   Align(
                     alignment: Alignment.center,
@@ -79,6 +79,7 @@ class _GetUsernameState extends State<GetUsername> {
                       padding: const EdgeInsets.all(5.0),
                       child: Text(
                         "One step at a time",
+                        textAlign: TextAlign.center,
                         style: GoogleFonts.lora(
                           fontSize: 32.45,
                           fontWeight: FontWeight.w400,
@@ -155,10 +156,10 @@ class _GetUsernameState extends State<GetUsername> {
                                 ),
                               ),
                               clipBehavior: Clip.antiAlias,
-                              onPressed: () async {
+                              onPressed: () {
                                 //check internet availability
-                                bool result = await InternetConnectionChecker()
-                                    .hasConnection;
+                                /* bool result = await InternetConnectionChecker()
+                                    .hasConnection; */
 
                                 //check for null value
                                 if (usernameController.text == "") {
@@ -171,7 +172,7 @@ class _GetUsernameState extends State<GetUsername> {
                                   ).show(context);
                                 }
                                 //authorize if internet is available
-                                if (result == true) {
+                                /*   if (result == true) {
                                   AnimatedSnackBar.material(
                                     "Medium username: ${usernameController.text}",
                                     type: AnimatedSnackBarType.info,
@@ -179,20 +180,28 @@ class _GetUsernameState extends State<GetUsername> {
                                     mobileSnackBarPosition:
                                         MobileSnackBarPosition.bottom,
                                   ).show(context);
-                                  
+
                                   await fetchUserInfo(usernameController.text)
                                       .then((value) => {logger.i(value.items)});
                                   logger.i(
                                       "Medium username: ${usernameController.text}");
-                                } else {
-                                  AnimatedSnackBar.material(
-                                    "Please check your internet connection.",
-                                    type: AnimatedSnackBarType.info,
-                                    duration: const Duration(seconds: 4),
-                                    mobileSnackBarPosition:
-                                        MobileSnackBarPosition.bottom,
-                                  ).show(context);
-                                }
+                                } */
+                                AnimatedSnackBar.material(
+                                  "Please check your internet connection.",
+                                  type: AnimatedSnackBarType.info,
+                                  duration: const Duration(seconds: 4),
+                                  mobileSnackBarPosition:
+                                      MobileSnackBarPosition.bottom,
+                                ).show(context);
+                                //Navigator.pushNamed(context, "/noInternet");
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (_) => VerifyUser(
+                                      username: usernameController.text.trim(),
+                                    ),
+                                  ),
+                                );
                               },
                               child: const Text("Continue"),
                             ),

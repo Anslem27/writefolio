@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:writefolio/screens/home.dart';
+import 'package:writefolio/widgets/no_internetscreen.dart';
 import 'onboarding/user/welcome.dart';
 
 void main() {
@@ -21,6 +22,11 @@ class MyApp extends StatelessWidget {
         // primarySwatch: Colors.blue,
       ),
       home: const WriteFolioApp(),
+      routes: {
+        "/noInternet": (_) => const NoInternet(isRouteBack: true),
+        "/welcome": (_) => const WelcomePage(),
+        "/home": (_) => const HomeScreen()
+      },
     );
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/onboarding/user/get_username.dart';
 
+import '../../animations/onboarding_pulse_animation.dart';
+
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
 
@@ -50,9 +52,9 @@ class _WelcomePageState extends State<WelcomePage> {
               alignment: Alignment.center,
               child: Stack(
                 children: [
-                  Align(
+                  const Align(
                     alignment: Alignment.center,
-                    child: Image.asset("assets/images/Grad.png"),
+                    child: OnboardingPulseAnimation(),
                   ),
                   Align(
                     alignment: Alignment.center,
@@ -60,6 +62,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       padding: const EdgeInsets.all(5.0),
                       child: Text(
                         "Tell your story with us",
+                        textAlign: TextAlign.center,
                         style: GoogleFonts.lora(
                           fontSize: 32.45,
                           fontWeight: FontWeight.w400,
