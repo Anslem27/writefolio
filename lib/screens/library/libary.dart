@@ -1,16 +1,18 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../widgets/shimmer_component.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+import '../../widgets/shimmer_component.dart';
+
+class LibraryScreen extends StatefulWidget {
+  const LibraryScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<LibraryScreen> createState() => _LibraryScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class _LibraryScreenState extends State<LibraryScreen>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     TabController tabcontroller = TabController(length: 2, vsync: this);
@@ -18,6 +20,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     var deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 1000),
+          curve: Curves.easeInOut,
+          child: IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.edit),
+          ),
+        ),
+      ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -26,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             title: Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: Text(
-                "Home",
+                "Your Library",
                 style: GoogleFonts.urbanist(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
@@ -51,9 +64,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   controller: tabcontroller,
                   isScrollable: true,
                   indicator: const UnderlineTabIndicator(
-                    borderSide: BorderSide(width: 2),
-                    insets: EdgeInsets.only(right: 6),
-                  ),
+                      borderSide: BorderSide(width: 2),
+                      insets: EdgeInsets.only(right: 6)),
                   splashFactory: NoSplash.splashFactory,
                   overlayColor: MaterialStateProperty.resolveWith<Color?>(
                     (Set<MaterialState> states) {
@@ -96,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final List<Tab> _tabs = [
     Tab(
       child: Text(
-        "My articles",
+        "Pending",
         style: GoogleFonts.urbanist(
           fontSize: 18,
           fontWeight: FontWeight.w400,
@@ -105,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     ),
     Tab(
       child: Text(
-        "Favourites",
+        "Tagged",
         style: GoogleFonts.urbanist(
           fontSize: 18,
           fontWeight: FontWeight.w400,

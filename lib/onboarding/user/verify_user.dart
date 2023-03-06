@@ -167,7 +167,7 @@ class _VerifyUserState extends State<VerifyUser> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      Navigator.pushNamed(context, "/home");
+                                      Navigator.pushNamed(context, "/navigation");
                                     },
                                     child: const Text("Continue"),
                                   ),

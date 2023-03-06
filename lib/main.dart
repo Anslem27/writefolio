@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:writefolio/screens/home.dart';
 import 'package:writefolio/widgets/no_internetscreen.dart';
 import 'onboarding/user/welcome.dart';
+import 'screens/navigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
       routes: {
         "/noInternet": (_) => const NoInternet(isRouteBack: true),
         "/welcome": (_) => const WelcomePage(),
-        "/home": (_) => const HomeScreen()
+        "/home": (_) => const HomeScreen(),
+        "/navigation": (_) => const Navigation()
       },
     );
   }
