@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     ),
     Tab(
       child: Text(
-        "Favourites",
+        "Poets",
         style: GoogleFonts.urbanist(
           fontSize: 18,
           fontWeight: FontWeight.w400,

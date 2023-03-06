@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/onboarding/user/get_username.dart';
 
 import '../../animations/onboarding_pulse_animation.dart';
+import '../../widgets/theme_button.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -96,13 +97,10 @@ class _WelcomePageState extends State<WelcomePage> {
                                   spreadRadius: 1,
                                   blurRadius: 15)
                             ]),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                              ),
-                              onPressed: () {
+                            child: BButton(
+                              text: "Get Started",
+                              width: 270,
+                              ontap: () {
                                 Navigator.push(
                                   context,
                                   CupertinoPageRoute(
@@ -110,7 +108,6 @@ class _WelcomePageState extends State<WelcomePage> {
                                   ),
                                 );
                               },
-                              child: const Text("Get Started"),
                             ),
                           ),
                         ),

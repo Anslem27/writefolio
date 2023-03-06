@@ -48,7 +48,7 @@ class _VerifyUserState extends State<VerifyUser> {
                                   "Verify Account",
                                   style: GoogleFonts.lora(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 35,
+                                    fontSize: 30,
                                   ),
                                 ),
                               ),

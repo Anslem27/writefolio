@@ -31,7 +31,9 @@ class _ArticleEditorState extends State<ArticleEditor> {
                 child: Row(
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       icon: const Icon(CupertinoIcons.chevron_back),
                     ),
                     Expanded(

@@ -1,45 +1,26 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:writefolio/screens/edit_article.dart';
 
 import '../../widgets/shimmer_component.dart';
+import '../widgets/theme_button.dart';
 
-class LibraryScreen extends StatefulWidget {
-  const LibraryScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
-  State<LibraryScreen> createState() => _LibraryScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _LibraryScreenState extends State<LibraryScreen>
+class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    TabController tabcontroller = TabController(length: 2, vsync: this);
-    var deviceHeight = MediaQuery.of(context).size.height;
-    var deviceWidth = MediaQuery.of(context).size.width;
+    TabController tabcontroller = TabController(length: 1, vsync: this);
+    bool darkModeOn =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 1000),
-          curve: Curves.easeInOut,
-          child: IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (_) => const ArticleEditor(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.edit),
-          ),
-        ),
-      ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -48,7 +29,7 @@ class _LibraryScreenState extends State<LibraryScreen>
             title: Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: Text(
-                "Your Library",
+                "Your Profile",
                 style: GoogleFonts.urbanist(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
@@ -92,11 +73,34 @@ class _LibraryScreenState extends State<LibraryScreen>
             child: TabBarView(
               controller: tabcontroller,
               children: [
-                shimmerLoader(deviceWidth, deviceHeight),
-                shimmerLoader(deviceWidth, deviceHeight),
+                _centeredPage(darkModeOn),
               ],
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  _centeredPage(bool isDarkModeOn) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          //TODO: Add darkmode illustration
+          Image.asset(
+              !isDarkModeOn ? "assets/illustrations/meditating.png" : ""),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Profile under\nconstruction...",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.urbanist(fontSize: 20),
+            ),
+          ),
+          const BButton(text: "See more")
         ],
       ),
     );
@@ -117,16 +121,7 @@ class _LibraryScreenState extends State<LibraryScreen>
   final List<Tab> _tabs = [
     Tab(
       child: Text(
-        "Pending",
-        style: GoogleFonts.urbanist(
-          fontSize: 18,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    ),
-    Tab(
-      child: Text(
-        "Tagged",
+        "About",
         style: GoogleFonts.urbanist(
           fontSize: 18,
           fontWeight: FontWeight.w400,

@@ -7,6 +7,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import '../../animations/onboarding_pulse_animation.dart';
+import '../../widgets/theme_button.dart';
 import 'verify_user.dart';
 
 var logger = Logger(); //debugging variable
@@ -52,7 +53,7 @@ class _GetUsernameState extends State<GetUsername> {
                                   "Get Started",
                                   style: GoogleFonts.lora(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 35,
+                                    fontSize: 30,
                                   ),
                                 ),
                               ),
@@ -149,14 +150,10 @@ class _GetUsernameState extends State<GetUsername> {
                                 blurRadius: 15,
                               )
                             ]),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                              ),
-                              clipBehavior: Clip.antiAlias,
-                              onPressed: () {
+                            child: BButton(
+                              text: "Continue",
+                              width: 270,
+                              ontap: () {
                                 //check internet availability
                                 /* bool result = await InternetConnectionChecker()
                                     .hasConnection; */
@@ -203,7 +200,6 @@ class _GetUsernameState extends State<GetUsername> {
                                   ),
                                 );
                               },
-                              child: const Text("Continue"),
                             ),
                           ),
                         ),

@@ -1,8 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:writefolio/screens/home.dart';
-
-import 'edit_article.dart';
+import 'package:writefolio/screens/profile_page.dart';
 import 'library/libary.dart';
 
 class Navigation extends StatefulWidget {
@@ -16,7 +15,7 @@ class _NavigationState extends State<Navigation> {
   final appBody = const [
     HomeScreen(),
     LibraryScreen(),
-    ArticleEditor(),
+    ProfileScreen(),
   ];
   int currentIndex = 0;
   @override
