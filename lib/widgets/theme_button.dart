@@ -38,3 +38,41 @@ class BButton extends StatelessWidget {
     );
   }
 }
+
+class SButton extends StatelessWidget {
+  final String text;
+  final Function()? ontap;
+  final double? width;
+  const SButton({super.key, required this.text, this.ontap, this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    bool darkModeOn =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+    double deviceWidth = MediaQuery.of(context).size.width;
+
+    return InkWell(
+      onTap: ontap,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+          height: 45,
+          width: width ?? deviceWidth / 1.9,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: darkModeOn ? Colors.white : const Color(0xff181717),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Text(
+            text,
+            style: GoogleFonts.montserrat(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: darkModeOn ? const Color(0xff181717) : Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -1,16 +1,8 @@
-# writefolio
+# Writefolio
 
-A new Flutter project.
+<b>Writefolio</b> is a unique app designed for writers, providing them with a personalized writing space to showcase their published articles and write new ones. With Writefolio, writers can easily access their previous work and also note down new ideas in a distraction-free environment. Whether you're an aspiring writer or a seasoned pro, Writefolio is the perfect companion to help you refine your craft and take your writing to the next level.
 
-## Getting Started
+## Api's
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Poetry db (https://poetrydb.org/)
+- rss2json (https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@medium-username)

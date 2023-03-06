@@ -1,5 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:writefolio/screens/home/home.dart';
 import 'package:writefolio/screens/profile_page.dart';
 import 'library/libary.dart';
@@ -40,8 +41,8 @@ class _NavigationState extends State<Navigation> {
             label: "Home",
           ),
           BottomNavigationBarItem(
-            activeIcon: Icon(EvaIcons.bookmark),
-            icon: Icon(EvaIcons.bookmarkOutline),
+            activeIcon: Icon(PhosphorIcons.pen_fill),
+            icon: Icon(PhosphorIcons.pen),
             tooltip: "Library",
             label: "Library",
           ),

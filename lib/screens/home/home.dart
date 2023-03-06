@@ -1,7 +1,9 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/screens/home/poem_view.dart';
+import 'package:writefolio/screens/home/poemsearch.dart';
 import '../../widgets/shimmer_component.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    TabController tabcontroller = TabController(length: 2, vsync: this);
+    TabController tabcontroller = TabController(length: 3, vsync: this);
     var deviceHeight = MediaQuery.of(context).size.height;
     var deviceWidth = MediaQuery.of(context).size.width;
 
@@ -37,6 +39,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             pinned: true,
             centerTitle: false,
             actions: [
+              IconButton(
+                onPressed: () {
+                  showSearch(context: context, delegate: PoemQuerySearch());
+                },
+                icon: const Icon(PhosphorIcons.magnifying_glass),
+              ),
               IconButton(
                 onPressed: () {},
                 icon: const Icon(
@@ -74,6 +82,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               children: [
                 shimmerLoader(deviceWidth, deviceHeight),
                 const PoemView(),
+                //TODO: Add this to the user profile page
+                shimmerLoader(deviceWidth, deviceHeight),
               ],
             ),
           )
@@ -107,6 +117,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     Tab(
       child: Text(
         "Poetry",
+        style: GoogleFonts.urbanist(
+          fontSize: 18,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    ),
+    Tab(
+      child: Text(
+        "Saved",
         style: GoogleFonts.urbanist(
           fontSize: 18,
           fontWeight: FontWeight.w400,

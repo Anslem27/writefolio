@@ -150,9 +150,9 @@ class _GetUsernameState extends State<GetUsername> {
                                 blurRadius: 15,
                               )
                             ]),
-                            child: BButton(
+                            child: SButton(
                               text: "Continue",
-                              width: 270,
+                            
                               ontap: () {
                                 //check internet availability
                                 /* bool result = await InternetConnectionChecker()

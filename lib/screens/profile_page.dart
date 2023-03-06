@@ -1,5 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../widgets/shimmer_component.dart';
@@ -90,17 +91,17 @@ class _ProfileScreenState extends State<ProfileScreen>
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           //TODO: Add darkmode illustration
-          Image.asset(
-              !isDarkModeOn ? "assets/illustrations/meditating.png" : ""),
+          SvgPicture.asset(!isDarkModeOn ? "assets/svg/meditating.svg" : ""),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               "Profile under\nconstruction...",
               textAlign: TextAlign.center,
-              style: GoogleFonts.urbanist(fontSize: 20),
+              style: GoogleFonts.urbanist(
+                  fontWeight: FontWeight.w400, fontSize: 20),
             ),
           ),
-          const BButton(text: "See more")
+          const SButton(text: "See more")
         ],
       ),
     );
