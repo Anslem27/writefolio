@@ -1,7 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../widgets/shimmer_component.dart';
+import 'package:writefolio/screens/home/poem_view.dart';
+import '../../widgets/shimmer_component.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -72,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               controller: tabcontroller,
               children: [
                 shimmerLoader(deviceWidth, deviceHeight),
-                shimmerLoader(deviceWidth, deviceHeight),
+                const PoemView(),
               ],
             ),
           )
@@ -105,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     ),
     Tab(
       child: Text(
-        "Poets",
+        "Poetry",
         style: GoogleFonts.urbanist(
           fontSize: 18,
           fontWeight: FontWeight.w400,

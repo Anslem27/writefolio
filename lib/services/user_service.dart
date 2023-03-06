@@ -12,6 +12,6 @@ Future<MediumUser> fetchUserInfo(String userName) async {
     // print(response.body);
     return MediumUser.fromJson(json.decode(response.body));
   } else {
-    throw Exception('Failed to fetch repos');
+    throw Exception('Failed to fetch user info');
   }
 }

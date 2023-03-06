@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:writefolio/screens/home.dart';
+import 'package:writefolio/screens/home/home.dart';
 import 'package:writefolio/widgets/no_internetscreen.dart';
 import 'onboarding/user/welcome.dart';
 import 'screens/navigation.dart';
