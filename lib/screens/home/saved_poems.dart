@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 import 'package:writefolio/screens/home/offline_poemView.dart';
+import '../../animations/fade_in_animation.dart';
 import '../../constants.dart';
 import '../../data/saved_poem_datastore.dart';
 import '../../models/saved_poems.dart';
@@ -49,123 +50,128 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                     var savedPoem = savedPoems[index];
                     logger.i(savedPoem); //log returned query
                     int randomIndex = Random().nextInt(poemAvatars.length);
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (_) => OfflinePoemView(
-                                    poemtitle: savedPoem.title,
-                                    poemBody: savedPoem.lines,
-                                    noOfLines: savedPoem.linecount,
-                                    poet: savedPoem.author,
+                    return FloatInAnimation(
+                      delay: (1.0 + index) / 4,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (_) => OfflinePoemView(
+                                      poemtitle: savedPoem.title,
+                                      poemBody: savedPoem.lines,
+                                      noOfLines: savedPoem.linecount,
+                                      poet: savedPoem.author,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.all(3),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5)),
-                              height: MediaQuery.of(context).size.height / 7,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        SizedBox(
-                                          width: double.infinity,
-                                          child: Text(
-                                            savedPoem.title
-                                                .trim()
-                                                .toUpperCase(),
-                                            overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.urbanist(
-                                                fontSize: 16.5,
-                                                fontWeight: FontWeight.bold),
+                                );
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: const EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5)),
+                                height: MediaQuery.of(context).size.height / 7,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: Text(
+                                              savedPoem.title
+                                                  .trim()
+                                                  .toUpperCase(),
+                                              overflow: TextOverflow.ellipsis,
+                                              style: GoogleFonts.urbanist(
+                                                  fontSize: 16.5,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 2.0),
-                                        ),
-                                        SizedBox(
-                                          width: double.infinity,
-                                          child: Text(
-                                            "By ${savedPoem.author}",
-                                            overflow: TextOverflow.ellipsis,
+                                          const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 2.0),
                                           ),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 2.0),
-                                        ),
-                                        const Spacer(),
-                                        Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 5.0),
-                                              child: SizedBox(
-                                                child: Text(
-                                                  "${savedPoem.linecount} reading lines",
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: Text(
+                                              "By ${savedPoem.author}",
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 2.0),
+                                          ),
+                                          const Spacer(),
+                                          Row(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 5.0),
+                                                child: SizedBox(
+                                                  child: Text(
+                                                    "${savedPoem.linecount} reading lines",
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
+                                            ],
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 8.0),
-                                  ),
-                                  Container(
-                                    width: 80.0,
-                                    height: 80.0,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade100,
-                                      borderRadius: BorderRadius.circular(5),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 8.0),
                                     ),
-                                    child:
-                                        Image.asset(poemAvatars[randomIndex]),
-                                  ),
-                                  //delete button
-                                  IconButton(
-                                    onPressed: () {
-                                      SavedPoemsHiveDataStore()
-                                          .deleteSavedPoem(savedPoem: savedPoem)
-                                          .then((value) {
-                                        AnimatedSnackBar.material(
-                                          "Deleted: ${savedPoem.title}",
-                                          type: AnimatedSnackBarType.info,
-                                          duration: const Duration(seconds: 4),
-                                          mobileSnackBarPosition:
-                                              MobileSnackBarPosition.bottom,
-                                        ).show(context);
-                                      });
-                                    },
-                                    icon: const Icon(PhosphorIcons.trash),
-                                  )
-                                ],
+                                    Container(
+                                      width: 80.0,
+                                      height: 80.0,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade100,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child:
+                                          Image.asset(poemAvatars[randomIndex]),
+                                    ),
+                                    //delete button
+                                    IconButton(
+                                      onPressed: () {
+                                        SavedPoemsHiveDataStore()
+                                            .deleteSavedPoem(
+                                                savedPoem: savedPoem)
+                                            .then((value) {
+                                          AnimatedSnackBar.material(
+                                            "Deleted: ${savedPoem.title}",
+                                            type: AnimatedSnackBarType.info,
+                                            duration:
+                                                const Duration(seconds: 4),
+                                            mobileSnackBarPosition:
+                                                MobileSnackBarPosition.bottom,
+                                          ).show(context);
+                                        });
+                                      },
+                                      icon: const Icon(PhosphorIcons.trash),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: const Divider(thickness: 0.5),
-                          )
-                        ],
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: const Divider(thickness: 0.5),
+                            )
+                          ],
+                        ),
                       ),
                     );
                   },

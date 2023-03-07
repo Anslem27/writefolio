@@ -40,6 +40,7 @@ dependencies:
   shimmer: ^2.0.0
   flutter_quill: ^6.4.4
   modal_bottom_sheet: ^2.1.2
+  simple_animations: ^5.0.0+3
   
 
 dev_dependencies:
