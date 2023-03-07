@@ -41,9 +41,8 @@ class _ArticleEditorState extends State<ArticleEditor> {
                         height: 100,
                         child: TextFormField(
                           controller: _titleController,
-                          maxLines: 2,
                           style: GoogleFonts.lora(
-                              fontWeight: FontWeight.bold, fontSize: 25),
+                              fontWeight: FontWeight.w500, fontSize: 25),
                           decoration: InputDecoration(
                             border: const UnderlineInputBorder(
                               borderSide: BorderSide(width: 2),
@@ -58,13 +57,10 @@ class _ArticleEditorState extends State<ArticleEditor> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: QuillToolbar.basic(controller: _controller),
-              ),
+              QuillToolbar.basic(controller: _controller),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: SizedBox(
                     child: QuillEditor.basic(
                       controller: _controller,

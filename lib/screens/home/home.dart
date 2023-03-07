@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/screens/home/poem_view.dart';
 import 'package:writefolio/screens/home/poemsearch.dart';
 import '../../widgets/shimmer_component.dart';
+import 'saved_poems.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -83,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 shimmerLoader(deviceWidth, deviceHeight),
                 const PoemView(),
                 //TODO: Add this to the user profile page
-                shimmerLoader(deviceWidth, deviceHeight),
+                const SavedPoemsScreen(),
               ],
             ),
           )

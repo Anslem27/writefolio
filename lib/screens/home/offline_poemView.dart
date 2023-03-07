@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,26 +8,27 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:writefolio/models/saved_poems.dart';
-import 'package:writefolio/screens/home/offline_poemView.dart';
 import '../../data/saved_poem_datastore.dart';
 
 var logger = Logger();
 
-class PoemDetailView extends StatefulWidget {
+class OfflinePoemView extends StatefulWidget {
+  final SavedPoems? savedpoem;
   final String poemtitle, noOfLines, poet;
   final List<String> poemBody;
-  const PoemDetailView(
+  const OfflinePoemView(
       {super.key,
       required this.poemtitle,
       required this.poemBody,
       required this.noOfLines,
-      required this.poet});
+      required this.poet,
+      this.savedpoem});
 
   @override
-  State<PoemDetailView> createState() => _PoemDetailViewState();
+  State<OfflinePoemView> createState() => _OfflinePoemViewState();
 }
 
-class _PoemDetailViewState extends State<PoemDetailView> {
+class _OfflinePoemViewState extends State<OfflinePoemView> {
   var poemDatastore = SavedPoemsHiveDataStore();
 
   @override
@@ -53,43 +56,6 @@ class _PoemDetailViewState extends State<PoemDetailView> {
                 ),
               ),
               actions: [
-                IconButton(
-                  onPressed: () {
-                    var poem = SavedPoems.create(
-                      title: widget.poemtitle,
-                      author: widget.poet,
-                      lines: widget.poemBody,
-                      linecount: widget.noOfLines,
-                      isSaved: true,
-                    );
-                    /*   poem.isSaved = true;
-                    poem.save(); */
-                    SavedPoemsHiveDataStore()
-                        .savePoem(savedPoem: poem)
-                        .then((value) => {
-                              AnimatedSnackBar.material(
-                                "${widget.poemtitle} has been saved",
-                                type: AnimatedSnackBarType.success,
-                                duration: const Duration(seconds: 4),
-                                mobileSnackBarPosition:
-                                    MobileSnackBarPosition.bottom,
-                              ).show(context),
-                              Navigator.pushReplacement(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (_) => OfflinePoemView(
-                                    poemtitle: widget.poemtitle,
-                                    poemBody: widget.poemBody,
-                                    noOfLines: widget.noOfLines,
-                                    poet: widget.poet,
-                                  ),
-                                ),
-                              ),
-                            }); //save poem to db
-                    setState(() {});
-                  },
-                  icon: const Icon(PhosphorIcons.download),
-                ),
                 IconButton(
                   onPressed: () {
                     var copied =

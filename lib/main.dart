@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:writefolio/screens/home/home.dart';
 import 'package:writefolio/widgets/no_internetscreen.dart';
+import 'models/saved_poems.dart';
 import 'onboarding/user/welcome.dart';
 import 'screens/navigation.dart';
 
-void main() {
+Future<void> main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter<SavedPoems>(SavedPoemsAdapter());
+  await Hive.openBox<SavedPoems>("savedPoems");
   runApp(const MyApp());
 }
 

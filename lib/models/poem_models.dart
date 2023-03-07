@@ -3,9 +3,9 @@ class HomePoemList {
   HomePoemList({this.poem});
 
   factory HomePoemList.fromJson(List<dynamic> json) {
-    List<PoemModel> repos = <PoemModel>[];
-    repos = json.map((e) => PoemModel.fromJson(e)).toList();
-    return HomePoemList(poem: repos);
+    List<PoemModel> poems = <PoemModel>[];
+    poems = json.map((e) => PoemModel.fromJson(e)).toList();
+    return HomePoemList(poem: poems);
   }
 }
 

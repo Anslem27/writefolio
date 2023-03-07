@@ -1,118 +1,53 @@
 import 'dart:math';
+
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
+import 'package:writefolio/screens/home/offline_poemView.dart';
 import '../../constants.dart';
 import '../../data/saved_poem_datastore.dart';
-import '../../services/poem_service.dart';
-import '../../widgets/theme_button.dart';
-import 'poem_detail_view.dart';
+import '../../models/saved_poems.dart';
 
 var logger = Logger();
 
-class PoemQuerySearch extends SearchDelegate {
-  @override
-  String get searchFieldLabel => 'Search by author';
+class SavedPoemsScreen extends StatefulWidget {
+  const SavedPoemsScreen({super.key});
 
   @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: const Icon(Icons.clear),
-        onPressed: () {
-          query = '';
-        },
-      ),
-    ];
-  }
+  State<SavedPoemsScreen> createState() => _SavedPoemsScreenState();
+}
 
+class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
+  var poemDatastore = SavedPoemsHiveDataStore();
   @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: const Icon(CupertinoIcons.chevron_back),
-      onPressed: () {
-        close(context, null);
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    var isDarkModeOn =
+  Widget build(BuildContext context) {
+    bool darkModeOn =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
-    if (query.length < 3 || query.isEmpty) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Center(
-            child: Column(
-              children: [
-                //TODO: Add darkmode illustration
-                SvgPicture.asset(
-                    !isDarkModeOn ? "assets/svg/meditating.svg" : ""),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Search term must be longer than two letters.",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.urbanist(
-                        fontWeight: FontWeight.w400, fontSize: 20),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
-      );
-    }
-
-    var poemDatastore = SavedPoemsHiveDataStore();
-
+    final savedPoemBox = poemDatastore.box;
     return ValueListenableBuilder(
-        valueListenable: poemDatastore.listenToSavedPoems(),
-        builder: (_, __, ___) {
-          return FutureBuilder(
-            future: PoemService.fetchSearch(query),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Center(child: CircularProgressIndicator()),
-                  ],
-                );
-              } else if (snapshot.data!.poem!.isEmpty || snapshot.hasError) {
-                var isDarkModeOn = MediaQuery.of(context).platformBrightness ==
-                    Brightness.dark;
-                return Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      //TODO: Add darkmode illustration
-                      SvgPicture.asset(
-                          !isDarkModeOn ? "assets/svg/meditating.svg" : ""),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "No results\nfor ${query.trim()}",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.urbanist(
-                              fontWeight: FontWeight.w400, fontSize: 20),
-                        ),
-                      ),
-                      const SButton(text: "Go Home")
-                    ],
-                  ),
-                );
-              } else {
-                logger.i(snapshot.data!.poem); //log returned query
-                return ListView.builder(
-                  itemCount: snapshot.data!.poem!.length,
+      valueListenable: poemDatastore.listenToSavedPoems(),
+      builder: (_, Box<SavedPoems> box, Widget? child) {
+        var savedPoems = savedPoemBox.values.toList();
+
+        return Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {},
+            child: const Icon(
+              PhosphorIcons.magnifying_glass,
+            ),
+          ),
+          body: savedPoems.isEmpty
+              ? _emptySavedPoems(darkModeOn)
+              : ListView.builder(
+                  itemCount: savedPoems.length,
                   itemBuilder: (_, index) {
+                    var savedPoem = savedPoems[index];
+                    logger.i(savedPoem); //log returned query
                     int randomIndex = Random().nextInt(poemAvatars.length);
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -124,13 +59,11 @@ class PoemQuerySearch extends SearchDelegate {
                               Navigator.push(
                                 context,
                                 CupertinoPageRoute(
-                                  builder: (_) => PoemDetailView(
-                                    poemtitle:
-                                        snapshot.data!.poem![index].title,
-                                    poemBody: snapshot.data!.poem![index].lines,
-                                    noOfLines:
-                                        snapshot.data!.poem![index].linecount,
-                                    poet: snapshot.data!.poem![index].author,
+                                  builder: (_) => OfflinePoemView(
+                                    poemtitle: savedPoem.title,
+                                    poemBody: savedPoem.lines,
+                                    noOfLines: savedPoem.linecount,
+                                    poet: savedPoem.author,
                                   ),
                                 ),
                               );
@@ -152,7 +85,7 @@ class PoemQuerySearch extends SearchDelegate {
                                         SizedBox(
                                           width: double.infinity,
                                           child: Text(
-                                            snapshot.data!.poem![index].title
+                                            savedPoem.title
                                                 .trim()
                                                 .toUpperCase(),
                                             overflow: TextOverflow.ellipsis,
@@ -168,7 +101,7 @@ class PoemQuerySearch extends SearchDelegate {
                                         SizedBox(
                                           width: double.infinity,
                                           child: Text(
-                                            "By ${snapshot.data!.poem![index].author}",
+                                            "By ${savedPoem.author}",
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
@@ -184,7 +117,7 @@ class PoemQuerySearch extends SearchDelegate {
                                                   right: 5.0),
                                               child: SizedBox(
                                                 child: Text(
-                                                  "${snapshot.data!.poem![index].linecount} reading lines",
+                                                  "${savedPoem.linecount} reading lines",
                                                 ),
                                               ),
                                             ),
@@ -207,6 +140,23 @@ class PoemQuerySearch extends SearchDelegate {
                                     child:
                                         Image.asset(poemAvatars[randomIndex]),
                                   ),
+                                  //delete button
+                                  IconButton(
+                                    onPressed: () {
+                                      SavedPoemsHiveDataStore()
+                                          .deleteSavedPoem(savedPoem: savedPoem)
+                                          .then((value) {
+                                        AnimatedSnackBar.material(
+                                          "Deleted: ${savedPoem.title}",
+                                          type: AnimatedSnackBarType.info,
+                                          duration: const Duration(seconds: 4),
+                                          mobileSnackBarPosition:
+                                              MobileSnackBarPosition.bottom,
+                                        ).show(context);
+                                      });
+                                    },
+                                    icon: const Icon(PhosphorIcons.trash),
+                                  )
                                 ],
                               ),
                             ),
@@ -219,17 +169,32 @@ class PoemQuerySearch extends SearchDelegate {
                       ),
                     );
                   },
-                );
-              }
-            },
-          );
-        });
+                ),
+        );
+      },
+    );
   }
 
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    // This method is called everytime the search term changes.
-    // If you want to add search suggestions as the user enters their search term, this is the place to do that.
-    return Column();
+  _emptySavedPoems(bool darkModeOn) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          //TODO: Add darkmode illustration
+          SvgPicture.asset(!darkModeOn ? "assets/svg/reading-side.svg" : ""),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "No saved\npoems",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.urbanist(
+                  fontWeight: FontWeight.w400, fontSize: 20),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
