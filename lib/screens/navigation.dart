@@ -33,27 +33,34 @@ class _NavigationState extends State<Navigation> {
             currentIndex = index;
           });
         },
-        items: const [
-          BottomNavigationBarItem(
+        items: [
+          const BottomNavigationBarItem(
             activeIcon: Icon(EvaIcons.home),
             icon: Icon(EvaIcons.homeOutline),
             tooltip: "Home",
             label: "Home",
           ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(PhosphorIcons.pen_fill),
-            icon: Icon(PhosphorIcons.pen),
+          const BottomNavigationBarItem(
+            activeIcon: Icon(PhosphorIcons.books_fill),
+            icon: Icon(PhosphorIcons.books),
             tooltip: "Library",
             label: "Library",
           ),
           BottomNavigationBarItem(
-            activeIcon: Icon(EvaIcons.settings2),
-            icon: Icon(EvaIcons.settings2Outline),
+            activeIcon: _userIcon(),
+            icon: _userIcon(),
             tooltip: "Settings",
             label: "Settings",
           ),
         ],
       ),
+    );
+  }
+
+  Widget _userIcon() {
+    return const CircleAvatar(
+      radius: 17,
+      backgroundImage: AssetImage("assets/avatars/Oval-3.png"),
     );
   }
 }

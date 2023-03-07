@@ -57,7 +57,7 @@ class SButton extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: Container(
           height: 45,
-          width: width ?? deviceWidth / 1.9,
+          width: width ?? deviceWidth / 0.5,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: darkModeOn ? Colors.white : const Color(0xff181717),
@@ -65,9 +65,8 @@ class SButton extends StatelessWidget {
           ),
           child: Text(
             text,
-            style: GoogleFonts.montserrat(
+            style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.w500,
               color: darkModeOn ? const Color(0xff181717) : Colors.white,
             ),
           ),
