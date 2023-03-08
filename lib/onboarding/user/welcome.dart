@@ -8,7 +8,7 @@ import 'package:writefolio/onboarding/user/get_username.dart';
 
 import '../../animations/deep_pulse_animation.dart';
 import '../../animations/onboarding_pulse_animation.dart';
-import '../../widgets/theme_button.dart';
+import '../../utils/widgets/theme_button.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});

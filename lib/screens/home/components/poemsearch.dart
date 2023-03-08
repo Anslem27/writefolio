@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
-import '../../constants.dart';
-import '../../data/saved_poem_datastore.dart';
-import '../../services/poem_service.dart';
-import '../../widgets/theme_button.dart';
-import 'poem_detail_view.dart';
+import '../../../utils/constants.dart';
+import '../../../data/saved_poem_datastore.dart';
+import '../../../services/poem_service.dart';
+import '../../../utils/widgets/theme_button.dart';
+import '../poems/poem_detail_view.dart';
 
 var logger = Logger();
 

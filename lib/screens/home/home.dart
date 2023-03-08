@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/screens/home/poem_view.dart';
-import 'package:writefolio/screens/home/poemsearch.dart';
-import '../../widgets/shimmer_component.dart';
+import 'package:writefolio/screens/home/components/poemsearch.dart';
+import '../../utils/widgets/shimmer_component.dart';
 import 'saved_poems.dart';
 
 class HomeScreen extends StatefulWidget {

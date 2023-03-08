@@ -7,7 +7,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import '../../animations/onboarding_pulse_animation.dart';
-import '../../widgets/theme_button.dart';
+import '../../utils/widgets/theme_button.dart';
 import 'verify_user.dart';
 
 var logger = Logger(); //debugging variable

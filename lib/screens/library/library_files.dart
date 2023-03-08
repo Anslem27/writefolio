@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:writefolio/screens/library/components/article_view.dart';
-import '../../constants.dart';
-import '../../widgets/theme_button.dart';
+import '../../utils/constants.dart';
+import '../../utils/widgets/theme_button.dart';
 
 var logger = Logger();
 

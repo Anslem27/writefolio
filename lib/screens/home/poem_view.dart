@@ -4,13 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:logger/logger.dart';
-import 'package:writefolio/screens/home/poem_detail_view.dart';
-import 'package:writefolio/widgets/theme_button.dart';
+import 'package:writefolio/utils/widgets/theme_button.dart';
 import "dart:math";
 import '../../animations/fade_in_animation.dart';
-import '../../constants.dart';
+import '../../utils/constants.dart';
 import '../../models/poem_models.dart';
 import '../../services/poem_service.dart';
+import 'poems/poem_detail_view.dart';
 
 var logger = Logger();
 

@@ -2,9 +2,9 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:writefolio/screens/edit_article.dart';
+import 'package:writefolio/editor/edit_article.dart';
 
-import '../../widgets/shimmer_component.dart';
+import '../../utils/widgets/shimmer_component.dart';
 import 'library_files.dart';
 
 class LibraryScreen extends StatefulWidget {

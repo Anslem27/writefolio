@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../widgets/shimmer_component.dart';
-import '../widgets/theme_button.dart';
+import '../utils/widgets/shimmer_component.dart';
+import '../utils/widgets/theme_button.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
