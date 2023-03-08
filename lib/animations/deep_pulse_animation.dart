@@ -58,7 +58,14 @@ class _DeepPulseAnimationState extends State<DeepPulseAnimation>
           ),
         );
       },
-      child: Image.asset("assets/images/Grad.png"),
+      child: Container(
+        width: 350,
+        height: 350,
+        decoration: BoxDecoration(
+          color: const Color(0xff181717).withOpacity(0.4),
+          shape: BoxShape.circle,
+        ),
+      ),
     );
   }
 }

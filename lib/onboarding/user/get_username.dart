@@ -28,6 +28,13 @@ class _GetUsernameState extends State<GetUsername> {
       body: SafeArea(
         child: Stack(
           children: [
+            const Align(
+              alignment: AlignmentDirectional(-2, -1.5),
+              child: SizedBox(
+                height: 250,
+                child: OnboardingPulseAnimation(),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Align(
@@ -100,9 +107,9 @@ class _GetUsernameState extends State<GetUsername> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Enter your medium username.",
-                          style: GoogleFonts.urbanist(fontSize: 16),
+                          style: TextStyle(fontSize: 16),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -112,28 +119,12 @@ class _GetUsernameState extends State<GetUsername> {
                               suffixIcon: const Icon(
                                 PhosphorIcons.medium_logo_fill,
                               ),
-                              filled: true,
-                              fillColor: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(.2),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2),
-                                borderRadius:
-                                    BorderRadius.circular(100).copyWith(
-                                  bottomRight: const Radius.circular(0),
-                                ),
-                              ),
+                                  borderSide: const BorderSide(width: 1),
+                                  borderRadius: BorderRadius.circular(12)),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 2,
-                                ),
-                                borderRadius:
-                                    BorderRadius.circular(100).copyWith(
-                                  bottomRight: const Radius.circular(0),
-                                ),
+                                borderSide: const BorderSide(width: 1),
+                                borderRadius: BorderRadius.circular(12),
                               ),
                               labelText: 'Enter medium username...',
                             ),
@@ -152,7 +143,6 @@ class _GetUsernameState extends State<GetUsername> {
                             ]),
                             child: SButton(
                               text: "Continue",
-                            
                               ontap: () {
                                 //check internet availability
                                 /* bool result = await InternetConnectionChecker()
@@ -167,6 +157,24 @@ class _GetUsernameState extends State<GetUsername> {
                                     mobileSnackBarPosition:
                                         MobileSnackBarPosition.bottom,
                                   ).show(context);
+                                } else {
+                                  AnimatedSnackBar.material(
+                                    "Please check your internet connection.",
+                                    type: AnimatedSnackBarType.info,
+                                    duration: const Duration(seconds: 4),
+                                    mobileSnackBarPosition:
+                                        MobileSnackBarPosition.bottom,
+                                  ).show(context);
+                                  //Navigator.pushNamed(context, "/noInternet");
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (_) => VerifyUser(
+                                        username:
+                                            usernameController.text.trim(),
+                                      ),
+                                    ),
+                                  );
                                 }
                                 //authorize if internet is available
                                 /*   if (result == true) {
@@ -183,22 +191,6 @@ class _GetUsernameState extends State<GetUsername> {
                                   logger.i(
                                       "Medium username: ${usernameController.text}");
                                 } */
-                                AnimatedSnackBar.material(
-                                  "Please check your internet connection.",
-                                  type: AnimatedSnackBarType.info,
-                                  duration: const Duration(seconds: 4),
-                                  mobileSnackBarPosition:
-                                      MobileSnackBarPosition.bottom,
-                                ).show(context);
-                                //Navigator.pushNamed(context, "/noInternet");
-                                Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (_) => VerifyUser(
-                                      username: usernameController.text.trim(),
-                                    ),
-                                  ),
-                                );
                               },
                             ),
                           ),

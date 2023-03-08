@@ -74,7 +74,7 @@ class PoemQuerySearch extends SearchDelegate {
         valueListenable: poemDatastore.listenToSavedPoems(),
         builder: (_, __, ___) {
           return FutureBuilder(
-            future: PoemService.fetchSearch(query),
+            future: PoemService.fetchSearch(query.trim()),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return Column(

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/models/user_model.dart';
+import '../../animations/fade_in_animation.dart';
 import '../../animations/onboarding_pulse_animation.dart';
 import '../../services/user_service.dart';
 import 'package:logger/logger.dart';
@@ -23,6 +24,13 @@ class _VerifyUserState extends State<VerifyUser> {
       body: SafeArea(
         child: Stack(
           children: [
+            const Align(
+              alignment: AlignmentDirectional(-2, -1.5),
+              child: SizedBox(
+                height: 250,
+                child: OnboardingPulseAnimation(),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Align(
@@ -114,13 +122,17 @@ class _VerifyUserState extends State<VerifyUser> {
                                     style: GoogleFonts.urbanist(fontSize: 16),
                                   );
                                 }
-                                return AnimatedContainer(
-                                  curve: Curves.bounceInOut,
-                                  duration: const Duration(milliseconds: 1000),
-                                  child: CircleAvatar(
-                                    radius: 80,
-                                    backgroundImage:
-                                        NetworkImage(snapshot.data!.feed.image),
+                                return FloatInAnimation(
+                                  delay: 5,
+                                  child: AnimatedContainer(
+                                    curve: Curves.bounceInOut,
+                                    duration:
+                                        const Duration(milliseconds: 1000),
+                                    child: CircleAvatar(
+                                      radius: 80,
+                                      backgroundImage: NetworkImage(
+                                          snapshot.data!.feed.image),
+                                    ),
                                   ),
                                 );
                               }),
@@ -167,7 +179,8 @@ class _VerifyUserState extends State<VerifyUser> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      Navigator.pushNamed(context, "/navigation");
+                                      Navigator.pushNamed(
+                                          context, "/navigation");
                                     },
                                     child: const Text("Continue"),
                                   ),
