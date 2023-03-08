@@ -142,22 +142,20 @@ class _PoemDetailViewState extends State<PoemDetailView> {
   Widget _body(List<String> lines) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: Expanded(
-        child: ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: lines.length,
-            itemBuilder: (_, index) {
-              return Text(
-                lines[index],
-                textAlign: TextAlign.center,
-                style: GoogleFonts.urbanist(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18,
-                ),
-              );
-            }),
-      ),
+      child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: lines.length,
+          itemBuilder: (_, index) {
+            return Text(
+              lines[index],
+              textAlign: TextAlign.center,
+              style: GoogleFonts.urbanist(
+                fontWeight: FontWeight.w400,
+                fontSize: 18,
+              ),
+            );
+          }),
     );
   }
 }

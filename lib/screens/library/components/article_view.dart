@@ -40,7 +40,7 @@ class _ArticleViewState extends State<ArticleView> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(
                 "Please Start Writing Better Commits",
                 overflow: TextOverflow.ellipsis,
