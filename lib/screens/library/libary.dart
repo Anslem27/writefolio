@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/screens/edit_article.dart';
 
 import '../../widgets/shimmer_component.dart';
+import 'library_files.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
@@ -92,7 +93,7 @@ class _LibraryScreenState extends State<LibraryScreen>
             child: TabBarView(
               controller: tabcontroller,
               children: [
-                shimmerLoader(deviceWidth, deviceHeight),
+                const LibraryFiles(),
                 shimmerLoader(deviceWidth, deviceHeight),
               ],
             ),
@@ -117,7 +118,7 @@ class _LibraryScreenState extends State<LibraryScreen>
   final List<Tab> _tabs = [
     Tab(
       child: Text(
-        "Pending",
+        "Drafts",
         style: GoogleFonts.urbanist(
           fontSize: 18,
           fontWeight: FontWeight.w400,

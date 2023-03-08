@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
+
+var logger = Logger();
 
 class ArticleEditor extends StatefulWidget {
   const ArticleEditor({super.key});
@@ -16,8 +19,18 @@ class _ArticleEditorState extends State<ArticleEditor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(CupertinoIcons.chevron_back),
+          ),
+        ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            logger.i(_controller.document.toDelta().toJson());
+          },
           child: const Icon(
             Icons.save_as_rounded,
             size: 30,
@@ -30,12 +43,6 @@ class _ArticleEditorState extends State<ArticleEditor> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(CupertinoIcons.chevron_back),
-                    ),
                     Expanded(
                       child: SizedBox(
                         height: 100,
@@ -45,11 +52,13 @@ class _ArticleEditorState extends State<ArticleEditor> {
                               fontWeight: FontWeight.w500, fontSize: 25),
                           decoration: InputDecoration(
                             border: const UnderlineInputBorder(
-                              borderSide: BorderSide(width: 2),
+                              borderSide: BorderSide(width: 20),
                             ),
                             labelText: 'Article title',
                             labelStyle: GoogleFonts.lora(
-                                fontWeight: FontWeight.bold, fontSize: 25),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
+                            ),
                           ),
                         ),
                       ),

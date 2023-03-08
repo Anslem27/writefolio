@@ -61,7 +61,7 @@ class SButton extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: darkModeOn ? Colors.white : const Color(0xff181717),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
             text,
