@@ -41,7 +41,9 @@ class _ProfileScreenState extends State<ProfileScreen>
             centerTitle: false,
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, "settings");
+                },
                 icon: const Icon(
                   EvaIcons.settings2Outline,
                 ),

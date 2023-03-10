@@ -114,9 +114,9 @@ class _WelcomePageState extends State<WelcomePage> {
                                 ],
                               ),
                             ),
-                            Expanded(
+                            Flexible(
                               child: Text(
-                                "Write your story, your way",
+                                "Write your story, your way.",
                                 style: GoogleFonts.urbanist(),
                               ),
                             ),

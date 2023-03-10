@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/models/user_model.dart';
-import '../../animations/fade_in_animation.dart';
 import '../../animations/onboarding_pulse_animation.dart';
 import '../../services/user_service.dart';
 import 'package:logger/logger.dart';
@@ -122,17 +121,14 @@ class _VerifyUserState extends State<VerifyUser> {
                                     style: GoogleFonts.urbanist(fontSize: 16),
                                   );
                                 }
-                                return FloatInAnimation(
-                                  delay: 5,
-                                  child: AnimatedContainer(
-                                    curve: Curves.bounceInOut,
-                                    duration:
-                                        const Duration(milliseconds: 1000),
-                                    child: CircleAvatar(
-                                      radius: 80,
-                                      backgroundImage: NetworkImage(
-                                          snapshot.data!.feed.image),
-                                    ),
+                                return AnimatedContainer(
+                                  curve: Curves.bounceInOut,
+                                  duration:
+                                      const Duration(milliseconds: 1000),
+                                  child: CircleAvatar(
+                                    radius: 80,
+                                    backgroundImage: NetworkImage(
+                                        snapshot.data!.feed.image),
                                   ),
                                 );
                               }),

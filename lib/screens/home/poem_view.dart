@@ -8,7 +8,7 @@ import 'package:writefolio/utils/widgets/theme_button.dart';
 import "dart:math";
 import '../../animations/fade_in_animation.dart';
 import '../../utils/constants.dart';
-import '../../models/poem_models.dart';
+import '../../models/poems/poem_models.dart';
 import '../../services/poem_service.dart';
 import 'poems/poem_detail_view.dart';
 

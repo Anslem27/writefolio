@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/adapters.dart';
-import '../models/saved_poems.dart';
+import '../models/poems/saved_poems.dart';
 
 class SavedPoemsHiveDataStore {
   static const String boxName = "savedPoems";

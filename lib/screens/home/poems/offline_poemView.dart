@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
-import 'package:writefolio/models/saved_poems.dart';
 import '../../../data/saved_poem_datastore.dart';
+import '../../../models/poems/saved_poems.dart';
 
 var logger = Logger();
 
