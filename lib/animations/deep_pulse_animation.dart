@@ -62,7 +62,7 @@ class _DeepPulseAnimationState extends State<DeepPulseAnimation>
         width: 350,
         height: 350,
         decoration: BoxDecoration(
-          color: const Color(0xff181717).withOpacity(0.4),
+          color: Theme.of(context).primaryColor.withOpacity(0.4),
           shape: BoxShape.circle,
         ),
       ),

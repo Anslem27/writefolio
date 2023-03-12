@@ -3,6 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:writefolio/screens/home/home.dart';
 import 'package:writefolio/screens/settings/settings_page.dart';
 import 'package:writefolio/utils/widgets/no_internetscreen.dart';
+import 'models/articles/article.dart';
 import 'models/poems/saved_poems.dart';
 import 'onboarding/user/welcome.dart';
 import 'screens/navigation.dart';
@@ -10,7 +11,9 @@ import 'screens/navigation.dart';
 Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter<SavedPoems>(SavedPoemsAdapter());
+  Hive.registerAdapter<UserArticle>(UserArticleAdapter());
   await Hive.openBox<SavedPoems>("savedPoems");
+  await Hive.openBox<UserArticle>("userArticles");
   runApp(const MyApp());
 }
 

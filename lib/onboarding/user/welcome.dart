@@ -66,12 +66,13 @@ class _WelcomePageState extends State<WelcomePage> {
             Align(
               alignment: const AlignmentDirectional(1, -0.95),
               child: Container(
-                  width: 700,
-                  height: 700,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Expanded(child: OnboardingPulseAnimation())),
+                width: 700,
+                height: 700,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: const OnboardingPulseAnimation(),
+              ),
             ),
             Align(
               alignment: const AlignmentDirectional(0, 1),
