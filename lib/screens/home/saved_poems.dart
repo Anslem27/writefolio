@@ -36,9 +36,10 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
         var savedPoems = savedPoemBox.values.toList();
 
         return Scaffold(
-          floatingActionButton: FloatingActionButton(
+          floatingActionButton: FloatingActionButton.extended(
+            label: const Text("Search more"),
             onPressed: () {},
-            child: const Icon(
+            icon: const Icon(
               PhosphorIcons.magnifying_glass,
             ),
           ),

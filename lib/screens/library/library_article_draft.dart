@@ -33,6 +33,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
           if (savedArticlesList.isEmpty) {
             return _emptyArticles(darkModeOn);
           } else {
+            //TODO: Add a list count for the articles.
             return ListView.builder(
               itemCount: savedArticlesList.length,
               itemBuilder: (_, index) {

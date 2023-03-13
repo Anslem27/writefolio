@@ -23,23 +23,17 @@ class _LibraryScreenState extends State<LibraryScreen>
     var deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 1000),
-          curve: Curves.easeInOut,
-          child: IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (_) => const ArticleEditor(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.edit),
-          ),
-        ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (_) => const ArticleEditor(),
+            ),
+          );
+        },
+        label: const Text("Create"),
+        icon: const Icon(Icons.edit),
       ),
       body: CustomScrollView(
         slivers: [

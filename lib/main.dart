@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:writefolio/screens/home/home.dart';
+import 'package:writefolio/screens/library/libary.dart';
 import 'package:writefolio/screens/settings/settings_page.dart';
 import 'package:writefolio/utils/widgets/no_internetscreen.dart';
 import 'models/articles/article.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         "/noInternet": (_) => const NoInternet(isRouteBack: true),
         "/welcome": (_) => const WelcomePage(),
         "/home": (_) => const HomeScreen(),
+        "/library": (context) => const LibraryScreen(),
         "/navigation": (_) => const Navigation(),
         "settings": (_) => const SettingsPage()
       },

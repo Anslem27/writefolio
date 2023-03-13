@@ -10,7 +10,6 @@ class ArticleHomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var date = DateTime.now();
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(
@@ -30,7 +29,8 @@ class ArticleHomeCard extends StatelessWidget {
                 userArticle.title,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.start,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
             ),
             Padding(
@@ -42,7 +42,7 @@ class ArticleHomeCard extends StatelessWidget {
                   const Text("Travis Aaron Wagner"),
                   const Spacer(),
                   Text(
-                    "${date.month}/${date.day}th/${date.year}",
+                    userArticle.updateDate,
                   ),
                   const SizedBox(width: 8),
                   const Text(
@@ -71,7 +71,7 @@ class ArticleHomeCard extends StatelessWidget {
                 Navigator.push(
                   context,
                   CupertinoPageRoute(
-                    builder: (_) => const ArticleView(),
+                    builder: (_) => ArticleView(userArticle: userArticle),
                   ),
                 );
               },

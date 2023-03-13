@@ -1,9 +1,14 @@
+import 'dart:convert';
+
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:writefolio/models/articles/article.dart';
 
 import '../data/user_article_datastore.dart';
 
@@ -20,6 +25,8 @@ class _ArticleEditorState extends State<ArticleEditor> {
   final QuillController _controller = QuillController.basic();
   final TextEditingController _titleController = TextEditingController();
   var articleDataStore = UserArticleDataStore();
+  static var currentDate = DateTime.now();
+  var formattedDate = DateFormat.yMMMd().format(currentDate);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +41,6 @@ class _ArticleEditorState extends State<ArticleEditor> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            logger.i(_controller.document.toDelta().toJson());
             showModalBottomSheet(
                 context: context,
                 builder: (_) => Container(
@@ -71,11 +77,6 @@ class _ArticleEditorState extends State<ArticleEditor> {
                               ],
                             ),
                           ),
-                          /*   Text(
-                            'You are creating:\n"${_titleController.text.trim()}"',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 20),
-                          ), */
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
@@ -89,7 +90,9 @@ class _ArticleEditorState extends State<ArticleEditor> {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
                                     child: const Text(
                                       "Keep Editting",
                                       style: TextStyle(fontSize: 16),
@@ -105,7 +108,43 @@ class _ArticleEditorState extends State<ArticleEditor> {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      var bodyJson = jsonEncode(_controller
+                                          .document
+                                          .toDelta()
+                                          .toJson());
+
+                                      // create article object
+                                      var userArticle = UserArticle.create(
+                                        title: _titleController.text.trim(),
+                                        body: bodyJson,
+                                        bodyText:
+                                            _controller.document.toPlainText(),
+                                        updateDate: formattedDate,
+                                      );
+
+                                      logger.i(
+                                        "${userArticle.body}\n${userArticle.updateDate}\n${userArticle.id}\n${userArticle.bodyText}",
+                                      );
+                                      //create article object
+                                      await articleDataStore
+                                          .saveArticle(userArticle: userArticle)
+                                          .then((value) =>
+                                              AnimatedSnackBar.material(
+                                                "${userArticle.title} has been saved",
+                                                type: AnimatedSnackBarType
+                                                    .success,
+                                                duration:
+                                                    const Duration(seconds: 4),
+                                                mobileSnackBarPosition:
+                                                    MobileSnackBarPosition
+                                                        .bottom,
+                                              ).show(context));
+
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.popAndPushNamed(
+                                          context, "/library");
+                                    },
                                     label: const Text(
                                       "Save Article",
                                       style: TextStyle(fontSize: 16),

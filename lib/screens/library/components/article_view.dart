@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../../utils/constants.dart';
+import '../../../models/articles/article.dart';
 
 class ArticleView extends StatefulWidget {
-  const ArticleView({super.key});
+  final UserArticle userArticle;
+  const ArticleView({super.key, required this.userArticle});
 
   @override
   State<ArticleView> createState() => _ArticleViewState();
@@ -15,10 +19,19 @@ class _ArticleViewState extends State<ArticleView> {
   var date = DateTime.now();
   @override
   Widget build(BuildContext context) {
+    QuillController controller = QuillController.basic();
+
+    var articleJsonBody = jsonDecode(widget.userArticle.body);
+    controller = QuillController(
+      document: Document.fromJson(articleJsonBody),
+      selection: const TextSelection.collapsed(offset: 0),
+    );
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        //TODO: enable for saving and updating
         onPressed: () {},
-        child: const Icon(Icons.edit),
+        label: const Text("Contnue Editting"),
+        icon: const Icon(Icons.edit),
       ),
       appBar: AppBar(
         leading: IconButton(
@@ -32,7 +45,7 @@ class _ArticleViewState extends State<ArticleView> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.more_vert_rounded),
+            icon: const Icon(PhosphorIcons.trash),
           ),
         ],
       ),
@@ -42,11 +55,13 @@ class _ArticleViewState extends State<ArticleView> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Please Start Writing Better Commits",
+                widget.userArticle.title,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.start,
                 style: GoogleFonts.urbanist(
-                    fontSize: 20, fontWeight: FontWeight.w500),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             Padding(
@@ -58,7 +73,7 @@ class _ArticleViewState extends State<ArticleView> {
                   const Text("Travis Aaron Wagner"),
                   const Spacer(),
                   Text(
-                    "${date.month}/${date.day}th/${date.year}",
+                    widget.userArticle.updateDate,
                   ),
                   const SizedBox(width: 8),
                   const Text(
@@ -77,9 +92,9 @@ class _ArticleViewState extends State<ArticleView> {
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Text(
-                loremText,
-                style: const TextStyle(fontSize: 15),
+              child: QuillEditor.basic(
+                controller: controller,
+                readOnly: true, // true for view only mode
               ),
             )
           ],
