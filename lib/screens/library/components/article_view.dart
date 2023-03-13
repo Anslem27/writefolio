@@ -79,7 +79,7 @@ class _ArticleViewState extends State<ArticleView> {
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 loremText,
-                style: GoogleFonts.breeSerif(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
               ),
             )
           ],

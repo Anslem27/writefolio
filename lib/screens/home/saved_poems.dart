@@ -189,7 +189,10 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           //TODO: Add darkmode illustration
-          SvgPicture.asset(!darkModeOn ? "assets/svg/reading-side.svg" : ""),
+          SvgPicture.asset(
+            "assets/svg/reading-side.svg",
+            color: !darkModeOn ? Colors.black : Colors.white,
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(

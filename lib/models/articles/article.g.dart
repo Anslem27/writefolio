@@ -19,15 +19,16 @@ class UserArticleAdapter extends TypeAdapter<UserArticle> {
     return UserArticle(
       title: fields[1] as String,
       body: fields[2] as String,
+      bodyText: fields[3] as String,
       id: fields[0] as String,
-      updateDate: fields[3] as String,
+      updateDate: fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserArticle obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -35,6 +36,8 @@ class UserArticleAdapter extends TypeAdapter<UserArticle> {
       ..writeByte(2)
       ..write(obj.body)
       ..writeByte(3)
+      ..write(obj.bodyText)
+      ..writeByte(4)
       ..write(obj.updateDate);
   }
 

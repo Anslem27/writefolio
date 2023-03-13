@@ -15,21 +15,26 @@ class UserArticle extends HiveObject {
   String body;
 
   @HiveField(3)
+  String bodyText;
+
+  @HiveField(4)
   String updateDate;
 
   UserArticle({
     required this.title,
     required this.body,
+    required this.bodyText,
     required this.id,
     required this.updateDate,
   });
 
-  factory UserArticle.create(
-          String id, String title, String body, String updateDate) =>
+  factory UserArticle.create(String id, String title, String body,
+          String bodyText, String updateDate) =>
       UserArticle(
         id: const Uuid().v1(), //unique id
         title: title,
         body: body,
+        bodyText: bodyText,
         updateDate: updateDate,
       );
 }

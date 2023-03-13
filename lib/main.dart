@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: const Color(0xff6750A4),
+        colorSchemeSeed: const Color(0xfffbd38d),
         // primarySwatch: Colors.blue,
       ),
       home: const WriteFolioApp(),
