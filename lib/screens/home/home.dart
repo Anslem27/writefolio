@@ -17,9 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    TabController tabcontroller = TabController(length: 3, vsync: this);
-    var deviceHeight = MediaQuery.of(context).size.height;
-    var deviceWidth = MediaQuery.of(context).size.width;
+    TabController tabcontroller = TabController(length: 2, vsync: this);
 
     return Scaffold(
       body: CustomScrollView(
@@ -60,10 +58,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 child: TabBar(
                   controller: tabcontroller,
                   isScrollable: true,
-                  indicator: const UnderlineTabIndicator(
+                  /*  indicator: const UnderlineTabIndicator(
                     borderSide: BorderSide(width: 2),
                     insets: EdgeInsets.only(right: 6),
-                  ),
+                  ), */
                   splashFactory: NoSplash.splashFactory,
                   overlayColor: MaterialStateProperty.resolveWith<Color?>(
                     (Set<MaterialState> states) {
@@ -80,11 +78,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           SliverFillRemaining(
             child: TabBarView(
               controller: tabcontroller,
-              children: [
-                shimmerLoader(deviceWidth, deviceHeight),
-                const PoemView(),
+              children: const [
+                PoemView(),
                 //TODO: Add this to the user profile page
-                const SavedPoemsScreen(),
+                SavedPoemsScreen(),
               ],
             ),
           )
@@ -106,15 +103,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   final List<Tab> _tabs = [
-    Tab(
-      child: Text(
-        "My articles",
-        style: GoogleFonts.urbanist(
-          fontSize: 18,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    ),
     Tab(
       child: Text(
         "Poetry",

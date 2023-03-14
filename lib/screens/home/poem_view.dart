@@ -4,12 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:logger/logger.dart';
-import 'package:writefolio/utils/widgets/theme_button.dart';
 import "dart:math";
 import '../../animations/fade_in_animation.dart';
 import '../../utils/constants.dart';
 import '../../models/poems/poem_models.dart';
 import '../../services/poem_service.dart';
+import '../../utils/widgets/reading_time_approximator.dart';
 import 'poems/poem_detail_view.dart';
 
 var logger = Logger();
@@ -24,8 +24,6 @@ class PoemView extends StatefulWidget {
 class _PoemViewState extends State<PoemView> {
   @override
   Widget build(BuildContext context) {
-    bool darkModeOn =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return StreamBuilder<InternetConnectionStatus>(
       stream: InternetConnectionChecker().onStatusChange,
       builder: (context, snapshot) {
@@ -117,7 +115,7 @@ class _PoemViewState extends State<PoemView> {
                                                     right: 5.0),
                                                 child: SizedBox(
                                                   child: Text(
-                                                    "${snapshot.data!.poem![index].linecount} reading lines",
+                                                    "${snapshot.data!.poem![index].linecount} reading lines . ${calculateReadingTime(snapshot.data!.poem![index].lines.toString().replaceAll("\n", "").replaceAll("]", "").replaceAll("[", "")).toString()} min read",
                                                   ),
                                                 ),
                                               ),
@@ -157,7 +155,7 @@ class _PoemViewState extends State<PoemView> {
               },
             );
           } else {
-            return _noInternet(darkModeOn);
+            return _noInternet();
           }
         } else {
           return const Center(child: CircularProgressIndicator());
@@ -166,25 +164,30 @@ class _PoemViewState extends State<PoemView> {
     );
   }
 
-  _noInternet(bool darkModeOn) {
+  _noInternet() {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          //TODO: Add darkmode illustration
-          SvgPicture.asset(!darkModeOn ? "assets/svg/reading-side.svg" : ""),
+          SvgPicture.asset("assets/svg/idea.svg", height: 200),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "No Internet\ncheck connection",
+              "No Internet\nconnection",
               textAlign: TextAlign.center,
               style: GoogleFonts.urbanist(
-                  fontWeight: FontWeight.w400, fontSize: 20),
+                  fontWeight: FontWeight.w400, fontSize: 19),
             ),
           ),
-          const SButton(text: "Check settings")
+          OutlinedButton(
+            onPressed: () {},
+            child: Text(
+              "Open settings",
+              style: GoogleFonts.urbanist(fontSize: 17),
+            ),
+          ),
         ],
       ),
     );

@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:writefolio/utils/widgets/theme_button.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../models/articles/article.dart';
 import '../../screens/library/components/article_view.dart';
+import 'reading_time_approximator.dart';
 
 class ArticleHomeCard extends StatelessWidget {
   final UserArticle userArticle;
@@ -10,12 +11,14 @@ class ArticleHomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool darkModeOn =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: Colors.grey[100],
+          color: darkModeOn ? Colors.grey.shade900 : Colors.grey[100],
           borderRadius: BorderRadius.circular(12),
         ),
         width: double.maxFinite,
@@ -45,9 +48,9 @@ class ArticleHomeCard extends StatelessWidget {
                     userArticle.updateDate,
                   ),
                   const SizedBox(width: 8),
-                  const Text(
-                    "4 min read",
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                  Text(
+                    "${calculateReadingTime(userArticle.bodyText).toString()} min read",
+                    style: const TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ],
               ),
@@ -65,17 +68,34 @@ class ArticleHomeCard extends StatelessWidget {
                 style: const TextStyle(),
               ),
             ),
-            SButton(
-              text: "See details",
-              ontap: () {
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (_) => ArticleView(userArticle: userArticle),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width - 50,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (_) =>
+                                ArticleView(userArticle: userArticle),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "See details",
+                        style: GoogleFonts.urbanist(fontSize: 17),
+                      ),
+                    ),
                   ),
-                );
-              },
-            )
+                ],
+              ),
+            ),
           ],
         ),
       ),

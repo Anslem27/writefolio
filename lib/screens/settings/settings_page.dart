@@ -1,67 +1,99 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:hive/hive.dart';
+import 'package:writefolio/editor/create_article.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  @override
   Widget build(BuildContext context) {
+    final themeBox = Hive.box<bool>('themeBox');
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
       ),
-      body: Center(
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 400),
-          child: ListView(
+      body: ListView(
+        shrinkWrap: true,
+        children: [
+          const ListTile(
+            leading: Icon(
+              Icons.push_pin_outlined,
+              color: Colors.red,
+            ),
+            title: Text("Speak to us and share your thoughts."),
+          ),
+          _SingleSection(
+            title: "General",
             children: [
-              _SingleSection(
-                title: "General",
-                children: [
-                  const _CustomListTile(
-                      title: "About Phone",
-                      icon: CupertinoIcons.device_phone_portrait),
-                  _CustomListTile(
-                      title: "Dark Mode",
-                      icon: CupertinoIcons.moon,
-                      trailing:
-                          CupertinoSwitch(value: false, onChanged: (value) {})),
-                  const _CustomListTile(
-                      title: "System Apps Updater",
-                      icon: CupertinoIcons.cloud_download),
-                  const _CustomListTile(
-                      title: "Security Status",
-                      icon: CupertinoIcons.lock_shield),
-                ],
+              _CustomListTile(
+                title: "Dark Mode",
+                icon: PhosphorIcons.moon,
+                trailing: Switch(
+                  value:
+                      themeBox.get('isDarkMode', defaultValue: null) ?? false,
+                  onChanged: (value) {
+                    themeBox.put('isDarkMode', value);
+                    setState(() {});
+                    logger.i(value); //value to be stored.
+                  },
+                ),
               ),
-              _SingleSection(
-                title: "Network",
-                children: [
-                  _CustomListTile(
-                    title: "Wi-Fi",
-                    icon: CupertinoIcons.wifi,
-                    trailing: CupertinoSwitch(value: true, onChanged: (val) {}),
-                  ),
-                  _CustomListTile(
-                    title: "Bluetooth",
-                    icon: CupertinoIcons.bluetooth,
-                    trailing:
-                        CupertinoSwitch(value: false, onChanged: (val) {}),
-                  ),
-                ],
-              ),
-              const _SingleSection(
-                title: "Privacy and Security",
-                children: [
-                  _CustomListTile(
-                      title: "Display", icon: CupertinoIcons.brightness),
-                  _CustomListTile(
-                      title: "Themes", icon: CupertinoIcons.paintbrush)
-                ],
-              ),
+              const _CustomListTile(
+                  title: "In app updater", icon: CupertinoIcons.cloud_download),
             ],
           ),
-        ),
+          const _SingleSection(title: "Social", children: [
+            _CustomListTile(
+              title: "Medium",
+              icon: PhosphorIcons.medium_logo,
+            )
+          ]),
+          const _SingleSection(
+            title: "About Writefolio",
+            children: [
+              _CustomListTile(
+                title: "Help",
+                icon: PhosphorIcons.info,
+              ),
+              _CustomListTile(
+                title: "Terms of service",
+                icon: PhosphorIcons.shield,
+              ),
+              _CustomListTile(
+                title: "Privacy Policy",
+                icon: Icons.shield,
+              ),
+              _CustomListTile(
+                title: "Rate on the Play Store",
+                icon: PhosphorIcons.star,
+              )
+            ],
+          ),
+          const _SingleSection(title: "The Boring zone", children: [
+            _CustomListTile(
+              title: "Opensource licences",
+              icon: PhosphorIcons.list,
+            ),
+          ]),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "v0.8.0(8000)",
+              style: TextStyle(
+                fontSize: 17,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -77,14 +109,20 @@ class _CustomListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        title,
-        style: const TextStyle(fontStyle: FontStyle.normal),
-      ),
-      leading: Icon(icon),
-      trailing: trailing ?? const Icon(CupertinoIcons.forward, size: 15),
-      onTap: () {},
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ListTile(
+          title: Text(
+            title,
+            style: const TextStyle(),
+          ),
+          leading: Icon(icon, size: 21.5),
+          trailing: trailing ?? const Icon(CupertinoIcons.forward, size: 15),
+          onTap: () {},
+        ),
+        const SizedBox(width: double.maxFinite, child: Divider())
+      ],
     );
   }
 }
@@ -109,10 +147,6 @@ class _SingleSection extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             title.toUpperCase(),
-            style: Theme.of(context)
-                .textTheme
-                .displaySmall
-                ?.copyWith(fontSize: 15),
           ),
         ),
         Padding(

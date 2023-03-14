@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 import '../../../utils/constants.dart';
 import '../../../data/saved_poem_datastore.dart';
 import '../../../services/poem_service.dart';
+import '../../../utils/widgets/reading_time_approximator.dart';
 import '../../../utils/widgets/theme_button.dart';
 import '../poems/poem_detail_view.dart';
 
@@ -40,8 +41,6 @@ class PoemQuerySearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    var isDarkModeOn =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
     if (query.length < 3 || query.isEmpty) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -49,15 +48,13 @@ class PoemQuerySearch extends SearchDelegate {
           Center(
             child: Column(
               children: [
-                //TODO: Add darkmode illustration
-                SvgPicture.asset(
-                    !isDarkModeOn ? "assets/svg/meditating.svg" : ""),
+                SvgPicture.asset("assets/svg/joy.svg", height: 200),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Search term must be longer than two letters.",
+                    "Search query must be longer than two letters.",
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.urbanist(
+                    style: GoogleFonts.roboto(
                         fontWeight: FontWeight.w400, fontSize: 20),
                   ),
                 ),
@@ -84,17 +81,16 @@ class PoemQuerySearch extends SearchDelegate {
                   ],
                 );
               } else if (snapshot.data!.poem!.isEmpty || snapshot.hasError) {
-                var isDarkModeOn = MediaQuery.of(context).platformBrightness ==
-                    Brightness.dark;
                 return Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      //TODO: Add darkmode illustration
                       SvgPicture.asset(
-                          !isDarkModeOn ? "assets/svg/meditating.svg" : ""),
+                        "assets/svg/article.svg",
+                        height: 200,
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
@@ -184,7 +180,7 @@ class PoemQuerySearch extends SearchDelegate {
                                                   right: 5.0),
                                               child: SizedBox(
                                                 child: Text(
-                                                  "${snapshot.data!.poem![index].linecount} reading lines",
+                                                  "${snapshot.data!.poem![index].linecount} reading lines |  ${calculateReadingTime(snapshot.data!.poem![index].lines.toString().replaceAll("\n", "").replaceAll("]", "").replaceAll("[", "")).toString()} min read",
                                                 ),
                                               ),
                                             ),

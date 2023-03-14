@@ -67,9 +67,9 @@ class _LibraryScreenState extends State<LibraryScreen>
                 child: TabBar(
                   controller: tabcontroller,
                   isScrollable: true,
-                  indicator: const UnderlineTabIndicator(
+     /*              indicator: const UnderlineTabIndicator(
                       borderSide: BorderSide(width: 2),
-                      insets: EdgeInsets.only(right: 6)),
+                      insets: EdgeInsets.only(right: 6)), */
                   splashFactory: NoSplash.splashFactory,
                   overlayColor: MaterialStateProperty.resolveWith<Color?>(
                     (Set<MaterialState> states) {

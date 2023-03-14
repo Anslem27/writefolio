@@ -188,7 +188,7 @@ class _ArticleEditorState extends State<ArticleEditor> {
                             borderSide: const BorderSide(width: 1),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          labelText: 'Article title',
+                          labelText: 'An Interesting title',
                           labelStyle: GoogleFonts.lora(
                               fontWeight: FontWeight.bold, fontSize: 25),
                         ),

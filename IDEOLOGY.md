@@ -4,10 +4,22 @@
 
 ## Features
 
+- Dark Mode
+- Material 3 design
 - User medium artiles
 - Poems
   - Random feed
   - Search
+  - Save
+- Create Articles
+
+### To add
+
+```
+https://www.theguardian.com/lifestyle/rss
+
+https://www.reddit.com/r/self.rss
+```
 
 ### Slogans
 

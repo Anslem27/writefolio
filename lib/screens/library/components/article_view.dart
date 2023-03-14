@@ -6,6 +6,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
 import '../../../models/articles/article.dart';
+import '../../../utils/widgets/reading_time_approximator.dart';
 
 class ArticleView extends StatefulWidget {
   final UserArticle userArticle;
@@ -76,9 +77,9 @@ class _ArticleViewState extends State<ArticleView> {
                     widget.userArticle.updateDate,
                   ),
                   const SizedBox(width: 8),
-                  const Text(
-                    "4 min read",
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                  Text(
+                    " ${calculateReadingTime(widget.userArticle.bodyText).toString()} min read",
+                    style: const TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ],
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ShimmerComponent extends StatelessWidget {
+class ShimmerComponent extends StatefulWidget {
   const ShimmerComponent({
     super.key,
     required this.deviceWidth,
@@ -12,6 +12,11 @@ class ShimmerComponent extends StatelessWidget {
   final double deviceHeight;
 
   @override
+  State<ShimmerComponent> createState() => _ShimmerComponentState();
+}
+
+class _ShimmerComponentState extends State<ShimmerComponent> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -19,12 +24,14 @@ class ShimmerComponent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Shimmer.fromColors(
-            baseColor: Colors.grey[300] as Color,
+            baseColor: ThemeMode.system != ThemeMode.dark
+                ? Colors.grey[900] as Color
+                : Colors.grey[300] as Color,
             highlightColor: Colors.grey[100] as Color,
             child: Container(
-              width: deviceWidth,
+              width: widget.deviceWidth,
               padding: const EdgeInsets.all(3),
-              height: deviceHeight / 8,
+              height: widget.deviceHeight / 8,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -94,7 +101,7 @@ class ShimmerComponent extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: deviceWidth,
+            width: widget.deviceWidth,
             child: const Divider(
               thickness: 0.5,
             ),

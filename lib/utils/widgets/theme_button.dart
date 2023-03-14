@@ -47,31 +47,23 @@ class SButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool darkModeOn =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
-    double deviceWidth = MediaQuery.of(context).size.width;
-
-    return InkWell(
-      onTap: ontap,
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Container(
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
           height: 45,
-          width: width ?? deviceWidth / 0.5,
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: darkModeOn ? Colors.white : const Color(0xff181717),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Text(
-            text,
-            style: TextStyle(
-              fontSize: 18,
-              color: darkModeOn ? const Color(0xff181717) : Colors.white,
-            ),
-          ),
-        ),
-      ),
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12))),
+              onPressed: ontap,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  text,
+                  style: const TextStyle(fontSize: 18),
+                ),
+              ))),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/theme_button.dart';
@@ -20,13 +21,13 @@ class _CenteredPageState extends State<CenteredPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset("assets/illustrations/meditating.png"),
+            SvgPicture.asset("assets/svg/read.svg"),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Profile under\nconstruction...",
+                "I'ts not you\ni'ts us",
                 textAlign: TextAlign.center,
-                style: GoogleFonts.urbanist(fontSize: 20),
+                style: GoogleFonts.roboto(fontSize: 20),
               ),
             ),
             const BButton(text: "See more")
