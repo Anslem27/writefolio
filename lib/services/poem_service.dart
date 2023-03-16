@@ -16,7 +16,7 @@ class PoemService {
 
   //search by author
   static Future<HomePoemList> fetchSearch(String query) async {
-    var url = Uri.parse("https://poetrydb.org/author,poemcount/$query;10");
+    var url = Uri.parse("https://poetrydb.org/author,poemcount/$query;20");
 
     final response = await http.get(url);
     if (response.statusCode == 200) {

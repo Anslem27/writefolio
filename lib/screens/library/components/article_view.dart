@@ -59,24 +59,51 @@ class _ArticleViewState extends State<ArticleView> {
                 widget.userArticle.title,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.start,
+                maxLines: 2,
                 style: GoogleFonts.urbanist(
-                  fontSize: 20,
+                  fontSize: 25,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   _userIcon(),
                   const SizedBox(width: 3),
-                  const Text("Travis Aaron Wagner"),
+                  const Text("Anslem"),
                   const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.bookmark_add_outlined,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.more_vert,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Row(
+                children: [
                   Text(
-                    widget.userArticle.updateDate,
+                    "Last updated: ${widget.userArticle.updateDate}",
                   ),
-                  const SizedBox(width: 8),
+                  const Spacer(),
+                  const Icon(Icons.timer_outlined),
                   Text(
                     " ${calculateReadingTime(widget.userArticle.bodyText).toString()} min read",
                     style: const TextStyle(fontStyle: FontStyle.italic),

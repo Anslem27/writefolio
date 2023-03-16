@@ -42,11 +42,10 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
               padding: const EdgeInsets.all(5),
               child: FilterChip(
                   label: Text(savedPoems[i].author),
+                  showCheckmark: true,
                   selected: selected,
                   onSelected: (bool value) {
-                    setState(() {
-                      value = selected;
-                    });
+                    value = selected;
                   }),
             );
             chips.add(item);
@@ -70,7 +69,7 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                   child: Column(
                     children: [
                       Wrap(
-                        spacing: 8,
+                        spacing: 5,
                         children: queryChips(),
                       ),
                       ListView.builder(

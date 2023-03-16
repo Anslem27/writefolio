@@ -41,7 +41,7 @@ class PoemQuerySearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    if (query.length < 3 || query.isEmpty) {
+    if (query.length < 3) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -226,6 +226,27 @@ class PoemQuerySearch extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     // This method is called everytime the search term changes.
     // If you want to add search suggestions as the user enters their search term, this is the place to do that.
-    return Column();
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Center(
+          child: Column(
+            children: [
+              SvgPicture.asset("assets/svg/idea.svg", height: 200),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Type Author's name.",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w400, fontSize: 20),
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
   }
 }

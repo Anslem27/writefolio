@@ -24,10 +24,8 @@ class _ShimmerComponentState extends State<ShimmerComponent> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Shimmer.fromColors(
-            baseColor: ThemeMode.system != ThemeMode.dark
-                ? Colors.grey[900] as Color
-                : Colors.grey[300] as Color,
-            highlightColor: Colors.grey[100] as Color,
+            baseColor: Theme.of(context).cardColor,
+            highlightColor: Colors.grey[200] as Color,
             child: Container(
               width: widget.deviceWidth,
               padding: const EdgeInsets.all(3),

@@ -217,6 +217,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  dart_markdown:
+    dependency: transitive
+    description:
+      name: dart_markdown
+      sha256: "485ad799768131a6603f835e3f47aa277e6481844af843ff1f4aa1a4a96f00ab"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.5"
   dart_pubspec_licenses:
     dependency: transitive
     description:
@@ -600,6 +608,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  markdown_viewer:
+    dependency: "direct main"
+    description:
+      name: markdown_viewer
+      sha256: "20ba66becfb4aec6e39b1eef07c53463c96ecf315d7da4e7ad960796f866cb45"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.0"
   matcher:
     dependency: transitive
     description:

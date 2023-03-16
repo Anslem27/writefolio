@@ -44,7 +44,7 @@ class _OfflinePoemViewState extends State<OfflinePoemView> {
           return Scaffold(
             floatingActionButton: FloatingActionButton(
               onPressed: () {},
-              child: const Icon(PhosphorIcons.share),
+              child: const Icon(PhosphorIcons.microphone),
             ),
             appBar: AppBar(
               leading: IconButton(
@@ -74,6 +74,12 @@ class _OfflinePoemViewState extends State<OfflinePoemView> {
                     });
                   },
                   icon: const Icon(PhosphorIcons.copy),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    PhosphorIcons.share,
+                  ),
                 ),
               ],
             ),

@@ -11,92 +11,112 @@ class ArticleHomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool darkModeOn =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.all(5.0),
-      child: Container(
-        padding: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          color: darkModeOn ? Colors.grey.shade900 : Colors.grey[100],
-          borderRadius: BorderRadius.circular(12),
-        ),
-        width: double.maxFinite,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                userArticle.title,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.start,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-              ),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Container(
+            padding: const EdgeInsets.all(3),
+            decoration: BoxDecoration(
+              //color: darkModeOn ? Colors.grey.shade900 : Colors.grey[100],
+              borderRadius: BorderRadius.circular(12),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0, bottom: 4),
-              child: Row(
-                children: [
-                  _userIcon(),
-                  const SizedBox(width: 3),
-                  const Text("Travis Aaron Wagner"),
-                  const Spacer(),
-                  Text(
-                    userArticle.updateDate,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    "${calculateReadingTime(userArticle.bodyText).toString()} min read",
-                    style: const TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              width: double.maxFinite,
-              child: Divider(),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                userArticle.bodyText,
-                maxLines: 5,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width - 50,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (_) =>
-                                ArticleView(userArticle: userArticle),
-                          ),
-                        );
-                      },
+            width: double.maxFinite,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
                       child: Text(
-                        "See details",
-                        style: GoogleFonts.urbanist(fontSize: 17),
+                        userArticle.title,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
+                    //  const Spacer(),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.bookmark),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 4.0, bottom: 4),
+                  child: Row(
+                    children: [
+                      _userIcon(),
+                      const SizedBox(width: 3),
+                      const Text("Travis Aaron Wagner"),
+                      const Spacer(),
+                      Text(
+                        userArticle.updateDate,
+                      ),
+                      const SizedBox(width: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.timer_outlined),
+                          Text(
+                            "${calculateReadingTime(userArticle.bodyText).toString()} min read",
+                            style: const TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  width: double.maxFinite,
+                  child: Divider(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    userArticle.bodyText,
+                    maxLines: 5,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 50,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (_) =>
+                                    ArticleView(userArticle: userArticle),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "See details",
+                            style: GoogleFonts.urbanist(fontSize: 17),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
