@@ -1,4 +1,3 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -44,12 +43,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   showSearch(context: context, delegate: PoemQuerySearch());
                 },
                 icon: const Icon(PhosphorIcons.magnifying_glass),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  EvaIcons.settings2Outline,
-                ),
               ),
             ],
             bottom: PreferredSize(
