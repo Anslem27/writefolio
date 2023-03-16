@@ -372,7 +372,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   style: GoogleFonts.urbanist(fontSize: 17),
                 )),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 3.0),
               child: Text(
                 loremText,
                 style: const TextStyle(fontSize: 15.5),

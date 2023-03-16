@@ -36,14 +36,41 @@ class _LibraryFilesState extends State<LibraryFiles> {
             return _emptyArticles(darkModeOn);
           } else {
             //TODO: Add a list count for the articles.
-            return ListView.builder(
-              itemCount: savedArticlesList.length,
-              itemBuilder: (_, index) {
-                logger.i(savedArticlesList[index]);
-                var userArticle = savedArticlesList[index];
+            return SingleChildScrollView(
+              physics: const ScrollPhysics(),
+              child: Column(
+                children: [
+                  Card(
+                    margin: const EdgeInsets.all(8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("Draft"),
+                          const SizedBox(width: 5),
+                          Badge(
+                            label: Text(savedArticlesList.length.toString()),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    physics: const ScrollPhysics(),
+                    itemCount: savedArticlesList.length,
+                    itemBuilder: (_, index) {
+                      logger.i(savedArticlesList[index]);
+                      var userArticle = savedArticlesList[index];
 
-                return ArticleHomeCard(userArticle: userArticle);
-              },
+                      return ArticleHomeCard(userArticle: userArticle);
+                    },
+                  ),
+                ],
+              ),
             );
           }
         });
