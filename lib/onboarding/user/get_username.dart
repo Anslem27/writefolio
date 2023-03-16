@@ -130,58 +130,62 @@ class _GetUsernameState extends State<GetUsername> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width / 0.8,
-                          child: OutlinedButton(
-                            onPressed: () {
-                              //check internet availability
-                              /* bool result = await InternetConnectionChecker()
-                                    .hasConnection; */
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width / 0.8,
+                            child: OutlinedButton(
+                              onPressed: () {
+                                //check internet availability
+                                /* bool result = await InternetConnectionChecker()
+                                      .hasConnection; */
 
-                              //check for null value
-                              if (usernameController.text == "") {
-                                AnimatedSnackBar.material(
-                                  'User name can not be empty.',
-                                  type: AnimatedSnackBarType.warning,
-                                  duration: const Duration(seconds: 4),
-                                  mobileSnackBarPosition:
-                                      MobileSnackBarPosition.bottom,
-                                ).show(context);
-                              } else {
-                                AnimatedSnackBar.material(
-                                  "Please check your internet connection.",
-                                  type: AnimatedSnackBarType.info,
-                                  duration: const Duration(seconds: 4),
-                                  mobileSnackBarPosition:
-                                      MobileSnackBarPosition.bottom,
-                                ).show(context);
-                                //Navigator.pushNamed(context, "/noInternet");
-                                Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (_) => VerifyUser(
-                                      username: usernameController.text.trim(),
-                                    ),
-                                  ),
-                                );
-                              }
-                              //authorize if internet is available
-                              /*   if (result == true) {
+                                //check for null value
+                                if (usernameController.text == "") {
                                   AnimatedSnackBar.material(
-                                    "Medium username: ${usernameController.text}",
+                                    'User name can not be empty.',
+                                    type: AnimatedSnackBarType.warning,
+                                    duration: const Duration(seconds: 4),
+                                    mobileSnackBarPosition:
+                                        MobileSnackBarPosition.bottom,
+                                  ).show(context);
+                                } else {
+                                  AnimatedSnackBar.material(
+                                    "Please check your internet connection.",
                                     type: AnimatedSnackBarType.info,
                                     duration: const Duration(seconds: 4),
                                     mobileSnackBarPosition:
                                         MobileSnackBarPosition.bottom,
                                   ).show(context);
-
-                                  await fetchUserInfo(usernameController.text)
-                                      .then((value) => {logger.i(value.items)});
-                                  logger.i(
-                                      "Medium username: ${usernameController.text}");
-                                } */
-                            },
-                            child: const Text("Continue"),
+                                  //Navigator.pushNamed(context, "/noInternet");
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (_) => VerifyUser(
+                                        username:
+                                            usernameController.text.trim(),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                //authorize if internet is available
+                                /*   if (result == true) {
+                                    AnimatedSnackBar.material(
+                                      "Medium username: ${usernameController.text}",
+                                      type: AnimatedSnackBarType.info,
+                                      duration: const Duration(seconds: 4),
+                                      mobileSnackBarPosition:
+                                          MobileSnackBarPosition.bottom,
+                                    ).show(context);
+                        
+                                    await fetchUserInfo(usernameController.text)
+                                        .then((value) => {logger.i(value.items)});
+                                    logger.i(
+                                        "Medium username: ${usernameController.text}");
+                                  } */
+                              },
+                              child: const Text("Continue"),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 40)
