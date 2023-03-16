@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/screens/home/poem_view.dart';
 import 'package:writefolio/screens/home/components/poemsearch.dart';
 import '../../utils/widgets/shimmer_component.dart';
-import 'components/r-self.dart';
+import 'components/explorer.dart';
 import 'saved_poems.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             child: TabBarView(
               controller: tabcontroller,
               children: const [
-                RSelf(),
+                Explorer(),
                 PoemView(),
                 SavedPoemsScreen(),
               ],
@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final List<Tab> _tabs = [
     Tab(
       child: Text(
-        "Self stories",
+        "Explorer",
         style: GoogleFonts.urbanist(
           fontSize: 18,
           fontWeight: FontWeight.w400,

@@ -4,14 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/utils/widgets/shimmer_component.dart';
 
-class RSelf extends StatefulWidget {
-  const RSelf({super.key});
+class Explorer extends StatefulWidget {
+  const Explorer({super.key});
 
   @override
-  State<RSelf> createState() => _RSelfState();
+  State<Explorer> createState() => _ExplorerState();
 }
 
-class _RSelfState extends State<RSelf> {
+class _ExplorerState extends State<Explorer> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -23,7 +23,8 @@ class _RSelfState extends State<RSelf> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Find Inspiration from people expressing them-selves.",
+              "Explorer\nand find Inspiration.",
+              textAlign: TextAlign.start,
               style: GoogleFonts.urbanist(
                 fontWeight: FontWeight.w500,
                 fontSize: 25,
