@@ -55,7 +55,7 @@ class _VerifyUserState extends State<VerifyUser> {
                                   "Verify Account",
                                   style: GoogleFonts.lora(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 30,
+                                    fontSize: 25,
                                   ),
                                 ),
                               ),
@@ -123,12 +123,11 @@ class _VerifyUserState extends State<VerifyUser> {
                                 }
                                 return AnimatedContainer(
                                   curve: Curves.bounceInOut,
-                                  duration:
-                                      const Duration(milliseconds: 1000),
+                                  duration: const Duration(milliseconds: 1000),
                                   child: CircleAvatar(
                                     radius: 80,
-                                    backgroundImage: NetworkImage(
-                                        snapshot.data!.feed.image),
+                                    backgroundImage:
+                                        NetworkImage(snapshot.data!.feed.image),
                                   ),
                                 );
                               }),
@@ -145,43 +144,39 @@ class _VerifyUserState extends State<VerifyUser> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(5),
-                          child: Container(
-                              width: MediaQuery.of(context).size.width / 1.5,
-                              decoration: BoxDecoration(boxShadow: [
-                                BoxShadow(
-                                    color: Colors.grey.shade200,
-                                    spreadRadius: 1,
-                                    blurRadius: 15)
-                              ]),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 2.5,
+                                child: OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text("Try Again"),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Try Again"),
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 2.5,
+                                child: OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    onPressed: () {
-                                      Navigator.pushNamed(
-                                          context, "/navigation");
-                                    },
-                                    child: const Text("Continue"),
                                   ),
-                                ],
-                              )),
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, "/navigation");
+                                  },
+                                  child: const Text("Continue"),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 40)
                       ],

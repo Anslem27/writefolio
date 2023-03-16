@@ -130,54 +130,43 @@ class _GetUsernameState extends State<GetUsername> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width / 2.5,
-                            decoration: BoxDecoration(boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.shade200,
-                                spreadRadius: 1,
-                                blurRadius: 15,
-                              )
-                            ]),
-                            child: SButton(
-                              text: "Continue",
-                              ontap: () {
-                                //check internet availability
-                                /* bool result = await InternetConnectionChecker()
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 0.8,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              //check internet availability
+                              /* bool result = await InternetConnectionChecker()
                                     .hasConnection; */
 
-                                //check for null value
-                                if (usernameController.text == "") {
-                                  AnimatedSnackBar.material(
-                                    'User name can not be empty.',
-                                    type: AnimatedSnackBarType.warning,
-                                    duration: const Duration(seconds: 4),
-                                    mobileSnackBarPosition:
-                                        MobileSnackBarPosition.bottom,
-                                  ).show(context);
-                                } else {
-                                  AnimatedSnackBar.material(
-                                    "Please check your internet connection.",
-                                    type: AnimatedSnackBarType.info,
-                                    duration: const Duration(seconds: 4),
-                                    mobileSnackBarPosition:
-                                        MobileSnackBarPosition.bottom,
-                                  ).show(context);
-                                  //Navigator.pushNamed(context, "/noInternet");
-                                  Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                      builder: (_) => VerifyUser(
-                                        username:
-                                            usernameController.text.trim(),
-                                      ),
+                              //check for null value
+                              if (usernameController.text == "") {
+                                AnimatedSnackBar.material(
+                                  'User name can not be empty.',
+                                  type: AnimatedSnackBarType.warning,
+                                  duration: const Duration(seconds: 4),
+                                  mobileSnackBarPosition:
+                                      MobileSnackBarPosition.bottom,
+                                ).show(context);
+                              } else {
+                                AnimatedSnackBar.material(
+                                  "Please check your internet connection.",
+                                  type: AnimatedSnackBarType.info,
+                                  duration: const Duration(seconds: 4),
+                                  mobileSnackBarPosition:
+                                      MobileSnackBarPosition.bottom,
+                                ).show(context);
+                                //Navigator.pushNamed(context, "/noInternet");
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (_) => VerifyUser(
+                                      username: usernameController.text.trim(),
                                     ),
-                                  );
-                                }
-                                //authorize if internet is available
-                                /*   if (result == true) {
+                                  ),
+                                );
+                              }
+                              //authorize if internet is available
+                              /*   if (result == true) {
                                   AnimatedSnackBar.material(
                                     "Medium username: ${usernameController.text}",
                                     type: AnimatedSnackBarType.info,
@@ -191,8 +180,8 @@ class _GetUsernameState extends State<GetUsername> {
                                   logger.i(
                                       "Medium username: ${usernameController.text}");
                                 } */
-                              },
-                            ),
+                            },
+                            child: const Text("Continue"),
                           ),
                         ),
                         const SizedBox(height: 40)
