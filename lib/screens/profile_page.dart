@@ -3,6 +3,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import '../animations/fade_in_animation.dart';
 import '../editor/create_article.dart';
 import '../models/user_model.dart';
@@ -22,6 +23,8 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     TabController tabcontroller = TabController(length: 3, vsync: this);
+    var currentDate = DateTime.now();
+    var formattedDate = DateFormat.yMMMd().format(currentDate);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -148,8 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                       ListTile(
                         leading: const Icon(Icons.date_range),
-                        title: Text(
-                            "Joined ${DateTime.now().day}th | ${DateTime.now().month}"),
+                        title: Text("Joined $formattedDate"),
                       ),
                       const ListTile(
                         leading: Icon(PhosphorIcons.medium_logo),
@@ -382,7 +384,6 @@ class _ProfileScreenState extends State<ProfileScreen>
     );
   }
 
-  
   ListView shimmerLoader() {
     return ListView.builder(
       itemCount: 10,
