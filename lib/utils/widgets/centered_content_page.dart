@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../widgets/theme_button.dart';
-
 class CenteredPage extends StatefulWidget {
   const CenteredPage({super.key});
 
@@ -30,7 +28,21 @@ class _CenteredPageState extends State<CenteredPage> {
                 style: GoogleFonts.roboto(fontSize: 20),
               ),
             ),
-            const BButton(text: "See more")
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 0.5,
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: const Text("See more"),
+                ),
+              ),
+            ),
           ],
         ),
       ),

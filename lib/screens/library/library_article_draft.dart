@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,7 +33,6 @@ class _LibraryFilesState extends State<LibraryFiles> {
           if (savedArticlesList.isEmpty) {
             return _emptyArticles(darkModeOn);
           } else {
-            //TODO: Add a list count for the articles.
             return SingleChildScrollView(
               physics: const ScrollPhysics(),
               child: Column(
@@ -84,8 +81,8 @@ class _LibraryFilesState extends State<LibraryFiles> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            "assets/svg/meditating.svg",
-            color: !darkModeOn ? Colors.black : Colors.white,
+            "assets/svg/article.svg",
+            height: 200,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

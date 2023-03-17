@@ -33,21 +33,19 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
       valueListenable: poemDatastore.listenToSavedPoems(),
       builder: (_, Box<SavedPoems> box, Widget? child) {
         var savedPoems = savedPoemBox.values.toList();
-        bool selected = false;
+        
 
         List<Widget> queryChips() {
           List<Widget> chips = [];
           for (int i = 0; i < savedPoems.length; i++) {
             Widget item = Padding(
-              padding: const EdgeInsets.all(5),
-              child: FilterChip(
-                  label: Text(savedPoems[i].author),
-                  showCheckmark: true,
-                  selected: selected,
-                  onSelected: (bool value) {
-                    value = selected;
-                  }),
-            );
+                padding: const EdgeInsets.all(5),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(savedPoems[i].author),
+                  ),
+                ));
             chips.add(item);
           }
           return chips;
@@ -69,12 +67,13 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                   child: Column(
                     children: [
                       Wrap(
-                        spacing: 5,
+                        spacing: 2,
                         children: queryChips(),
                       ),
                       ListView.builder(
                         shrinkWrap: true,
                         itemCount: savedPoems.length,
+                        physics: const ScrollPhysics(),
                         itemBuilder: (_, index) {
                           var savedPoem = savedPoems[index];
 
@@ -176,7 +175,8 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                                             width: 80.0,
                                             height: 80.0,
                                             decoration: BoxDecoration(
-                                              color: Colors.grey.shade100,
+                                              color:
+                                                  Theme.of(context).cardColor,
                                               borderRadius:
                                                   BorderRadius.circular(5),
                                             ),

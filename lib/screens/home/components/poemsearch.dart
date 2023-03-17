@@ -8,7 +8,6 @@ import '../../../utils/constants.dart';
 import '../../../data/saved_poem_datastore.dart';
 import '../../../services/poem_service.dart';
 import '../../../utils/widgets/reading_time_approximator.dart';
-import '../../../utils/widgets/theme_button.dart';
 import '../poems/poem_detail_view.dart';
 
 var logger = Logger();
@@ -100,7 +99,21 @@ class PoemQuerySearch extends SearchDelegate {
                               fontWeight: FontWeight.w400, fontSize: 20),
                         ),
                       ),
-                      const SButton(text: "Go Home")
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width / 0.5,
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text("Go home"),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 );
