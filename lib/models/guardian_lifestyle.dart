@@ -1,7 +1,5 @@
-// ignore_for_file: file_names
-
-class Rself {
-  Rself({
+class GuardianLifestyle {
+  GuardianLifestyle({
     required this.status,
     required this.feed,
     required this.items,
@@ -9,18 +7,18 @@ class Rself {
   late final String status;
   late final Feed feed;
   late final List<Items> items;
-
-  Rself.fromJson(Map<String, dynamic> json) {
+  
+  GuardianLifestyle.fromJson(Map<String, dynamic> json){
     status = json['status'];
     feed = Feed.fromJson(json['feed']);
-    items = List.from(json['items']).map((e) => Items.fromJson(e)).toList();
+    items = List.from(json['items']).map((e)=>Items.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['status'] = status;
     data['feed'] = feed.toJson();
-    data['items'] = items.map((e) => e.toJson()).toList();
+    data['items'] = items.map((e)=>e.toJson()).toList();
     return data;
   }
 }
@@ -40,8 +38,8 @@ class Feed {
   late final String author;
   late final String description;
   late final String image;
-
-  Feed.fromJson(Map<String, dynamic> json) {
+  
+  Feed.fromJson(Map<String, dynamic> json){
     url = json['url'];
     title = json['title'];
     link = json['link'];
@@ -85,8 +83,8 @@ class Items {
   late final String content;
   late final Enclosure enclosure;
   late final List<String> categories;
-
-  Items.fromJson(Map<String, dynamic> json) {
+  
+  Items.fromJson(Map<String, dynamic> json){
     title = json['title'];
     pubDate = json['pubDate'];
     link = json['link'];
@@ -116,12 +114,18 @@ class Items {
 }
 
 class Enclosure {
-  Enclosure();
-
-  Enclosure.fromJson(Map json);
+  Enclosure({
+    required this.link,
+  });
+  late final String link;
+  
+  Enclosure.fromJson(Map<String, dynamic> json){
+    link = json['link'];
+  }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
+    data['link'] = link;
     return data;
   }
 }
