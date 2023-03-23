@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/editor/create_article.dart';
-
 import '../../utils/widgets/shimmer_component.dart';
 import 'library_article_draft.dart';
 
@@ -59,6 +58,7 @@ class _LibraryScreenState extends State<LibraryScreen>
                   EvaIcons.settings2Outline,
                 ),
               ),
+           
             ],
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(40),
@@ -67,7 +67,7 @@ class _LibraryScreenState extends State<LibraryScreen>
                 child: TabBar(
                   controller: tabcontroller,
                   isScrollable: true,
-     /*              indicator: const UnderlineTabIndicator(
+                  /*              indicator: const UnderlineTabIndicator(
                       borderSide: BorderSide(width: 2),
                       insets: EdgeInsets.only(right: 6)), */
                   splashFactory: NoSplash.splashFactory,

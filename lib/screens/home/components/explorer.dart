@@ -69,7 +69,7 @@ class _ExplorerState extends State<Explorer> {
                       ListView.builder(
                         physics: const ScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: snapshot.data!.items.length,
+                        itemCount: 9,
                         padding: EdgeInsets.zero,
                         itemBuilder: (_, index) {
                           return ExplorerRselfCard(

@@ -23,18 +23,19 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         shrinkWrap: true,
         children: [
-          const ListTile(
-            leading: Icon(
-              Icons.push_pin_outlined,
-              color: Colors.red,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton.icon(
+              onPressed: () {},
+              icon: const Icon(PhosphorIcons.link),
+              label: const Text("Speak to us and share your thoughts."),
             ),
-            title: Text("Speak to us and share your thoughts."),
           ),
           _SingleSection(
             title: "General",
             children: [
               _CustomListTile(
-                title: "Dark Mode",
+                title: "dark mode",
                 icon: PhosphorIcons.moon,
                 trailing: Switch(
                   value:
@@ -57,36 +58,36 @@ class _SettingsPageState extends State<SettingsPage> {
             )
           ]),
           const _SingleSection(
-            title: "About Writefolio",
+            title: "about Writefolio",
             children: [
               _CustomListTile(
-                title: "Help",
+                title: "faq/contact us",
                 icon: PhosphorIcons.info,
               ),
               _CustomListTile(
-                title: "Terms of service",
+                title: "terms of service",
                 icon: PhosphorIcons.shield,
               ),
               _CustomListTile(
-                title: "Privacy Policy",
+                title: "privacy policy",
                 icon: Icons.shield,
               ),
               _CustomListTile(
-                title: "Rate on the Play Store",
+                title: "rate on the play store",
                 icon: PhosphorIcons.star,
               )
             ],
           ),
           const _SingleSection(title: "The Boring zone", children: [
             _CustomListTile(
-              title: "Opensource licences",
+              title: "opensource licences",
               icon: PhosphorIcons.list,
             ),
           ]),
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-              "v0.8.0(8000)",
+              "version 23.03.16 (1020906)",
               style: TextStyle(
                 fontSize: 17,
               ),
@@ -109,20 +110,18 @@ class _CustomListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ListTile(
-          title: Text(
-            title,
-            style: const TextStyle(),
-          ),
-          leading: Icon(icon, size: 21.5),
-          trailing: trailing ?? const Icon(CupertinoIcons.forward, size: 15),
-          onTap: () {},
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: ListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        title: Text(
+          title,
+          style: const TextStyle(),
         ),
-        const SizedBox(width: double.maxFinite, child: Divider())
-      ],
+        leading: Icon(icon, size: 21.5),
+        trailing: trailing ?? const Icon(CupertinoIcons.forward, size: 15),
+        onTap: () {},
+      ),
     );
   }
 }
@@ -138,30 +137,35 @@ class _SingleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            title.toUpperCase(),
+    return Card(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              title.toUpperCase(),
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Material(
-            child: Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-              width: double.infinity,
-              child: Column(
-                children: children,
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Material(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
+              child: Container(
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                width: double.infinity,
+                child: Column(
+                  children: children,
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

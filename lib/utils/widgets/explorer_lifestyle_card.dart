@@ -78,7 +78,7 @@ class LifeStyleCard extends StatelessWidget {
                 ),
                 Wrap(
                   children: List.generate(
-                    listItem[index].categories.length,
+                    listItem[index].categories.take(5).length,
                     (categoryIndex) => Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Card(
