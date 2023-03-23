@@ -73,7 +73,7 @@ class _ExplorerState extends State<Explorer> {
                         padding: EdgeInsets.zero,
                         itemBuilder: (_, index) {
                           return ExplorerRselfCard(
-                            index: index,
+                            index: index + 1,
                             rselfObject: snapshot.data!,
                           );
                         },

@@ -28,7 +28,7 @@ class ExplorerRselfCard extends StatelessWidget {
               child: Text(
                 "0${index + 1}",
                 style: GoogleFonts.urbanist(
-                  fontSize: 35,
+                  fontSize: 32,
                   color: Colors.grey,
                 ),
               ),
@@ -75,7 +75,7 @@ class ExplorerRselfCard extends StatelessWidget {
                       htmlToPlainText(listObject[index].description.trim())
                           .toString()
                           .trim(),
-                      maxLines: 3,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
