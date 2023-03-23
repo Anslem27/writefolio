@@ -35,6 +35,7 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
         var savedPoems = savedPoemBox.values.toList();
         
 
+        // ignore: unused_element
         List<Widget> queryChips() {
           List<Widget> chips = [];
           for (int i = 0; i < savedPoems.length; i++) {
@@ -66,10 +67,10 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                   physics: const ScrollPhysics(),
                   child: Column(
                     children: [
-                      Wrap(
+                    /*   Wrap(
                         spacing: 2,
                         children: queryChips(),
-                      ),
+                      ), */
                       ListView.builder(
                         shrinkWrap: true,
                         itemCount: savedPoems.length,
