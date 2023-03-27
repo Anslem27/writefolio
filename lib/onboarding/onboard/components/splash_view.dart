@@ -34,7 +34,7 @@ class _SplashViewState extends State<SplashView> {
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: 200,
+              height: 300,
               child: SvgPicture.asset(
                 "assets/svg/unboxing.svg",
               ),
@@ -76,7 +76,7 @@ class _SplashViewState extends State<SplashView> {
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(38.0),
-                    color: const Color(0xff132137),
+                    color: Colors.black,
                   ),
                   child: const Text(
                     "Let's begin",

@@ -1,3 +1,4 @@
+import '../editor/create_article.dart';
 import '../models/poems/poem_models.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -10,6 +11,7 @@ class PoemService {
     if (response.statusCode == 200) {
       return HomePoemList.fromJson(json.decode(response.body));
     } else {
+      logger.w("Failed to fetch poems");
       throw Exception('Failed to fetch poems');
     }
   }
@@ -22,6 +24,7 @@ class PoemService {
     if (response.statusCode == 200) {
       return HomePoemList.fromJson(json.decode(response.body));
     } else {
+      logger.w("Failed to fetch poems");
       throw Exception('Failed to fetch poems');
     }
   }

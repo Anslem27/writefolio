@@ -98,7 +98,7 @@ class ForYou extends StatelessWidget {
                     padding: EdgeInsets.only(
                         left: 64, right: 64, top: 16, bottom: 16),
                     child: Text(
-                      "Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore",
+                      "Explore new writing styles from people expressing themselves and discover fresh ideas with our 'For You' page.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,

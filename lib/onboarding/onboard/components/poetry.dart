@@ -108,7 +108,7 @@ class Poetry extends StatelessWidget {
                 padding:
                     EdgeInsets.only(left: 64, right: 64, bottom: 16, top: 16),
                 child: Text(
-                  "Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore",
+                  "From haikus to sonnets, writefolio has got you covered. Let's explore!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,

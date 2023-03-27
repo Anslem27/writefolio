@@ -95,7 +95,7 @@ class Write extends StatelessWidget {
                   padding:
                       EdgeInsets.only(left: 64, right: 64, top: 16, bottom: 16),
                   child: Text(
-                    "Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore",
+                    "With writefolio, you have all the tools you need to bring your ideas to life.",
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.black),
                   ),
