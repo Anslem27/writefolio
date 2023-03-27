@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../models/articles/article.dart';
 import '../../screens/library/components/article_view.dart';
+import '../../screens/settings/components/avatar_picker.dart';
 import 'reading_time_approximator.dart';
 
 class ArticleHomeCard extends StatelessWidget {
@@ -51,7 +52,7 @@ class ArticleHomeCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 4.0, bottom: 4),
                   child: Row(
                     children: [
-                      _userIcon(),
+                      const AvatarComponent(radius: 17),
                       const SizedBox(width: 3),
                       const Text(
                         "Travis Aaron Wagner",
@@ -122,13 +123,6 @@ class ArticleHomeCard extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _userIcon() {
-    return const CircleAvatar(
-      radius: 17,
-      backgroundImage: AssetImage("assets/avatars/Oval-3.png"),
     );
   }
 }

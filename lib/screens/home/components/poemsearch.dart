@@ -122,7 +122,7 @@ class PoemQuerySearch extends SearchDelegate {
                 return ListView.builder(
                   itemCount: snapshot.data!.poem!.length,
                   itemBuilder: (_, index) {
-                    int randomIndex = Random().nextInt(poemAvatars.length);
+                    int randomIndex = Random().nextInt(avatars.length);
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -213,8 +213,7 @@ class PoemQuerySearch extends SearchDelegate {
                                       color: Colors.grey.shade100,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
-                                    child:
-                                        Image.asset(poemAvatars[randomIndex]),
+                                    child: Image.asset(avatars[randomIndex]),
                                   ),
                                 ],
                               ),

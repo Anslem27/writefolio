@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:writefolio/screens/home/home.dart';
 import 'package:writefolio/screens/profile_page.dart';
+import 'package:writefolio/screens/settings/components/avatar_picker.dart';
 import 'library/libary.dart';
 
 class Navigation extends StatefulWidget {
@@ -33,34 +34,27 @@ class _NavigationState extends State<Navigation> {
             currentIndex = index;
           });
         },
-        items: [
-          const BottomNavigationBarItem(
+        items: const [
+          BottomNavigationBarItem(
             activeIcon: Icon(EvaIcons.home),
             icon: Icon(EvaIcons.homeOutline),
             tooltip: "Home",
             label: "Home",
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             activeIcon: Icon(PhosphorIcons.bookmark_fill),
             icon: Icon(PhosphorIcons.bookmark),
             tooltip: "Library",
             label: "Library",
           ),
           BottomNavigationBarItem(
-            activeIcon: _userIcon(),
-            icon: _userIcon(),
+            activeIcon: AvatarComponent(radius: 17),
+            icon: AvatarComponent(radius: 17),
             tooltip: "Settings",
             label: "Settings",
           ),
         ],
       ),
-    );
-  }
-
-  Widget _userIcon() {
-    return const CircleAvatar(
-      radius: 17,
-      backgroundImage: AssetImage("assets/avatars/Oval-3.png"),
     );
   }
 }

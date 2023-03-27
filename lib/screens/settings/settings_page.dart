@@ -4,6 +4,8 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:hive/hive.dart';
 import 'package:writefolio/editor/create_article.dart';
 
+import 'components/avatar_picker.dart';
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
@@ -47,8 +49,32 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                 ),
               ),
-              const _CustomListTile(
-                  title: "In app updater", icon: CupertinoIcons.cloud_download),
+              _CustomListTile(
+                title: "writefolio avatar",
+                icon: Icons.person,
+                ontap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (_) => SizedBox(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              "Pick your Avatar",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                          AvatarList(),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
           const _SingleSection(title: "Social", children: [
@@ -103,9 +129,14 @@ class _SettingsPageState extends State<SettingsPage> {
 class _CustomListTile extends StatelessWidget {
   final String title;
   final IconData icon;
+  final Function()? ontap;
   final Widget? trailing;
   const _CustomListTile(
-      {Key? key, required this.title, required this.icon, this.trailing})
+      {Key? key,
+      required this.title,
+      required this.icon,
+      this.trailing,
+      this.ontap})
       : super(key: key);
 
   @override
@@ -120,7 +151,7 @@ class _CustomListTile extends StatelessWidget {
         ),
         leading: Icon(icon, size: 21.5),
         trailing: trailing ?? const Icon(CupertinoIcons.forward, size: 15),
-        onTap: () {},
+        onTap: ontap,
       ),
     );
   }

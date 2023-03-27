@@ -33,7 +33,7 @@ class _PoemViewState extends State<PoemView> {
         return ListView.builder(
           itemCount: snapshot.data!.poem!.length,
           itemBuilder: (_, index) {
-            int randomIndex = Random().nextInt(poemAvatars.length);
+            int randomIndex = Random().nextInt(avatars.length);
             return FloatInAnimation(
               delay: (1.0 + index) / 4,
               child: Padding(
@@ -122,7 +122,7 @@ class _PoemViewState extends State<PoemView> {
                                 color: Colors.grey.shade100,
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              child: Image.asset(poemAvatars[randomIndex]),
+                              child: Image.asset(avatars[randomIndex]),
                             ),
                           ],
                         ),

@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/editor/editting.dart';
 import '../../../models/articles/article.dart';
 import '../../../utils/widgets/reading_time_approximator.dart';
+import '../../settings/components/avatar_picker.dart';
 
 class ArticleView extends StatefulWidget {
   final UserArticle userArticle;
@@ -132,7 +133,7 @@ class _ArticleViewState extends State<ArticleView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _userIcon(),
+                  const AvatarComponent(radius: 17),
                   const SizedBox(width: 3),
                   const Text("Anslem"),
                   const Spacer(),
@@ -197,10 +198,5 @@ class _ArticleViewState extends State<ArticleView> {
     );
   }
 
-  Widget _userIcon() {
-    return const CircleAvatar(
-      radius: 17,
-      backgroundImage: AssetImage("assets/avatars/Oval-3.png"),
-    );
-  }
+ 
 }

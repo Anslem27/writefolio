@@ -18,6 +18,7 @@ Future<void> main() async {
   await Hive.openBox<SavedPoems>("savedPoems");
   await Hive.openBox<UserArticle>("userArticles");
   await Hive.openBox<bool>('themeBox');
+  await Hive.openBox<String>("avatarBox");
   runApp(const MyApp());
 }
 

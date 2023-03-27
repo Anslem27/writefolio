@@ -1,4 +1,4 @@
-var poemAvatars = [
+var avatars = [
   "assets/avatars/Oval-1.png",
   "assets/avatars/Oval-2.png",
   "assets/avatars/Oval-3.png",

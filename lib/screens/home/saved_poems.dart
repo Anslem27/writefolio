@@ -60,8 +60,7 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                           var savedPoem = savedPoems[index];
 
                           logger.i(savedPoem); //log returned query
-                          int randomIndex =
-                              Random().nextInt(poemAvatars.length);
+                          int randomIndex = Random().nextInt(avatars.length);
                           return FloatInAnimation(
                             delay: (1.0 + index) / 5,
                             child: Padding(
@@ -163,7 +162,7 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                                                   BorderRadius.circular(5),
                                             ),
                                             child: Image.asset(
-                                                poemAvatars[randomIndex]),
+                                                avatars[randomIndex]),
                                           ),
                                           //delete button
                                           IconButton(

@@ -9,6 +9,7 @@ import '../editor/create_article.dart';
 import '../models/user_model.dart';
 import '../services/user_service.dart';
 import '../utils/widgets/shimmer_component.dart';
+import 'settings/components/avatar_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -71,14 +72,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                       child: Row(
                         children: [
                           const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: CircleAvatar(
-                              radius: 40,
-                              child: Text("SA"),
-                            ),
-                          ),
+                              padding: EdgeInsets.all(8.0),
+                              child: AvatarComponent(radius: 40)),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -181,7 +179,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                               itemCount: 10,
                               itemBuilder: (_, index) {
                                 return ShimmerComponent(
-                                  deviceWidth: MediaQuery.of(context).size.width,
+                                  deviceWidth:
+                                      MediaQuery.of(context).size.width,
                                   deviceHeight:
                                       MediaQuery.of(context).size.height,
                                 );
@@ -229,14 +228,16 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                               .start,
                                                       children: <Widget>[
                                                         SizedBox(
-                                                          width: double.infinity,
+                                                          width:
+                                                              double.infinity,
                                                           child: Text(
                                                             articles[index]
                                                                 .title
                                                                 .trim()
                                                                 .toUpperCase(),
-                                                            overflow: TextOverflow
-                                                                .ellipsis,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                             style: GoogleFonts
                                                                 .urbanist(
                                                                     fontSize:
@@ -249,20 +250,24 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                         const Padding(
                                                           padding: EdgeInsets
                                                               .symmetric(
-                                                                  vertical: 2.0),
+                                                                  vertical:
+                                                                      2.0),
                                                         ),
                                                         SizedBox(
-                                                          width: double.infinity,
+                                                          width:
+                                                              double.infinity,
                                                           child: Text(
                                                             "By ${articles[index].author}",
-                                                            overflow: TextOverflow
-                                                                .ellipsis,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                           ),
                                                         ),
                                                         const Padding(
                                                           padding: EdgeInsets
                                                               .symmetric(
-                                                                  vertical: 2.0),
+                                                                  vertical:
+                                                                      2.0),
                                                         ),
                                                         const Spacer(),
                                                         Row(
@@ -271,7 +276,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                               padding:
                                                                   const EdgeInsets
                                                                           .only(
-                                                                      right: 5.0),
+                                                                      right:
+                                                                          5.0),
                                                               child: SizedBox(
                                                                 child: Text(
                                                                   "Published : ${articles[index].pubDate}",
@@ -284,29 +290,33 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                     ),
                                                   ),
                                                   const Padding(
-                                                    padding: EdgeInsets.symmetric(
-                                                        horizontal: 8.0),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 8.0),
                                                   ),
                                                   Container(
                                                       width: 80.0,
                                                       height: 80.0,
                                                       decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                5),
+                                                            BorderRadius
+                                                                .circular(5),
                                                       ),
                                                       child: CachedNetworkImage(
-                                                        imageUrl: articles[index]
-                                                            .thumbnail,
+                                                        imageUrl:
+                                                            articles[index]
+                                                                .thumbnail,
                                                       )),
                                                 ],
                                               ),
                                             ),
                                           ),
                                           SizedBox(
-                                            width:
-                                                MediaQuery.of(context).size.width,
-                                            child: const Divider(thickness: 0.5),
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child:
+                                                const Divider(thickness: 0.5),
                                           )
                                         ],
                                       ),
