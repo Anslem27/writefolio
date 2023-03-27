@@ -62,7 +62,6 @@ class _LibraryFilesState extends State<LibraryFiles> {
                     itemBuilder: (_, index) {
                       logger.i(savedArticlesList[index]);
                       var userArticle = savedArticlesList[index];
-
                       return ArticleHomeCard(userArticle: userArticle);
                     },
                   ),

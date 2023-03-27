@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:writefolio/editor/editting.dart';
 import '../../../models/articles/article.dart';
 import '../../../utils/widgets/reading_time_approximator.dart';
 
@@ -29,9 +30,15 @@ class _ArticleViewState extends State<ArticleView> {
     );
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        //TODO: enable for saving and updating
-        onPressed: () {},
-        label: const Text("Contnue Editting"),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ContinueEditting(userArticle: widget.userArticle),
+            ),
+          );
+        },
+        label: const Text("Continue Editting"),
         icon: const Icon(Icons.edit),
       ),
       appBar: AppBar(
@@ -45,7 +52,61 @@ class _ArticleViewState extends State<ArticleView> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                context: context,
+                builder: (_) => Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SizedBox(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "Are you sure you want to\ndelete this article?",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 17),
+                          ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                onPressed: () {},
+                                child: const Text("Yes"),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                onPressed: () {},
+                                child: const Text("No"),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
             icon: const Icon(PhosphorIcons.trash),
           ),
         ],
@@ -84,11 +145,16 @@ class _ArticleViewState extends State<ArticleView> {
                           Icons.bookmark_add_outlined,
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.more_vert,
-                        ),
+                      PopupMenuButton<String>(
+                        onSelected: (value) {
+                          // Do something when an item is selected
+                        },
+                        itemBuilder: (BuildContext context) => [
+                          const PopupMenuItem(
+                            value: 'share',
+                            child: Text('Share'),
+                          ),
+                        ],
                       )
                     ],
                   )

@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,7 +19,6 @@ class ArticleHomeCard extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(3),
             decoration: BoxDecoration(
-              //color: darkModeOn ? Colors.grey.shade900 : Colors.grey[100],
               borderRadius: BorderRadius.circular(12),
             ),
             width: double.maxFinite,
@@ -54,7 +52,10 @@ class ArticleHomeCard extends StatelessWidget {
                     children: [
                       _userIcon(),
                       const SizedBox(width: 3),
-                      const Text("Travis Aaron Wagner"),
+                      const Text(
+                        "Travis Aaron Wagner",
+                        overflow: TextOverflow.ellipsis,
+                      ),
                       const Spacer(),
                       Text(
                         userArticle.updateDate,

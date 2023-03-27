@@ -33,25 +33,6 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
       valueListenable: poemDatastore.listenToSavedPoems(),
       builder: (_, Box<SavedPoems> box, Widget? child) {
         var savedPoems = savedPoemBox.values.toList();
-        
-
-        // ignore: unused_element
-        List<Widget> queryChips() {
-          List<Widget> chips = [];
-          for (int i = 0; i < savedPoems.length; i++) {
-            Widget item = Padding(
-                padding: const EdgeInsets.all(5),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(savedPoems[i].author),
-                  ),
-                ));
-            chips.add(item);
-          }
-          return chips;
-        }
-        //TODO: Add choice chips setstate
 
         return Scaffold(
           floatingActionButton: FloatingActionButton.extended(
@@ -67,7 +48,7 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                   physics: const ScrollPhysics(),
                   child: Column(
                     children: [
-                    /*   Wrap(
+                      /*   Wrap(
                         spacing: 2,
                         children: queryChips(),
                       ), */

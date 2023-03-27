@@ -10,6 +10,7 @@ class UserArticleDataStore {
     await box.put(userArticle.id, userArticle);
   }
 
+  //update an exising article
   Future<void> updateArticle({required UserArticle savedArticle}) async {
     await savedArticle.save();
   }
@@ -22,7 +23,7 @@ class UserArticleDataStore {
     await savedArticle.delete();
   }
 
-  Future<UserArticle?> getPoem({required String savedArticleId}) async {
+  Future<UserArticle?> getArticle({required String savedArticleId}) async {
     return box.get(savedArticleId);
   }
 }
