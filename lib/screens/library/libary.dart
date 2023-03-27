@@ -51,15 +51,7 @@ class _LibraryScreenState extends State<LibraryScreen>
             ),
             pinned: true,
             centerTitle: false,
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  EvaIcons.settings2Outline,
-                ),
-              ),
-           
-            ],
+            
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(40),
               child: Align(

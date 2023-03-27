@@ -8,6 +8,7 @@ import 'reading_time_approximator.dart';
 class ArticleHomeCard extends StatelessWidget {
   final UserArticle userArticle;
   const ArticleHomeCard({super.key, required this.userArticle});
+  //TODO: Add image service and also tags
 
   @override
   Widget build(BuildContext context) {

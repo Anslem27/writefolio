@@ -16,10 +16,7 @@
 ### To add
 
 ```
-https://www.theguardian.com/lifestyle/rss
-
-https://www.reddit.com/r/self.rss
-https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.reddit.com%2Fr%2Fself.rss
+add tags to articles.
 ```
 
 ### Slogans
