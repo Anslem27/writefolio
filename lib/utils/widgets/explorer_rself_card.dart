@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../editor/create_article.dart';
+import 'package:writefolio/screens/home/components/explorer_component_view.dart';
 import '../../models/rself-model.dart';
 import '../tools/date_parser.dart';
 import '../tools/html_parser.dart';
@@ -17,7 +18,14 @@ class ExplorerRselfCard extends StatelessWidget {
     var listObject = rselfObject.items;
     return InkWell(
       onTap: () {
+        var component = listObject[index];
         logger.i(listObject[index].description.trim());
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (_) => ExplorerComponentView(component: component),
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
@@ -80,7 +88,7 @@ class ExplorerRselfCard extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top:4.0),
+                    padding: const EdgeInsets.only(top: 4.0),
                     child: Row(
                       children: [
                         Padding(

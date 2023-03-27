@@ -41,8 +41,8 @@ class _NavigationState extends State<Navigation> {
             label: "Home",
           ),
           const BottomNavigationBarItem(
-            activeIcon: Icon(PhosphorIcons.books_fill),
-            icon: Icon(PhosphorIcons.books),
+            activeIcon: Icon(PhosphorIcons.bookmark_fill),
+            icon: Icon(PhosphorIcons.bookmark),
             tooltip: "Library",
             label: "Library",
           ),
