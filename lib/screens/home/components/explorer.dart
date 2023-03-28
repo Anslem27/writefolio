@@ -160,7 +160,7 @@ class _ExplorerState extends State<Explorer> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            "assets/svg/idea.svg",
+            "assets/illustrations/no-connection.svg",
             height: 200,
           ),
           Padding(

@@ -2,12 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../animations/fade_in_animation.dart';
 import '../editor/create_article.dart';
 import '../models/user_model.dart';
 import '../services/user_service.dart';
+import '../utils/tools/date_parser.dart';
 import '../utils/widgets/shimmer_component.dart';
 import 'settings/components/avatar_picker.dart';
 
@@ -160,12 +162,16 @@ class _ProfileScreenState extends State<ProfileScreen>
                               child: SizedBox(
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 30.0),
-                                  child: Row(
+                                  child: Column(
                                     mainAxisSize: MainAxisSize.min,
-                                    children: const [
-                                      Icon(PhosphorIcons.cloud_slash),
-                                      SizedBox(width: 5),
-                                      Text("Seems like you are offline"),
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/illustrations/network-failure.svg",
+                                        height: 200,
+                                      ),
+                                      const SizedBox(width: 5),
+                                      const Text("Seems like you are offline"),
                                     ],
                                   ),
                                 ),
@@ -240,11 +246,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                                     .ellipsis,
                                                             style: GoogleFonts
                                                                 .urbanist(
-                                                                    fontSize:
-                                                                        16.5,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
+                                                              fontSize: 16.5,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
                                                           ),
                                                         ),
                                                         const Padding(
@@ -280,7 +286,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                                           5.0),
                                                               child: SizedBox(
                                                                 child: Text(
-                                                                  "Published : ${articles[index].pubDate}",
+                                                                  "Published : ${dateParser(articles[index].pubDate)}",
                                                                 ),
                                                               ),
                                                             ),
@@ -295,18 +301,18 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                             horizontal: 8.0),
                                                   ),
                                                   Container(
-                                                      width: 80.0,
-                                                      height: 80.0,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
-                                                      ),
-                                                      child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            articles[index]
-                                                                .thumbnail,
-                                                      )),
+                                                    width: 80.0,
+                                                    height: 80.0,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                    ),
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: articles[index]
+                                                          .thumbnail,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),

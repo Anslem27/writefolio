@@ -47,7 +47,7 @@ class PoemQuerySearch extends SearchDelegate {
           Center(
             child: Column(
               children: [
-                SvgPicture.asset("assets/svg/joy.svg", height: 200),
+                SvgPicture.asset("assets/illustrations/no-search.svg", height: 200),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -87,7 +87,7 @@ class PoemQuerySearch extends SearchDelegate {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
-                        "assets/svg/article.svg",
+                        "assets/illustrations/none-found.svg",
                         height: 200,
                       ),
                       Padding(
@@ -245,11 +245,11 @@ class PoemQuerySearch extends SearchDelegate {
         Center(
           child: Column(
             children: [
-              SvgPicture.asset("assets/svg/idea.svg", height: 200),
+              SvgPicture.asset("assets/illustrations/no-search.svg", height: 200),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "Type Author's name.",
+                  "Search by author's name.",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w400, fontSize: 20),

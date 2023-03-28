@@ -86,7 +86,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            "assets/svg/article.svg",
+            "assets/illustrations/no-fav.svg",
             height: 200,
           ),
           Padding(

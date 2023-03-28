@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import "dart:math";
@@ -25,6 +26,9 @@ class _PoemViewState extends State<PoemView> {
     return FutureBuilder<HomePoemList>(
       future: PoemService.fetchHome(),
       builder: (_, snapshot) {
+        if (snapshot.hasError) {
+          return _noInternet();
+        }
         if (!snapshot.hasData) {
           return const Center(
             child: CircularProgressIndicator(),
@@ -139,6 +143,38 @@ class _PoemViewState extends State<PoemView> {
           },
         );
       },
+    );
+  }
+
+  _noInternet() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            "assets/illustrations/no-connection.svg",
+            height: 200,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "No Internet\nconnection",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.urbanist(
+                  fontWeight: FontWeight.w400, fontSize: 19),
+            ),
+          ),
+          OutlinedButton(
+            onPressed: () {},
+            child: Text(
+              "Open settings",
+              style: GoogleFonts.urbanist(fontSize: 17),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
