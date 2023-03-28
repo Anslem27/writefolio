@@ -7,9 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
+import 'package:writefolio/screens/settings/components/avatar_picker.dart';
+import 'package:writefolio/utils/tools/date_parser.dart';
 import '../../../data/saved_poem_datastore.dart';
 import '../../../models/rself-model.dart';
 import '../../../utils/tools/html_parser.dart';
+import 'package:profanity_filter/profanity_filter.dart';
 
 var logger = Logger();
 
@@ -42,6 +45,10 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
         .trim();
 
     text = text.substring(0, text.indexOf("submitted by"));
+
+    final filter = ProfanityFilter();
+
+    bool hasProfanity = filter.hasProfanity(text);
     return ValueListenableBuilder(
         valueListenable: poemDatastore.listenToSavedPoems(),
         builder: (_, __, ___) {
@@ -92,26 +99,118 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const AvatarComponent(radius: 17),
+                        const SizedBox(width: 5),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.component.author
+                                        .replaceAll("/u/", ""),
+                                    style: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.orange[900],
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(3.0),
+                                      child: Text(
+                                        "self story",
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  hasProfanity
+                                      ? Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.green[900],
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(3.0),
+                                            child: Text(
+                                              "NSFW",
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                  const SizedBox(width: 5),
+                                  const CircleAvatar(
+                                    radius: 14,
+                                    child: Icon(
+                                      Icons.heart_broken,
+                                      size: 20,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5.0),
+                              child: Text(
+                                "Published ${dateParser(widget.component.pubDate)}",
+                                style: const TextStyle(),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       widget.component.title,
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.start,
                       style: GoogleFonts.urbanist(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Text(
-                    "By   ${widget.component.author}",
-                    style: TextStyle(color: Colors.orange[900]),
-                  ),
-                  Text(
-                    text,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.urbanist(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 18,
+                  /* Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: double.maxFinite,
+                      height: 220,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.orange[900]!.withOpacity(0.5),
+                      ),
+                    ),
+                  ), */
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      text,
+                      textAlign: TextAlign.start,
+                      style: GoogleFonts.urbanist(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                 ],

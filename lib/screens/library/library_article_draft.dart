@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -49,6 +50,11 @@ class _LibraryFilesState extends State<LibraryFiles> {
                           const SizedBox(width: 5),
                           Badge(
                             label: Text(savedArticlesList.length.toString()),
+                          ),
+                          IconButton(
+                            padding: const EdgeInsets.all(0),
+                            onPressed: () {},
+                            icon: const Icon(PhosphorIcons.grid_four),
                           )
                         ],
                       ),
