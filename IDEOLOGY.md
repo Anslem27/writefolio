@@ -7,16 +7,36 @@
 - Dark Mode
 - Material 3 design
 - User medium artiles
+
+- Home Page (For You)
+
+  - self content from `"r/self"`
+  - Lifestyle content from `"the guardian"`
+
+  ***
+
 - Poems
+
   - Random feed
   - Search
   - Save
+
+  ***
+
 - Create Articles
+  - Add images from `https://picsum.photos/`
+  - Reading time
 
 ### To add
 
 ```
 add tags to articles.
+```
+
+### In progress
+
+```
+Adding image to article `db`
 ```
 
 ### Slogans

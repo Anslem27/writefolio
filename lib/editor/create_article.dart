@@ -1,5 +1,9 @@
-import 'dart:convert';
+// ignore_for_file: library_private_types_in_public_api
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +13,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:writefolio/models/articles/article.dart';
-
 import '../data/user_article_datastore.dart';
 import '../screens/navigation.dart';
 
@@ -28,6 +31,27 @@ class _ArticleEditorState extends State<ArticleEditor> {
   var articleDataStore = UserArticleDataStore();
   static var currentDate = DateTime.now();
   var formattedDate = DateFormat.yMMMd().format(currentDate);
+
+  String selectedImageUrl = "";
+  late List<ImageModel> images;
+
+  Future<List<ImageModel>> fetchImages() async {
+    final response = await http
+        .get(Uri.parse('https://picsum.photos/v2/list?page=2&limit=100'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> responseData = json.decode(response.body);
+      setState(() {
+        images = responseData.map((json) => ImageModel.fromJson(json)).toList();
+      });
+
+      return images;
+    } else {
+      logger.w("Failed to load images");
+      throw Exception('Failed to load images');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,7 +141,91 @@ class _ArticleEditorState extends State<ArticleEditor> {
               setState(() {});
             },
             icon: const Icon(Icons.clear),
-          )
+          ),
+          IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  context: context,
+                  builder: (BuildContext context) {
+                    return FutureBuilder(
+                      future: fetchImages(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          // images = snapshot.data;
+                          return SizedBox(
+                            height: 400,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Text(
+                                    'Pick cover Image',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: GridView.count(
+                                    crossAxisCount: 3,
+                                    children: List.generate(
+                                      images.length,
+                                      (index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: InkWell(
+                                            onTap: () {
+                                              logger.i(
+                                                  "Added ${images[index].downloadUrl} as image url");
+                                              setState(() {
+                                                selectedImageUrl =
+                                                    images[index].downloadUrl;
+                                              });
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  images[index].downloadUrl,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                "assets/illustrations/no-connection.svg",
+                                height: 150,
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                '${snapshot.error}\nYou need Internet for this feature',
+                              ),
+                            ],
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    );
+                  },
+                );
+              },
+              icon: const Icon(Icons.image))
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -125,39 +233,24 @@ class _ArticleEditorState extends State<ArticleEditor> {
           if (_titleController.text.isNotEmpty &&
               _controller.document.toPlainText().isNotEmpty) {
             showModalBottomSheet(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               context: context,
-              builder: (_) => Container(
-                height: MediaQuery.of(context).size.height / 3.5,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(3),
-                      topRight: Radius.circular(3)),
-                ),
+              builder: (_) => SizedBox(
+                height: MediaQuery.of(context).size.height / 4,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    RichText(
+                    Text(
+                      "You are creating\n'${_titleController.text.trim()}'",
                       textAlign: TextAlign.center,
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "You are creating\n",
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Theme.of(context).cardColor,
-                            ),
-                          ),
-                          TextSpan(
-                            text: '"${_titleController.text.trim()}"',
-                            style: const TextStyle(
-                              fontSize: 22,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 20,
                       ),
                     ),
                     Padding(
@@ -167,8 +260,8 @@ class _ArticleEditorState extends State<ArticleEditor> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -184,9 +277,9 @@ class _ArticleEditorState extends State<ArticleEditor> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: ElevatedButton.icon(
+                            child: OutlinedButton.icon(
                               icon: const Icon(Icons.save_as_outlined),
-                              style: ElevatedButton.styleFrom(
+                              style: OutlinedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -246,7 +339,8 @@ class _ArticleEditorState extends State<ArticleEditor> {
         ),
       ),
       body: SafeArea(
-        child: Column(
+        child: ListView(
+          physics: const ScrollPhysics(),
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -268,21 +362,62 @@ class _ArticleEditorState extends State<ArticleEditor> {
               ),
             ),
             const SizedBox(height: 10),
-            QuillToolbar.basic(controller: _controller),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: SizedBox(
-                  child: QuillEditor.basic(
-                    controller: _controller,
-                    readOnly: false, // true for view only mode
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  width: double.maxFinite,
+                  height: 220,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    // color: Colors.orange[900]!.withOpacity(0.5),
                   ),
+                  child: Card(
+                    child: CachedNetworkImage(
+                      imageUrl: selectedImageUrl,
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => const Center(
+                          child: Icon(
+                        Icons.image_search_outlined,
+                        size: 80,
+                      )),
+                      fit: BoxFit.cover,
+                    ),
+                  )),
+            ),
+            QuillToolbar.basic(controller: _controller),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: SizedBox(
+                child: QuillEditor.basic(
+                  controller: _controller,
+                  readOnly: false, // true for view only mode
                 ),
               ),
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class ImageModel {
+  final String id;
+  final String author;
+  final String downloadUrl;
+
+  ImageModel({
+    required this.id,
+    required this.author,
+    required this.downloadUrl,
+  });
+
+  factory ImageModel.fromJson(Map<String, dynamic> json) {
+    return ImageModel(
+      id: json['id'],
+      author: json['author'],
+      downloadUrl: json['download_url'],
     );
   }
 }
