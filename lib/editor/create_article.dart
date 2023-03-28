@@ -294,10 +294,12 @@ class _ArticleEditorState extends State<ArticleEditor> {
                                   body: bodyJson,
                                   bodyText: _controller.document.toPlainText(),
                                   updateDate: formattedDate,
+                                  imageUrl:
+                                      selectedImageUrl, //TODO: Attribute for null instance.
                                 );
 
                                 logger.i(
-                                  "${userArticle.body}\n${userArticle.updateDate}\n${userArticle.id}\n${userArticle.bodyText}",
+                                  "${userArticle.body}\n${userArticle.updateDate}\n${userArticle.id}\n${userArticle.bodyText}\n${userArticle.imageUrl}",
                                 );
                                 //create article object
                                 await articleDataStore

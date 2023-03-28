@@ -22,13 +22,14 @@ class UserArticleAdapter extends TypeAdapter<UserArticle> {
       bodyText: fields[3] as String,
       id: fields[0] as String,
       updateDate: fields[4] as String,
+      imageUrl: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserArticle obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class UserArticleAdapter extends TypeAdapter<UserArticle> {
       ..writeByte(3)
       ..write(obj.bodyText)
       ..writeByte(4)
-      ..write(obj.updateDate);
+      ..write(obj.updateDate)
+      ..writeByte(5)
+      ..write(obj.imageUrl);
   }
 
   @override

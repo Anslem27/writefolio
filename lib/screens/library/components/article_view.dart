@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
@@ -112,91 +113,114 @@ class _ArticleViewState extends State<ArticleView> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                widget.userArticle.title,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.start,
-                maxLines: 2,
-                style: GoogleFonts.urbanist(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w500,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.userArticle.title,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.start,
+                  maxLines: 2,
+                  style: GoogleFonts.urbanist(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const AvatarComponent(radius: 17),
-                  const SizedBox(width: 3),
-                  const Text("Anslem"),
-                  const Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.bookmark_add_outlined,
-                        ),
-                      ),
-                      PopupMenuButton<String>(
-                        onSelected: (value) {
-                          // Do something when an item is selected
-                        },
-                        itemBuilder: (BuildContext context) => [
-                          const PopupMenuItem(
-                            value: 'share',
-                            child: Text('Share'),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const AvatarComponent(radius: 17),
+                    const SizedBox(width: 3),
+                    const Text("Anslem"),
+                    const Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.bookmark_add_outlined,
                           ),
-                        ],
-                      )
-                    ],
-                  )
-                ],
+                        ),
+                        PopupMenuButton<String>(
+                          onSelected: (value) {
+                            // Do something when an item is selected
+                          },
+                          itemBuilder: (BuildContext context) => [
+                            const PopupMenuItem(
+                              value: 'share',
+                              child: Text('Share'),
+                            ),
+                          ],
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Row(
-                children: [
-                  Text(
-                    "Last updated: ${widget.userArticle.updateDate}",
-                  ),
-                  const Spacer(),
-                  const Icon(Icons.timer_outlined),
-                  Text(
-                    " ${calculateReadingTime(widget.userArticle.bodyText).toString()} min read",
-                    style: const TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Row(
+                  children: [
+                    Text(
+                      "Last updated: ${widget.userArticle.updateDate}",
+                    ),
+                    const Spacer(),
+                    const Icon(Icons.timer_outlined),
+                    Text(
+                      " ${calculateReadingTime(widget.userArticle.bodyText).toString()} min read",
+                      style: const TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 8.0, right: 8),
-              child: SizedBox(
-                width: double.maxFinite,
-                child: Divider(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    width: double.maxFinite,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Card(
+                      child: CachedNetworkImage(
+                        imageUrl: widget.userArticle.imageUrl,
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => const Center(
+                            child: Icon(
+                          Icons.image_search_outlined,
+                          size: 80,
+                        )),
+                        fit: BoxFit.cover,
+                      ),
+                    )),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: QuillEditor.basic(
-                controller: controller,
-                readOnly: true, // true for view only mode
+              const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8),
+                child: SizedBox(
+                  width: double.maxFinite,
+                  child: Divider(),
+                ),
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: QuillEditor.basic(
+                  controller: controller,
+                  readOnly: true, // true for view only mode
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
-
- 
 }

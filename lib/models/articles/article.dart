@@ -20,12 +20,16 @@ class UserArticle extends HiveObject {
   @HiveField(4)
   String updateDate;
 
+  @HiveField(5)
+  String imageUrl;
+
   UserArticle({
     required this.title,
     required this.body,
     required this.bodyText,
     required this.id,
     required this.updateDate,
+    required this.imageUrl,
   });
 
   factory UserArticle.create({
@@ -34,6 +38,7 @@ class UserArticle extends HiveObject {
     required String body,
     required String bodyText,
     required String updateDate,
+    required String imageUrl,
   }) =>
       UserArticle(
         id: const Uuid().v1(), //unique id
@@ -41,5 +46,6 @@ class UserArticle extends HiveObject {
         body: body,
         bodyText: bodyText,
         updateDate: updateDate,
+        imageUrl: imageUrl,
       );
 }

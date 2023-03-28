@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../models/articles/article.dart';
 import '../../screens/library/components/article_view.dart';
@@ -52,28 +54,32 @@ class ArticleHomeCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 4.0, bottom: 4),
                   child: Row(
                     children: [
-                      const AvatarComponent(radius: 17),
-                      const SizedBox(width: 3),
                       const Text(
-                        "Travis Aaron Wagner",
-                        overflow: TextOverflow.ellipsis,
+                        "Last Editted:",
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                        ),
                       ),
-                      const Spacer(),
+                      const SizedBox(width: 5),
                       Text(
                         userArticle.updateDate,
                       ),
+                      const SizedBox(width: 8),
+                      const Text("•"),
                       const SizedBox(width: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(Icons.timer_outlined),
+                          const Icon(PhosphorIcons.clock),
                           Text(
                             "${calculateReadingTime(userArticle.bodyText).toString()} min read",
                             style: const TextStyle(fontStyle: FontStyle.italic),
                           ),
                         ],
                       ),
+                      const Spacer(),
+                      const AvatarComponent(radius: 17),
                     ],
                   ),
                 ),
@@ -83,11 +89,38 @@ class ArticleHomeCard extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    userArticle.bodyText,
-                    maxLines: 5,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          userArticle.bodyText.replaceAll("\n", " "),
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.roboto(),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.orange[100],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          width: 90,
+                          height: 100,
+                          child: CachedNetworkImage(
+                            imageUrl: userArticle.imageUrl,
+                            placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) => const Center(
+                                child: Icon(
+                              Icons.image_search_outlined,
+                              size: 80,
+                            )),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 Padding(
