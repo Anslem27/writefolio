@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
+import 'package:writefolio/models/poems/poem_models.dart';
 import '../../../utils/constants.dart';
 import '../../../data/saved_poem_datastore.dart';
 import '../../../services/poem_service.dart';
@@ -14,7 +15,7 @@ var logger = Logger();
 
 class PoemQuerySearch extends SearchDelegate {
   @override
-  String get searchFieldLabel => 'Search by author';
+  String get searchFieldLabel => 'search by author or theme';
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -27,6 +28,7 @@ class PoemQuerySearch extends SearchDelegate {
       ),
     ];
   }
+  
 
   @override
   Widget buildLeading(BuildContext context) {
@@ -40,30 +42,6 @@ class PoemQuerySearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    if (query.length < 3) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Center(
-            child: Column(
-              children: [
-                SvgPicture.asset("assets/illustrations/no-search.svg", height: 200),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Search query must be longer than two letters.",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w400, fontSize: 20),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
-      );
-    }
-
     var poemDatastore = SavedPoemsHiveDataStore();
 
     return ValueListenableBuilder(
@@ -240,24 +218,73 @@ class PoemQuerySearch extends SearchDelegate {
     // If you want to add search suggestions as the user enters their search term, this is the place to do that.
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Center(
-          child: Column(
-            children: [
-              SvgPicture.asset("assets/illustrations/no-search.svg", height: 200),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Search by author's name.",
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w400, fontSize: 20),
+        FutureBuilder<PoetList>(
+          future: PoemService.fetchPoetSuggestions(),
+          builder: (_, suggestionsSnapshot) {
+            if (suggestionsSnapshot.hasError) {
+              return const SizedBox();
+            }
+            if (!suggestionsSnapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Text(
+                    "suggestions",
+                    textAlign: TextAlign.start,
+                    style: GoogleFonts.urbanist(
+                        fontWeight: FontWeight.bold, fontSize: 25),
+                  ),
                 ),
-              ),
-            ],
+                Wrap(
+                  children: List.generate(
+                      suggestionsSnapshot.data!.poets!.length,
+                      (index) => InkWell(
+                            onTap: () {
+                              query = suggestionsSnapshot
+                                  .data!.poets![index].author
+                                  .toString();
+                              buildResults(context);
+                            },
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Text(suggestionsSnapshot
+                                    .data!.poets![index].author
+                                    .toString()),
+                              ),
+                            ),
+                          )),
+                ),
+              ],
+            );
+          },
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                SvgPicture.asset("assets/illustrations/no-notification.svg",
+                    height: 200),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    "search by poet or theme",
+                    style: GoogleFonts.urbanist(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        )
+        ),
       ],
     );
   }

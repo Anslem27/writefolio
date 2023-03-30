@@ -25,7 +25,7 @@ class _NavigationState extends State<Navigation> {
     return Scaffold(
       body: appBody[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        iconSize: 28,
+        iconSize: 25,
         currentIndex: currentIndex,
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -44,14 +44,14 @@ class _NavigationState extends State<Navigation> {
           BottomNavigationBarItem(
             activeIcon: Icon(PhosphorIcons.bookmark_fill),
             icon: Icon(PhosphorIcons.bookmark),
-            tooltip: "Library",
-            label: "Library",
+            tooltip: "Your library",
+            label: "Your library",
           ),
           BottomNavigationBarItem(
             activeIcon: AvatarComponent(radius: 17),
             icon: AvatarComponent(radius: 17),
-            tooltip: "Settings",
-            label: "Settings",
+            tooltip: "Writefolio profile",
+            label: "Writefolio Profile",
           ),
         ],
       ),

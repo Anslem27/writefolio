@@ -11,10 +11,25 @@ class PoemService {
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
+      logger.d("Poem service successfull");
       return HomePoemList.fromJson(json.decode(response.body));
     } else {
       logger.w("Failed to fetch poems");
       throw Exception('Failed to fetch poems');
+    }
+  }
+
+  //random poet array json
+  static Future<PoetList> fetchPoetSuggestions() async {
+    var url = Uri.parse("https://poetrydb.org//random/10/author");
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      logger.i("Fetched poet suggestions");
+      return PoetList.fromJson(json.decode(response.body));
+    } else {
+      logger.e("Failed to fetch poet suggestions $response");
+      throw Exception("Failed to fetch suggestions");
     }
   }
 
@@ -25,6 +40,7 @@ class PoemService {
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
+      logger.d("Poem service successfull");
       return HomePoemList.fromJson(json.decode(response.body));
     } else {
       logger.w("Failed to fetch poems");
@@ -38,6 +54,7 @@ class PoemService {
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
+      logger.d("Poem service successfull");
       return HomePoemList.fromJson(json.decode(response.body));
     } else {
       logger.w("Failed to fetch poems");
@@ -51,6 +68,7 @@ class PoemService {
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
+      logger.d("Poem service successfull");
       return HomePoemList.fromJson(json.decode(response.body));
     } else {
       logger.w("Failed to fetch poems");
@@ -64,6 +82,7 @@ class PoemService {
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
+      logger.d("Poem service successfull");
       return HomePoemList.fromJson(json.decode(response.body));
     } else {
       logger.w("Failed to fetch Sonnets");

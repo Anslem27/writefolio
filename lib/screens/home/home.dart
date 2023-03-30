@@ -20,62 +20,64 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     TabController tabcontroller = TabController(length: 3, vsync: this);
 
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            expandedHeight: 110,
-            title: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text(
-                "Home",
-                style: GoogleFonts.urbanist(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                ),
-              ),
-            ),
-            pinned: true,
-            centerTitle: false,
-            actions: [
-              IconButton(
-                onPressed: () {
-                  showSearch(context: context, delegate: PoemQuerySearch());
-                },
-                icon: const Icon(PhosphorIcons.magnifying_glass),
-              ),
-            ],
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(40),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: TabBar(
-                  controller: tabcontroller,
-                  isScrollable: true,
-                  splashFactory: NoSplash.splashFactory,
-                  overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                    (Set<MaterialState> states) {
-                      return states.contains(MaterialState.focused)
-                          ? null
-                          : Colors.transparent;
-                    },
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              automaticallyImplyLeading: false,
+              expandedHeight: 110,
+              title: Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Text(
+                  "Home",
+                  style: GoogleFonts.urbanist(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
                   ),
-                  tabs: _tabs,
+                ),
+              ),
+              pinned: true,
+              centerTitle: false,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    showSearch(context: context, delegate: PoemQuerySearch());
+                  },
+                  icon: const Icon(PhosphorIcons.magnifying_glass),
+                ),
+              ],
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(40),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TabBar(
+                    controller: tabcontroller,
+                    isScrollable: true,
+                    splashFactory: NoSplash.splashFactory,
+                    overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                      (Set<MaterialState> states) {
+                        return states.contains(MaterialState.focused)
+                            ? null
+                            : Colors.transparent;
+                      },
+                    ),
+                    tabs: _tabs,
+                  ),
                 ),
               ),
             ),
-          ),
-          SliverFillRemaining(
-            child: TabBarView(
-              controller: tabcontroller,
-              children: const [
-                Explorer(),
-                PoemView(),
-                SavedPoemsScreen(),
-              ],
-            ),
-          )
-        ],
+            SliverFillRemaining(
+              child: TabBarView(
+                controller: tabcontroller,
+                children: const [
+                  Explorer(),
+                  PoemView(),
+                  SavedPoemsScreen(),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -96,8 +98,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     Tab(
       child: Text(
         "For you",
-        style: GoogleFonts.urbanist(
-          fontSize: 18,
+        style: GoogleFonts.roboto(
+          fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -105,8 +107,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     Tab(
       child: Text(
         "Poetry",
-        style: GoogleFonts.urbanist(
-          fontSize: 18,
+        style: GoogleFonts.roboto(
+          fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -114,8 +116,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     Tab(
       child: Text(
         "Saved",
-        style: GoogleFonts.urbanist(
-          fontSize: 18,
+        style: GoogleFonts.roboto(
+          fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
       ),

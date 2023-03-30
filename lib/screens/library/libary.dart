@@ -39,7 +39,7 @@ class _LibraryScreenState extends State<LibraryScreen>
             automaticallyImplyLeading: false,
             expandedHeight: 110,
             title: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
+              padding: const EdgeInsets.only(top: 20.0),
               child: Text(
                 "Your Library",
                 style: GoogleFonts.urbanist(
@@ -50,7 +50,6 @@ class _LibraryScreenState extends State<LibraryScreen>
             ),
             pinned: true,
             centerTitle: false,
-            
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(40),
               child: Align(
@@ -101,8 +100,8 @@ class _LibraryScreenState extends State<LibraryScreen>
     Tab(
       child: Text(
         "Drafts",
-        style: GoogleFonts.urbanist(
-          fontSize: 18,
+        style: GoogleFonts.roboto(
+          fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -110,8 +109,8 @@ class _LibraryScreenState extends State<LibraryScreen>
     Tab(
       child: Text(
         "Tagged",
-        style: GoogleFonts.urbanist(
-          fontSize: 18,
+        style: GoogleFonts.roboto(
+          fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
       ),

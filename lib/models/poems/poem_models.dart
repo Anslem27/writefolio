@@ -9,6 +9,29 @@ class HomePoemList {
   }
 }
 
+class PoetList {
+  List<Poets>? poets;
+
+  PoetList({this.poets});
+
+  factory PoetList.fromJson(List<dynamic> json) {
+    List<Poets> poets = <Poets>[];
+    poets = json.map((e) => Poets.fromJson(e)).toList();
+
+    return PoetList(poets: poets);
+  }
+}
+
+class Poets {
+  String? author;
+
+  Poets({this.author});
+
+  Poets.fromJson(Map<String, dynamic> json) {
+    author = json['author'];
+  }
+}
+
 class PoemModel {
   late final String title;
   late final String author;

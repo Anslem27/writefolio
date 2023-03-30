@@ -33,6 +33,14 @@ class _ShimmerComponentState extends State<ShimmerComponent> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Container(
+                    height: 30.0,
+                    width: 30,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(100)),
+                  ),
+                  const SizedBox(width: 5),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +74,9 @@ class _ShimmerComponentState extends State<ShimmerComponent> {
                               child: Container(
                                 width: 40.0,
                                 height: 15.0,
-                                color: Colors.white,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(5)),
                               ),
                             ),
                             const SizedBox(
@@ -76,7 +86,9 @@ class _ShimmerComponentState extends State<ShimmerComponent> {
                             Container(
                               width: 40.0,
                               height: 14.0,
-                              color: Colors.white,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(5)),
                             ),
                           ],
                         )
