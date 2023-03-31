@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:auto_size_text_field/auto_size_text_field.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
@@ -62,11 +63,10 @@ class _ContinueEdittingState extends State<ContinueEditting> {
         },
         child: const Text("Save"),
       ),
-      appBar: AppBar(
-        title: Text("Editting: ${_titleController.text}"),
-      ),
+      appBar: AppBar(),
       body: SafeArea(
-        child: Column(
+        child: ListView(
+          physics: const ScrollPhysics(),
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -87,16 +87,37 @@ class _ContinueEdittingState extends State<ContinueEditting> {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  width: double.maxFinite,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    // color: Colors.orange[900]!.withOpacity(0.5),
+                  ),
+                  child: Card(
+                    child: CachedNetworkImage(
+                      imageUrl: widget.userArticle.imageUrl,
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => const Center(
+                          child: Icon(
+                        Icons.image_search_outlined,
+                        size: 80,
+                      )),
+                      fit: BoxFit.cover,
+                    ),
+                  )),
+            ),
             const SizedBox(height: 10),
             QuillToolbar.basic(controller: controller),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: SizedBox(
-                  child: QuillEditor.basic(
-                    controller: controller,
-                    readOnly: false, // true for view only mode
-                  ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: SizedBox(
+                child: QuillEditor.basic(
+                  controller: controller,
+                  readOnly: false, // true for view only mode
                 ),
               ),
             )
