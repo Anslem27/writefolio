@@ -8,7 +8,7 @@ import '../../animations/fade_in_animation.dart';
 import '../../utils/constants.dart';
 import '../../models/poems/poem_models.dart';
 import '../../services/poem_service.dart';
-import '../../utils/widgets/reading_time_approximator.dart';
+import '../../utils/tools/reading_time_approximator.dart';
 import 'poems/poem_detail_view.dart';
 
 var logger = Logger();
@@ -38,15 +38,19 @@ class _PoemViewState extends State<PoemView> {
           physics: const ScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
                 child: Text(
                   "picks for you.",
                   textAlign: TextAlign.start,
                   style: GoogleFonts.urbanist(
-                      fontWeight: FontWeight.bold, fontSize: 30),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.grey.shade500,
+                  ),
                 ),
               ),
               ListView.builder(
@@ -164,12 +168,16 @@ class _PoemViewState extends State<PoemView> {
                 },
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
                 child: Text(
                   "sonnets",
                   textAlign: TextAlign.start,
                   style: GoogleFonts.urbanist(
-                      fontWeight: FontWeight.bold, fontSize: 25),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.grey.shade500,
+                  ),
                 ),
               ),
               FutureBuilder(

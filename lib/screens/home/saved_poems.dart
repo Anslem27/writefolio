@@ -12,7 +12,7 @@ import '../../animations/fade_in_animation.dart';
 import '../../models/poems/saved_poems.dart';
 import '../../utils/constants.dart';
 import '../../data/saved_poem_datastore.dart';
-import '../../utils/widgets/reading_time_approximator.dart';
+import '../../utils/tools/reading_time_approximator.dart';
 import 'poems/offline_poemView.dart';
 
 var logger = Logger();

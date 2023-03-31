@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:vs_scrollbar/vs_scrollbar.dart';
 import 'package:writefolio/utils/widgets/shimmer_component.dart';
 import '../../../models/guardian_lifestyle.dart';
 import '../../../models/rself-model.dart';
@@ -24,6 +25,8 @@ class _ExplorerState extends State<Explorer> {
   Widget build(BuildContext context) {
     var explorerContents = ExplorerContents();
 
+    ScrollController scrollController = ScrollController();
+
     return StreamBuilder<InternetConnectionStatus>(
       stream: InternetConnectionChecker().onStatusChange,
       builder: (context, snapshot) {
@@ -38,11 +41,15 @@ class _ExplorerState extends State<Explorer> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                return SingleChildScrollView(
-                  physics: const ScrollPhysics(),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                return VsScrollbar(
+                  controller: scrollController,
+                  style: const VsScrollbarStyle(
+                    radius: Radius.circular(5),
+                    thickness: 3.0,
+                  ),
+                  child: ListView(
+                    controller: scrollController,
+                    physics: const ScrollPhysics(),
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(

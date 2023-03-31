@@ -8,7 +8,7 @@ import 'package:writefolio/models/poems/poem_models.dart';
 import '../../../utils/constants.dart';
 import '../../../data/saved_poem_datastore.dart';
 import '../../../services/poem_service.dart';
-import '../../../utils/widgets/reading_time_approximator.dart';
+import '../../../utils/tools/reading_time_approximator.dart';
 import '../poems/poem_detail_view.dart';
 
 var logger = Logger();
@@ -28,7 +28,6 @@ class PoemQuerySearch extends SearchDelegate {
       ),
     ];
   }
-  
 
   @override
   Widget buildLeading(BuildContext context) {
@@ -228,17 +227,24 @@ class PoemQuerySearch extends SearchDelegate {
               return const SizedBox();
             }
             if (!suggestionsSnapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(),
+              ));
             }
-            return Column(
+            return ListView(
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 10),
                   child: Text(
                     "suggestions",
                     textAlign: TextAlign.start,
-                    style: GoogleFonts.urbanist(
-                        fontWeight: FontWeight.bold, fontSize: 25),
+                    style: GoogleFonts.roboto(
+                        fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
                 Wrap(
@@ -249,7 +255,7 @@ class PoemQuerySearch extends SearchDelegate {
                               query = suggestionsSnapshot
                                   .data!.poets![index].author
                                   .toString();
-                              buildResults(context);
+                              //buildResults(context);
                             },
                             child: Card(
                               child: Padding(
@@ -268,14 +274,18 @@ class PoemQuerySearch extends SearchDelegate {
         Center(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
+            child: ListView(
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
               children: [
                 SvgPicture.asset("assets/illustrations/no-notification.svg",
                     height: 200),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
                   child: Text(
                     "search by poet or theme",
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.urbanist(
                       fontWeight: FontWeight.bold,
                     ),

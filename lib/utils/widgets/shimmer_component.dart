@@ -99,7 +99,7 @@ class _ShimmerComponentState extends State<ShimmerComponent> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                   ),
                   Container(
-                    width: 80.0,
+                    width: 110.0,
                     height: 80.0,
                     decoration: BoxDecoration(
                       color: Colors.grey.shade100,

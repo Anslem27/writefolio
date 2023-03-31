@@ -129,7 +129,7 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
                                   const SizedBox(width: 5),
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.orange[900],
+                                      color: Colors.orange[200],
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: const Padding(
@@ -144,7 +144,7 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
                                   hasProfanity
                                       ? Container(
                                           decoration: BoxDecoration(
-                                            color: Colors.green[900],
+                                            color: Colors.green[200],
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                           ),

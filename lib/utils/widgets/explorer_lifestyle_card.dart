@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../models/guardian_lifestyle.dart';
 import '../../screens/home/components/explorer_component_view.dart';
 import '../tools/date_parser.dart';
-import 'reading_time_approximator.dart';
+import '../tools/reading_time_approximator.dart';
 
 class LifeStyleCard extends StatelessWidget {
   final int index;

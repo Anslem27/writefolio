@@ -1,10 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 import 'package:writefolio/models/articles/article.dart';
+import 'package:writefolio/screens/settings/components/avatar_picker.dart';
+import 'package:writefolio/utils/tools/reading_time_approximator.dart';
 import '../../data/user_article_datastore.dart';
 import '../../utils/widgets/article_home_card.dart';
 
@@ -38,26 +40,59 @@ class _LibraryFilesState extends State<LibraryFiles> {
               physics: const ScrollPhysics(),
               child: Column(
                 children: [
-                  Card(
-                    margin: const EdgeInsets.all(8),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Draft"),
-                          const SizedBox(width: 5),
-                          Badge(
-                            label: Text(savedArticlesList.length.toString()),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Card(
+                          margin: const EdgeInsets.all(8),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Draft"),
+                                const SizedBox(width: 5),
+                                Badge(
+                                  label:
+                                      Text(savedArticlesList.length.toString()),
+                                ),
+                              ],
+                            ),
                           ),
-                          IconButton(
-                            padding: const EdgeInsets.all(0),
-                            onPressed: () {},
-                            icon: const Icon(PhosphorIcons.grid_four),
-                          )
-                        ],
-                      ),
+                        ),
+                        PopupMenuButton<String>(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          onSelected: (value) {
+                            // Do something when an item is selected
+                          },
+                          itemBuilder: (BuildContext context) => [
+                            PopupMenuItem(
+                              value: 'card',
+                              child: Row(
+                                children: const [
+                                  Icon(Icons.grid_view),
+                                  SizedBox(width: 2),
+                                  Text('Card view'),
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: 'list',
+                              child: Row(
+                                children: const [
+                                  Icon(Icons.list_rounded),
+                                  SizedBox(width: 2),
+                                  Text('List view'),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
                     ),
                   ),
                   ListView.builder(
@@ -71,11 +106,96 @@ class _LibraryFilesState extends State<LibraryFiles> {
                       return ArticleHomeCard(userArticle: userArticle);
                     },
                   ),
+
+                  //articleCard(savedArticlesList)
                 ],
               ),
             );
           }
         });
+  }
+
+  GridView articleCard(List<UserArticle> savedArticlesList) {
+    return GridView.count(
+      shrinkWrap: true,
+      childAspectRatio: 0.7,
+      padding: EdgeInsets.zero,
+      mainAxisSpacing: 5,
+      physics: const ScrollPhysics(),
+      crossAxisCount: 2,
+      children: List.generate(
+        savedArticlesList.length,
+        (index) => AnimatedContainer(
+          duration: const Duration(milliseconds: 500),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(8),
+              onTap: () {},
+              child: Column(
+                children: [
+                  Container(
+                    height: 130,
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Card(
+                      child: CachedNetworkImage(
+                        imageUrl: savedArticlesList[index].imageUrl,
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => const Center(
+                            child: Icon(
+                          Icons.image_search_outlined,
+                          size: 80,
+                        )),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    savedArticlesList[index].title,
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: GoogleFonts.roboto(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        const AvatarComponent(radius: 17),
+                        const SizedBox(width: 10),
+                        Text(savedArticlesList[index].updateDate)
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          "${calculateReadingTime(savedArticlesList[index].bodyText.trim()).toString()} min read  •  ${savedArticlesList[index].bodyText.trim().split(" ").length.toString()} words",
+                          style: const TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   _emptyArticles(bool darkModeOn) {

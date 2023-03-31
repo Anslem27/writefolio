@@ -5,7 +5,7 @@ import 'package:writefolio/screens/home/components/explorer_component_view.dart'
 import '../../models/rself-model.dart';
 import '../tools/date_parser.dart';
 import '../tools/html_parser.dart';
-import 'reading_time_approximator.dart';
+import '../tools/reading_time_approximator.dart';
 
 class ExplorerRselfCard extends StatelessWidget {
   final int index;
@@ -34,7 +34,7 @@ class ExplorerRselfCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "0${index + 1}",
+                "0$index",
                 style: GoogleFonts.urbanist(
                   fontSize: 32,
                   color: Colors.grey,

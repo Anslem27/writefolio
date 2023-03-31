@@ -8,7 +8,7 @@ import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/editor/editting.dart';
 import '../../../models/articles/article.dart';
-import '../../../utils/widgets/reading_time_approximator.dart';
+import '../../../utils/tools/reading_time_approximator.dart';
 import '../../settings/components/avatar_picker.dart';
 
 class ArticleView extends StatefulWidget {
@@ -40,7 +40,7 @@ class _ArticleViewState extends State<ArticleView> {
             ),
           );
         },
-        label: const Text("Continue Editting"),
+        label: const Text("Edit"),
         icon: const Icon(Icons.edit),
       ),
       appBar: AppBar(
@@ -150,6 +150,8 @@ class _ArticleViewState extends State<ArticleView> {
                           ),
                         ),
                         PopupMenuButton<String>(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
                           onSelected: (value) {
                             // Do something when an item is selected
                           },
@@ -171,6 +173,9 @@ class _ArticleViewState extends State<ArticleView> {
                   children: [
                     Text(
                       "Last updated: ${widget.userArticle.updateDate}",
+                      style: const TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
                     const Spacer(),
                     const Icon(Icons.timer_outlined),

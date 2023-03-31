@@ -6,12 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../models/articles/article.dart';
 import '../../screens/library/components/article_view.dart';
 import '../../screens/settings/components/avatar_picker.dart';
-import 'reading_time_approximator.dart';
+import '../tools/reading_time_approximator.dart';
 
 class ArticleHomeCard extends StatelessWidget {
   final UserArticle userArticle;
   const ArticleHomeCard({super.key, required this.userArticle});
-  //TODO: Add image service and also tags
+  //TODO: Add tags
 
   @override
   Widget build(BuildContext context) {
