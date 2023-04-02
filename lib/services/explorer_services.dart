@@ -7,6 +7,7 @@ import '../models/guardian_lifestyle.dart';
 import '../models/rself-model.dart';
 
 class ExplorerContents {
+  /// returns list of content from "r/self" [Rself]
   Future<Rself> fetchRselfInfo() async {
     var url = Uri.parse(
         'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.reddit.com%2Fr%2Fself.rss');

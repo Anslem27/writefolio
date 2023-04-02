@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 
 class PoemService {
   static int poemCount = 20;
-  //random
+
+  /// returns random list of poems with count of [poemCount]
   static Future<HomePoemList> fetchHome() async {
     var url = Uri.parse('https://poetrydb.org/random/$poemCount');
     final response = await http.get(url);
@@ -19,7 +20,7 @@ class PoemService {
     }
   }
 
-  //random poet array json
+  ///returns random poet list json
   static Future<PoetList> fetchPoetSuggestions() async {
     var url = Uri.parse("https://poetrydb.org//random/10/author");
     final response = await http.get(url);
@@ -33,7 +34,7 @@ class PoemService {
     }
   }
 
-  //search by author
+  /// search poems by author
   static Future<HomePoemList> fetchSearch(String query) async {
     var url =
         Uri.parse("https://poetrydb.org/author,poemcount/$query;$poemCount");
@@ -48,7 +49,7 @@ class PoemService {
     }
   }
 
-  //search by title {or theme}
+  /// search poems by title {or theme}
   static Future<HomePoemList> searchByTitle(String query) async {
     var url = Uri.parse("https://poetrydb.org/title/$query");
 
@@ -62,7 +63,7 @@ class PoemService {
     }
   }
 
-  //search by line from poem
+  /// search poem by line from poem ie "Death, Love"
   static Future<HomePoemList> searchByPoemLine(String query) async {
     var url = Uri.parse("https://poetrydb.org/lines/$query");
 
@@ -76,7 +77,7 @@ class PoemService {
     }
   }
 
-  //query sonnets
+  /// returns query of sonnets count set to [poemCount]
   static Future<HomePoemList> fetchSonnets() async {
     var url = Uri.parse("https://poetrydb.org//title,random/Sonnet;$poemCount");
 
