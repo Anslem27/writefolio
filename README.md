@@ -5,7 +5,7 @@
 ## Api's
 
 - Poetry db (https://poetrydb.org/)
-- rss2json (https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@medium-username)
+- rss2json for r/self and the guardian contents (https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@medium-username)
 
 ## Build
 
