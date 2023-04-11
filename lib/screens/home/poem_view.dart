@@ -49,7 +49,7 @@ class _PoemViewState extends State<PoemView> {
                   textAlign: TextAlign.start,
                   style: GoogleFonts.urbanist(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 30,
                     color: Colors.grey.shade500,
                   ),
                 ),
@@ -103,15 +103,19 @@ class _PoemViewState extends State<PoemView> {
                                             snapshot.data!.poem![index].title
                                                 .trim()
                                                 .toUpperCase(),
+                                            maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.urbanist(
-                                                fontSize: 16.5,
-                                                fontWeight: FontWeight.bold),
+                                            style: GoogleFonts.roboto(
+                                              fontSize: 16.5,
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
                                         const Padding(
                                           padding: EdgeInsets.symmetric(
-                                              vertical: 2.0),
+                                            vertical: 2.0,
+                                          ),
                                         ),
                                         SizedBox(
                                           width: double.infinity,
@@ -136,17 +140,29 @@ class _PoemViewState extends State<PoemView> {
                                                 ),
                                               ),
                                             ),
+                                            Text(
+                                                int.parse(snapshot
+                                                            .data!
+                                                            .poem![index]
+                                                            .linecount) >
+                                                        50
+                                                    ? "| Long poem"
+                                                    : "| Short poem",
+                                                style: GoogleFonts.roboto(
+                                                  color: Colors.pink,
+                                                  fontWeight: FontWeight.bold,
+                                                )),
                                           ],
                                         )
                                       ],
                                     ),
                                   ),
-                                  const Padding(
+                                  /* const Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 8.0),
-                                  ),
+                                  ), */
                                   Container(
-                                    width: 80.0,
+                                    width: 65.0,
                                     height: 80.0,
                                     decoration: BoxDecoration(
                                       color: Colors.grey.shade100,
@@ -176,7 +192,7 @@ class _PoemViewState extends State<PoemView> {
                   textAlign: TextAlign.start,
                   style: GoogleFonts.urbanist(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 30,
                     color: Colors.grey.shade500,
                   ),
                 ),
@@ -247,17 +263,20 @@ class _PoemViewState extends State<PoemView> {
                                                       .data!.poem![index].title
                                                       .trim()
                                                       .toUpperCase(),
+                                                  maxLines: 2,
                                                   overflow:
                                                       TextOverflow.ellipsis,
-                                                  style: GoogleFonts.urbanist(
-                                                      fontSize: 16.5,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                  style: GoogleFonts.roboto(
+                                                    fontSize: 16.5,
+                                                    color: Colors.grey,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
                                               ),
                                               const Padding(
                                                 padding: EdgeInsets.symmetric(
-                                                    vertical: 2.0),
+                                                  vertical: 2.0,
+                                                ),
                                               ),
                                               SizedBox(
                                                 width: double.infinity,
@@ -269,7 +288,8 @@ class _PoemViewState extends State<PoemView> {
                                               ),
                                               const Padding(
                                                 padding: EdgeInsets.symmetric(
-                                                    vertical: 2.0),
+                                                  vertical: 2.0,
+                                                ),
                                               ),
                                               const Spacer(),
                                               Row(

@@ -26,7 +26,6 @@ class SavedPoemsScreen extends StatefulWidget {
 class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
   var poemDatastore = SavedPoemsHiveDataStore();
 
-
   @override
   Widget build(BuildContext context) {
     final savedPoemBox = poemDatastore.box;
@@ -36,13 +35,6 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
         var savedPoems = savedPoemBox.values.toList();
 
         return Scaffold(
-          floatingActionButton: FloatingActionButton.extended(
-            label: const Text("Search more"),
-            onPressed: () {},
-            icon: const Icon(
-              PhosphorIcons.magnifying_glass,
-            ),
-          ),
           body: savedPoems.isEmpty
               ? _emptySavedPoems()
               : SingleChildScrollView(
@@ -86,7 +78,7 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                                     label: 'Delete',
                                   ),
                                   SlidableAction(
-                                    onPressed: (_){},
+                                    onPressed: (_) {},
                                     backgroundColor: Colors.brown,
                                     icon: Icons.share,
                                     label: 'Share',

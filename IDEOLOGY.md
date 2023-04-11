@@ -32,12 +32,13 @@
 ```
 add tags to articles.
 add previously read poem to under container
+add theming colors
 ```
 
 ### In progress
 
 ```
-Adding image to article `db`
+`
 ```
 
 ### Slogans

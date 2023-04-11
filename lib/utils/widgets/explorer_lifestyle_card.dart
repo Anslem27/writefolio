@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../models/home/guardian_lifestyle.dart';
 import '../../screens/home/components/explorer_component_view.dart';
@@ -55,11 +54,10 @@ class LifeStyleCard extends StatelessWidget {
                       const Spacer(),
                       IconButton(
                         onPressed: () {},
-                        icon: const Icon(Icons.link),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(PhosphorIcons.share),
+                        icon: const Icon(
+                          Icons.link,
+                          color: Colors.pink,
+                        ),
                       ),
                     ],
                   ),
@@ -70,8 +68,9 @@ class LifeStyleCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.roboto(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -97,6 +96,10 @@ class LifeStyleCard extends StatelessWidget {
                             padding: const EdgeInsets.all(5.0),
                             child: Text(
                               listItem[index].categories[categoryIndex],
+                              style: GoogleFonts.roboto(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
                         ),
