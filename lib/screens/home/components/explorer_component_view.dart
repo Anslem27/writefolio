@@ -129,14 +129,15 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
                                   const SizedBox(width: 5),
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.orange,
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.brown,
                                     ),
                                     child: const Padding(
                                       padding: EdgeInsets.all(3.0),
                                       child: Text(
                                         "self story",
                                         overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(),
                                       ),
                                     ),
                                   ),
@@ -180,7 +181,8 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
                       widget.component.title,
                       textAlign: TextAlign.start,
                       style: GoogleFonts.urbanist(
-                        fontSize: 20,
+                        fontSize: 25,
+                        color: Colors.grey,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -204,6 +206,39 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
                       style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w400,
                         fontSize: 16.5,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: double.maxFinite,
+                      height: 55,
+                      child: InkWell(
+                        onTap: () {},
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  PhosphorIcons.reddit_logo,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  "Continue in reddit",
+                                  style: GoogleFonts.roboto(
+                                    fontSize: 16,
+                                  ),
+                                )
+                              ],
+                            )),
                       ),
                     ),
                   ),

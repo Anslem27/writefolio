@@ -29,10 +29,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               title: Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Text(
-                  "Home",
-                  style: GoogleFonts.urbanist(
+                  "Writefolio",
+                  style: GoogleFonts.roboto(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
+                    color: Colors.grey,
                   ),
                 ),
               ),

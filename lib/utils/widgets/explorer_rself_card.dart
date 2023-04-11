@@ -75,8 +75,9 @@ class ExplorerRselfCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.roboto(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -88,6 +89,7 @@ class ExplorerRselfCard extends StatelessWidget {
                           .trim(),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.roboto(),
                     ),
                   ),
                   Padding(
@@ -98,7 +100,7 @@ class ExplorerRselfCard extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 5.0),
                           child: SizedBox(
                             child: Text(
-                              "Published: ${dateParser(listObject[index].pubDate)} | ${calculateReadingTime(listObject[index].content)} min read",
+                              "${dateParser(listObject[index].pubDate)} | ${calculateReadingTime(listObject[index].content)} min read",
                             ),
                           ),
                         ),

@@ -12,6 +12,7 @@ import '../../../models/home/rself-model.dart';
 import '../../../services/explorer_services.dart';
 import '../../../utils/widgets/explorer_lifestyle_card.dart';
 import '../../../utils/widgets/explorer_rself_card.dart';
+import '../../../utils/widgets/loader.dart';
 
 class Explorer extends StatefulWidget {
   const Explorer({super.key});
@@ -38,7 +39,7 @@ class _ExplorerState extends State<Explorer> {
               builder: (_, snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: LoadingAnimation(),
                   );
                 }
                 return VsScrollbar(
@@ -64,8 +65,9 @@ class _ExplorerState extends State<Explorer> {
                             Text(
                               "Self stories".toUpperCase(),
                               textAlign: TextAlign.start,
-                              style: GoogleFonts.urbanist(
-                                fontWeight: FontWeight.w500,
+                              style: GoogleFonts.roboto(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
                               ),
                             ),
                             const Spacer(),
@@ -90,8 +92,11 @@ class _ExplorerState extends State<Explorer> {
                         child: Text(
                           "More picks for you.",
                           textAlign: TextAlign.start,
-                          style: GoogleFonts.urbanist(
-                              fontWeight: FontWeight.bold, fontSize: 30),
+                          style: GoogleFonts.roboto(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                       Padding(
@@ -105,10 +110,11 @@ class _ExplorerState extends State<Explorer> {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              "Lifestyle stories".toUpperCase(),
+                              "Lifestyle".toUpperCase(),
                               textAlign: TextAlign.start,
-                              style: GoogleFonts.urbanist(
-                                fontWeight: FontWeight.w500,
+                              style: GoogleFonts.roboto(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
                               ),
                             ),
                           ],
