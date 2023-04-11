@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:profanity_filter/profanity_filter.dart';
 import 'package:writefolio/screens/home/components/explorer_component_view.dart';
-import '../../models/rself-model.dart';
+import '../../models/home/rself-model.dart';
 import '../tools/date_parser.dart';
 import '../tools/html_parser.dart';
 import '../tools/reading_time_approximator.dart';
@@ -16,6 +17,8 @@ class ExplorerRselfCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var listObject = rselfObject.items;
+    final filter = ProfanityFilter();
+    bool hasProfanity = filter.hasProfanity(rselfObject.items[index].content);
     return InkWell(
       onTap: () {
         var component = listObject[index];
@@ -36,9 +39,9 @@ class ExplorerRselfCard extends StatelessWidget {
               child: Text(
                 "0$index",
                 style: GoogleFonts.urbanist(
-                  fontSize: 32,
-                  color: Colors.grey,
-                ),
+                    fontSize: 32,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(width: 20),
@@ -99,10 +102,18 @@ class ExplorerRselfCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        index.isEven
+                        hasProfanity
+                            ? const Text(
+                                "nsfw",
+                                style: TextStyle(
+                                  color: Colors.pink,
+                                ),
+                              )
+                            : const SizedBox(),
+                        hasProfanity
                             ? const Icon(
-                                Icons.star,
-                                color: Colors.deepOrange,
+                                Icons.eighteen_up_rating,
+                                color: Colors.pink,
                                 size: 16,
                               )
                             : const SizedBox()

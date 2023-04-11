@@ -39,6 +39,7 @@ class _AvatarListState extends State<AvatarList> {
       avatarBox.put(
           'selectedAvatarUrl', selectedUrl); // save selected URL to Hive box
     });
+    setState(() {});
   }
 
   @override

@@ -10,7 +10,7 @@ import 'package:logger/logger.dart';
 import 'package:writefolio/screens/settings/components/avatar_picker.dart';
 import 'package:writefolio/utils/tools/date_parser.dart';
 import '../../../data/saved_poem_datastore.dart';
-import '../../../models/rself-model.dart';
+import '../../../models/home/rself-model.dart';
 import '../../../utils/tools/html_parser.dart';
 import 'package:profanity_filter/profanity_filter.dart';
 
@@ -129,7 +129,7 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
                                   const SizedBox(width: 5),
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.orange[200],
+                                      color: Colors.orange,
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: const Padding(
@@ -144,7 +144,6 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
                                   hasProfanity
                                       ? Container(
                                           decoration: BoxDecoration(
-                                            color: Colors.green[200],
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                           ),
@@ -153,18 +152,13 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
                                             child: Text(
                                               "NSFW",
                                               overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                color: Colors.pink,
+                                              ),
                                             ),
                                           ),
                                         )
                                       : const SizedBox(),
-                                  const SizedBox(width: 5),
-                                  const CircleAvatar(
-                                    radius: 14,
-                                    child: Icon(
-                                      Icons.heart_broken,
-                                      size: 20,
-                                    ),
-                                  )
                                 ],
                               ),
                             ),
@@ -186,7 +180,7 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
                       widget.component.title,
                       textAlign: TextAlign.start,
                       style: GoogleFonts.urbanist(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -209,7 +203,7 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
                       textAlign: TextAlign.start,
                       style: GoogleFonts.urbanist(
                         fontWeight: FontWeight.w400,
-                        fontSize: 18,
+                        fontSize: 16.5,
                       ),
                     ),
                   ),

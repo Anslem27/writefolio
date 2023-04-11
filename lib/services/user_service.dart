@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../models/user_model.dart';
+import '../models/user/medium_user_model.dart';
 
 /// fetch medium user object [MediumUser] with query parameter of username
 Future<MediumUser> fetchUserInfo(String userName) async {

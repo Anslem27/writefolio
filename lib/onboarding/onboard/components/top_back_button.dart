@@ -53,13 +53,17 @@ class TopBackSkipView extends StatelessWidget {
                     Icons.arrow_back_ios_new_rounded,
                     color: Colors.black,
                   ),
-                  //   ),
                 ),
                 SlideTransition(
                   position: skipAnimation,
                   child: IconButton(
                     onPressed: onSkipClick,
-                    icon: const Text('Skip'),
+                    icon: const Text(
+                      'Skip',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
                 ),
               ],

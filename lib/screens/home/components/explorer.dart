@@ -7,8 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:vs_scrollbar/vs_scrollbar.dart';
 import 'package:writefolio/utils/widgets/shimmer_component.dart';
-import '../../../models/guardian_lifestyle.dart';
-import '../../../models/rself-model.dart';
+import '../../../models/home/guardian_lifestyle.dart';
+import '../../../models/home/rself-model.dart';
 import '../../../services/explorer_services.dart';
 import '../../../utils/widgets/explorer_lifestyle_card.dart';
 import '../../../utils/widgets/explorer_rself_card.dart';
@@ -69,7 +69,7 @@ class _ExplorerState extends State<Explorer> {
                               ),
                             ),
                             const Spacer(),
-                            const Text("Sorted by newest")
+                            const Text("from reddit")
                           ],
                         ),
                       ),

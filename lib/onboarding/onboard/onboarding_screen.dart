@@ -114,6 +114,6 @@ class _IntroductionAnimationScreenState
   }
 
   void _signUpClick() {
-    Navigator.pushNamed(context, "/navigation");
+    Navigator.pushNamed(context, "/createAccount");
   }
 }

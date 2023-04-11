@@ -69,7 +69,7 @@ class WelcomeView extends StatelessWidget {
                 child: Container(
                   constraints:
                       const BoxConstraints(maxWidth: 350, maxHeight: 350),
-                  child: SvgPicture.asset("assets/svg/float.svg"),
+                  child: SvgPicture.asset("assets/svg/float.svg",height: 400,),
                 ),
               ),
               SlideTransition(

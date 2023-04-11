@@ -6,8 +6,8 @@ import 'package:writefolio/screens/settings/settings_page.dart';
 import 'package:writefolio/utils/widgets/no_internetscreen.dart';
 import 'models/articles/article.dart';
 import 'models/poems/saved_poems.dart';
-import 'onboarding/onboard/introduction_animation_screen.dart';
-import 'onboarding/user/welcome.dart';
+import 'onboarding/onboard/onboarding_screen.dart';
+import 'onboarding/onboard/screens/sign_up.dart';
 import 'screens/navigation.dart';
 
 Future<void> main() async {
@@ -46,8 +46,8 @@ class MyApp extends StatelessWidget {
           home: const WriteFolioApp(),
           routes: {
             "/onboarding": (_) => const IntroductionAnimationScreen(),
+            "/createAccount": (_) => const SignUpPage(),
             "/noInternet": (_) => const NoInternet(isRouteBack: true),
-            "/welcome": (_) => const WelcomePage(),
             "/home": (_) => const HomeScreen(),
             "/library": (context) => const LibraryScreen(),
             "/navigation": (_) => const Navigation(),

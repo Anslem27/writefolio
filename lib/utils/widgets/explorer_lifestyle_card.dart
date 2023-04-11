@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../models/guardian_lifestyle.dart';
+import '../../models/home/guardian_lifestyle.dart';
 import '../../screens/home/components/explorer_component_view.dart';
 import '../tools/date_parser.dart';
 import '../tools/reading_time_approximator.dart';

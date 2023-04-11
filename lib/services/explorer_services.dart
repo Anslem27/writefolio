@@ -3,8 +3,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:writefolio/screens/home/poem_view.dart';
-import '../models/guardian_lifestyle.dart';
-import '../models/rself-model.dart';
+import '../models/home/guardian_lifestyle.dart';
+import '../models/home/rself-model.dart';
 
 class ExplorerContents {
   /// returns list of content from "r/self" [Rself]

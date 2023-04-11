@@ -34,7 +34,7 @@ class _SplashViewState extends State<SplashView> {
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: 350,
+              height: 400,
               child: SvgPicture.asset(
                 "assets/svg/unboxing.svg",
               ),

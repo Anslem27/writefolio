@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../animations/fade_in_animation.dart';
 import '../editor/create_article.dart';
-import '../models/user_model.dart';
+import '../models/user/medium_user_model.dart';
 import '../services/user_service.dart';
 import '../utils/tools/date_parser.dart';
 import '../utils/widgets/shimmer_component.dart';
