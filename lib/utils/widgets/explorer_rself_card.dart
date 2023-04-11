@@ -100,7 +100,7 @@ class ExplorerRselfCard extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 5.0),
                           child: SizedBox(
                             child: Text(
-                              "${dateParser(listObject[index].pubDate)} | ${calculateReadingTime(listObject[index].content)} min read",
+                              "pub: ${dateParser(listObject[index].pubDate)} | ${calculateReadingTime(listObject[index].content)} min read",
                             ),
                           ),
                         ),

@@ -228,7 +228,6 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
                               children: [
                                 const Icon(
                                   PhosphorIcons.reddit_logo,
-                                  color: Colors.white,
                                 ),
                                 const SizedBox(width: 5),
                                 Text(
