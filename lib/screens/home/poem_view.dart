@@ -9,6 +9,7 @@ import '../../utils/constants.dart';
 import '../../models/poems/poem_models.dart';
 import '../../services/poem_service.dart';
 import '../../utils/tools/reading_time_approximator.dart';
+import '../../utils/widgets/loader.dart';
 import 'poems/poem_detail_view.dart';
 
 var logger = Logger();
@@ -31,7 +32,7 @@ class _PoemViewState extends State<PoemView> {
         }
         if (!snapshot.hasData) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: LoadingAnimation(),
           );
         }
         return SingleChildScrollView(

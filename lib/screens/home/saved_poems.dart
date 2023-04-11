@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/svg.dart';
@@ -27,7 +26,6 @@ class SavedPoemsScreen extends StatefulWidget {
 class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
   var poemDatastore = SavedPoemsHiveDataStore();
 
-  void _handleTap(BuildContext context) {}
 
   @override
   Widget build(BuildContext context) {
@@ -83,13 +81,13 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
 
                                       setState(() {});
                                     },
-                                    backgroundColor: const Color(0xFFFE4A49),
+                                    backgroundColor: Colors.pink,
                                     icon: PhosphorIcons.trash,
                                     label: 'Delete',
                                   ),
                                   SlidableAction(
-                                    onPressed: _handleTap,
-                                    backgroundColor: const Color(0xFF21B7CA),
+                                    onPressed: (_){},
+                                    backgroundColor: Colors.brown,
                                     icon: Icons.share,
                                     label: 'Share',
                                   ),
@@ -104,7 +102,7 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                                       onTap: () {
                                         Navigator.push(
                                           context,
-                                          CupertinoPageRoute(
+                                          MaterialPageRoute(
                                             builder: (_) => OfflinePoemView(
                                               poemtitle: savedPoem.title,
                                               poemBody: savedPoem.lines,
@@ -135,24 +133,30 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                                                 children: <Widget>[
                                                   SizedBox(
                                                     width: double.infinity,
-                                                    child: Text(
-                                                      savedPoem.title
-                                                          .trim()
-                                                          .toUpperCase(),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style:
-                                                          GoogleFonts.urbanist(
-                                                              fontSize: 16.5,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
+                                                    child: Hero(
+                                                      tag: "poemTitle",
+                                                      child: Text(
+                                                        savedPoem.title
+                                                            .trim()
+                                                            .toUpperCase(),
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style:
+                                                            GoogleFonts.roboto(
+                                                          color: Colors.grey,
+                                                          fontSize: 16.5,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                   const Padding(
                                                     padding:
                                                         EdgeInsets.symmetric(
-                                                            vertical: 2.0),
+                                                      vertical: 2.0,
+                                                    ),
                                                   ),
                                                   SizedBox(
                                                     width: double.infinity,
@@ -165,7 +169,8 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                                                   const Padding(
                                                     padding:
                                                         EdgeInsets.symmetric(
-                                                            vertical: 2.0),
+                                                      vertical: 2.0,
+                                                    ),
                                                   ),
                                                   const Spacer(),
                                                   Row(
@@ -173,8 +178,9 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .only(
-                                                                right: 5.0),
+                                                                .only(
+                                                          right: 5.0,
+                                                        ),
                                                         child: SizedBox(
                                                           child: Text(
                                                             "${savedPoem.linecount} reading lines | ${calculateReadingTime(savedPoem.lines.toString().replaceAll("\n", "").replaceAll("]", "").replaceAll("[", "")).toString()} min read",

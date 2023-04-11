@@ -8,6 +8,7 @@ import 'models/articles/article.dart';
 import 'models/poems/saved_poems.dart';
 import 'onboarding/onboard/onboarding_screen.dart';
 import 'onboarding/onboard/screens/sign_up.dart';
+import 'screens/library/tools/view_type.dart';
 import 'screens/navigation.dart';
 
 Future<void> main() async {
@@ -15,6 +16,8 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter<SavedPoems>(SavedPoemsAdapter());
   Hive.registerAdapter<UserArticle>(UserArticleAdapter());
+  Hive.registerAdapter(LayoutTypeAdapter());
+  await Hive.openBox<LayoutType>('Layout');
   await Hive.openBox<SavedPoems>("savedPoems");
   await Hive.openBox<UserArticle>("userArticles");
   await Hive.openBox<bool>('themeBox');

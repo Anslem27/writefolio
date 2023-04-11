@@ -4,6 +4,7 @@ import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -41,7 +42,8 @@ class _ContinueEdittingState extends State<ContinueEditting> {
     );
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(PhosphorIcons.pencil_circle),
         onPressed: () async {
           var bodyJson = jsonEncode(controller.document.toDelta().toJson());
 
@@ -61,7 +63,7 @@ class _ContinueEdittingState extends State<ContinueEditting> {
 
           setState(() {});
         },
-        child: const Text("Save"),
+        label: const Text("Save"),
       ),
       appBar: AppBar(),
       body: SafeArea(
@@ -75,8 +77,11 @@ class _ContinueEdittingState extends State<ContinueEditting> {
                   Expanded(
                     child: AutoSizeTextField(
                       controller: _titleController,
-                      style: GoogleFonts.lora(
-                          fontWeight: FontWeight.w500, fontSize: 25),
+                      style: GoogleFonts.roboto(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
                       decoration: const InputDecoration.collapsed(
                         //no decoration
                         hintText: "An Interesting title.",

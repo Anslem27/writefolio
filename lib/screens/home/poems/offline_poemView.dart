@@ -93,12 +93,16 @@ class _OfflinePoemViewState extends State<OfflinePoemView> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      widget.poemtitle,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.urbanist(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
+                    child: Hero(
+                      tag: "poemTitle",
+                      child: Text(
+                        widget.poemtitle,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.urbanist(
+                          fontSize: 25,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),

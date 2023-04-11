@@ -134,16 +134,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                             horizontal: 10.0, vertical: 5),
                         child: Text("joined $formattedDate"),
                       ),
-                      const ListTile(
+                      ListTile(
                         leading: Text(
                           "23",
-                          style: TextStyle(
+                          style: GoogleFonts.roboto(
                             fontSize: 35,
+                            fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
                         ),
-                        title: Text("Published medium articles",
-                            style: TextStyle(fontWeight: FontWeight.w500)),
+                        title: const Text(
+                          "published medium articles",
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
                         //else not Connected
                       ),
                       const SizedBox(height: 20),
@@ -151,7 +154,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
                           "your articles",
-                          style: GoogleFonts.urbanist(
+                          style: GoogleFonts.roboto(
+                            color: Colors.grey,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

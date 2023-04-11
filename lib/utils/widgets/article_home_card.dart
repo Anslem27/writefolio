@@ -100,23 +100,27 @@ class ArticleHomeCard extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.orange[100],
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          width: 90,
-                          height: 100,
-                          child: CachedNetworkImage(
-                            imageUrl: userArticle.imageUrl,
-                            placeholder: (context, url) => const Center(
-                                child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) => const Center(
-                                child: Icon(
-                              Icons.image_search_outlined,
-                              size: 80,
-                            )),
-                            fit: BoxFit.cover,
+                        child: Hero(
+                          tag: "draftImage",
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.orange[100],
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            width: 90,
+                            height: 100,
+                            child: CachedNetworkImage(
+                              imageUrl: userArticle.imageUrl,
+                              placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) =>
+                                  const Center(
+                                      child: Icon(
+                                Icons.image_search_outlined,
+                                size: 80,
+                              )),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       )

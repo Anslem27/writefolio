@@ -2,13 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:logger/logger.dart';
 import 'package:writefolio/models/articles/article.dart';
+import 'package:writefolio/screens/library/tools/view_type.dart';
 import 'package:writefolio/screens/settings/components/avatar_picker.dart';
 import 'package:writefolio/utils/tools/reading_time_approximator.dart';
 import '../../data/user_article_datastore.dart';
 import '../../utils/widgets/article_home_card.dart';
+import '../../utils/widgets/loader.dart';
+import 'components/article_view.dart';
 
 var logger = Logger();
 
@@ -65,9 +68,24 @@ class _LibraryFilesState extends State<LibraryFiles> {
                         ),
                         PopupMenuButton<String>(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                           onSelected: (value) {
-                            // Do something when an item is selected
+                            // Store the user's selected layout type in the Layout box
+                            switch (value) {
+                              case 'card':
+                                Hive.box<LayoutType>('Layout')
+                                    .put('type', LayoutType.card);
+
+                                logger.d("Layout type changed to card");
+                                break;
+                              case 'list':
+                                Hive.box<LayoutType>('Layout')
+                                    .put('type', LayoutType.list);
+
+                                logger.d("Layout type changed to list");
+                                break;
+                            }
                           },
                           itemBuilder: (BuildContext context) => [
                             PopupMenuItem(
@@ -95,17 +113,28 @@ class _LibraryFilesState extends State<LibraryFiles> {
                       ],
                     ),
                   ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    physics: const ScrollPhysics(),
-                    itemCount: savedArticlesList.length,
-                    itemBuilder: (_, index) {
-                      logger.i(savedArticlesList[index]);
-                      var userArticle = savedArticlesList[index];
-                      return ArticleHomeCard(userArticle: userArticle);
-                    },
-                  ),
+                  ValueListenableBuilder(
+                      valueListenable:
+                          Hive.box<LayoutType>("Layout").listenable(),
+                      builder: (_, viewBox, ___) {
+                        var boxValue =
+                            viewBox.get('type', defaultValue: LayoutType.list);
+
+                        return boxValue == LayoutType.list
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.zero,
+                                physics: const ScrollPhysics(),
+                                itemCount: savedArticlesList.length,
+                                itemBuilder: (_, index) {
+                                  logger.i(savedArticlesList[index]);
+                                  var userArticle = savedArticlesList[index];
+                                  return ArticleHomeCard(
+                                      userArticle: userArticle);
+                                },
+                              )
+                            : articleCard(savedArticlesList);
+                      })
 
                   //articleCard(savedArticlesList)
                 ],
@@ -123,9 +152,9 @@ class _LibraryFilesState extends State<LibraryFiles> {
       mainAxisSpacing: 5,
       physics: const ScrollPhysics(),
       crossAxisCount: 2,
-      children: List.generate(
-        savedArticlesList.length,
-        (index) => AnimatedContainer(
+      children: List.generate(savedArticlesList.length, (index) {
+        var userArticle = savedArticlesList[index];
+        return AnimatedContainer(
           duration: const Duration(milliseconds: 500),
           child: Card(
             shape: RoundedRectangleBorder(
@@ -133,26 +162,38 @@ class _LibraryFilesState extends State<LibraryFiles> {
             ),
             child: InkWell(
               borderRadius: BorderRadius.circular(8),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => ArticleView(
+                      userArticle: userArticle,
+                    ),
+                  ),
+                );
+              },
               child: Column(
                 children: [
-                  Container(
-                    height: 130,
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Card(
-                      child: CachedNetworkImage(
-                        imageUrl: savedArticlesList[index].imageUrl,
-                        placeholder: (context, url) =>
-                            const Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => const Center(
-                            child: Icon(
-                          Icons.image_search_outlined,
-                          size: 80,
-                        )),
-                        fit: BoxFit.cover,
+                  Hero(
+                    tag: "draftImage",
+                    child: Container(
+                      height: 130,
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Card(
+                        child: CachedNetworkImage(
+                          imageUrl: savedArticlesList[index].imageUrl,
+                          placeholder: (context, url) =>
+                              const Center(child: LoadingAnimation()),
+                          errorWidget: (context, url, error) => const Center(
+                              child: Icon(
+                            Icons.image_search_outlined,
+                            size: 80,
+                          )),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
@@ -193,8 +234,8 @@ class _LibraryFilesState extends State<LibraryFiles> {
               ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 

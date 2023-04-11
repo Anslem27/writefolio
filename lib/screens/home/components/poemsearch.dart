@@ -9,6 +9,7 @@ import '../../../utils/constants.dart';
 import '../../../data/saved_poem_datastore.dart';
 import '../../../services/poem_service.dart';
 import '../../../utils/tools/reading_time_approximator.dart';
+import '../../../utils/widgets/loader.dart';
 import '../poems/poem_detail_view.dart';
 
 var logger = Logger();
@@ -53,7 +54,7 @@ class PoemQuerySearch extends SearchDelegate {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    Center(child: CircularProgressIndicator()),
+                    Center(child: LoadingAnimation()),
                   ],
                 );
               } else if (snapshot.data!.poem!.isEmpty || snapshot.hasError) {
@@ -230,7 +231,7 @@ class PoemQuerySearch extends SearchDelegate {
               return const Center(
                   child: Padding(
                 padding: EdgeInsets.all(8.0),
-                child: CircularProgressIndicator(),
+                child: LoadingAnimation(),
               ));
             }
             return ListView(

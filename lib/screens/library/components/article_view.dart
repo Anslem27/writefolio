@@ -188,25 +188,28 @@ class _ArticleViewState extends State<ArticleView> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(
-                    width: double.maxFinite,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Card(
-                      child: CachedNetworkImage(
-                        imageUrl: widget.userArticle.imageUrl,
-                        placeholder: (context, url) =>
-                            const Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => const Center(
-                            child: Icon(
-                          Icons.image_search_outlined,
-                          size: 80,
-                        )),
-                        fit: BoxFit.cover,
+                child: Hero(
+                  tag: "draftImage",
+                  child: Container(
+                      width: double.maxFinite,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    )),
+                      child: Card(
+                        child: CachedNetworkImage(
+                          imageUrl: widget.userArticle.imageUrl,
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => const Center(
+                              child: Icon(
+                            Icons.image_search_outlined,
+                            size: 80,
+                          )),
+                          fit: BoxFit.cover,
+                        ),
+                      )),
+                ),
               ),
               const Padding(
                 padding: EdgeInsets.only(left: 8.0, right: 8),
