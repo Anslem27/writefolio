@@ -162,14 +162,14 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
+              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 5),
               child: Text(
                 "If you click  'Connect medium account'  your medium articles will be fetched from an online service and displayed in the app for you to reflect upon.",
                 style: TextStyle(),
               ),
             ),
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
+              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 5),
               child: Text(
                 "If you click  'Sign Up with google ' or 'Sign up with email' and are not a writefolio user, you will be registered nad agree to writefolio's Terms and Conditions and Privacy Policy.",
               ),
