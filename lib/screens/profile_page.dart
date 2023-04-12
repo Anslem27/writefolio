@@ -11,6 +11,7 @@ import '../models/user/medium_user_model.dart';
 import '../services/user_service.dart';
 import '../utils/tools/date_parser.dart';
 import '../utils/widgets/shimmer_component.dart';
+import 'library/tools/draft_count.dart';
 import 'settings/components/avatar_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -106,11 +107,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 5),
-                        child: Text(
-                          "43 drafts    |    40 saved poems",
-                          style: GoogleFonts.roboto(
-                            fontSize: 17,
-                          ),
+                        child: Row(
+                          children: [
+                            const DraftCount(),
+                            Text(
+                              "  |  ",
+                              style: GoogleFonts.roboto(
+                                fontSize: 17,
+                              ),
+                            ),
+                            const SavedPoemCount(),
+                          ],
                         ),
                       ),
                       TextButton(

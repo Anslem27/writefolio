@@ -15,6 +15,7 @@ import 'package:logger/logger.dart';
 import 'package:writefolio/models/articles/article.dart';
 import '../data/user_article_datastore.dart';
 import '../screens/navigation.dart';
+import '../utils/widgets/loader.dart';
 
 var logger = Logger();
 
@@ -191,6 +192,12 @@ class _ArticleEditorState extends State<ArticleEditor> {
                                             child: CachedNetworkImage(
                                               imageUrl:
                                                   images[index].downloadUrl,
+                                              progressIndicatorBuilder:
+                                                  (_, string, progress) {
+                                                return const Center(
+                                                  child: LoadingAnimation(),
+                                                );
+                                              },
                                             ),
                                           ),
                                         );
@@ -217,7 +224,7 @@ class _ArticleEditorState extends State<ArticleEditor> {
                           );
                         } else {
                           return const Center(
-                            child: CircularProgressIndicator(),
+                            child: LoadingAnimation(),
                           );
                         }
                       },
