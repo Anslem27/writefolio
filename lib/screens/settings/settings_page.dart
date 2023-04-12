@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:writefolio/editor/create_article.dart';
 
 import 'components/avatar_picker.dart';
+import 'components/licences.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -104,10 +105,18 @@ class _SettingsPageState extends State<SettingsPage> {
               )
             ],
           ),
-          const _SingleSection(title: "The Boring zone", children: [
+          _SingleSection(title: "The Boring zone", children: [
             _CustomListTile(
               title: "opensource licences",
               icon: PhosphorIcons.list,
+              ontap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const LicencesPage(),
+                  ),
+                );
+              },
             ),
           ]),
           const Padding(
