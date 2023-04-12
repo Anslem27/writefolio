@@ -252,11 +252,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                                   .title
                                                                   .trim()
                                                                   .toUpperCase(),
+                                                              maxLines: 2,
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
                                                               style: GoogleFonts
-                                                                  .urbanist(
+                                                                  .roboto(
+                                                                color:
+                                                                    Colors.grey,
                                                                 fontSize: 16.5,
                                                                 fontWeight:
                                                                     FontWeight
@@ -267,8 +270,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                           const Padding(
                                                             padding: EdgeInsets
                                                                 .symmetric(
-                                                                    vertical:
-                                                                        2.0),
+                                                              vertical: 2.0,
+                                                            ),
                                                           ),
                                                           SizedBox(
                                                             width:
@@ -297,7 +300,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                                             5.0),
                                                                 child: SizedBox(
                                                                   child: Text(
-                                                                    "Published : ${dateParser(articles[index].pubDate)}",
+                                                                    "pub : ${dateParser(articles[index].pubDate)}",
                                                                   ),
                                                                 ),
                                                               ),
