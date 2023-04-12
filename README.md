@@ -10,4 +10,8 @@
 ## Build
 
 - Generate Licences
+
   - `flutter pub run flutter_oss_licenses:generate.dart`
+
+- Generate Hive Adaptors
+  - `flutter packages pub run build_runner build`

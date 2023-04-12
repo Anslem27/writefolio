@@ -4,6 +4,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:hive/hive.dart';
 import 'package:writefolio/editor/create_article.dart';
 
+import '../../utils/theme/theme_colors.dart';
 import 'components/avatar_picker.dart';
 import 'components/legalities.dart';
 import 'components/licences.dart';
@@ -50,6 +51,18 @@ class _SettingsPageState extends State<SettingsPage> {
                     logger.i(value); //value to be stored.
                   },
                 ),
+              ),
+              _CustomListTile(
+                title: "theme color",
+                icon: PhosphorIcons.drop,
+                ontap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const ThemePage(),
+                    ),
+                  );
+                },
               ),
               _CustomListTile(
                 title: "writefolio avatar",

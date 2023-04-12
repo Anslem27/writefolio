@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class CategoryFeed {
   String? version;
   String? encoding;

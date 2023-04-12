@@ -1,4 +1,7 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: implementation_imports, unnecessary_import
+
+import "package:flutter/src/material/theme.dart" hide Theme;
+import 'package:flutter/material.dart' hide Theme;
 import 'package:hive_flutter/adapters.dart';
 import 'package:writefolio/screens/home/home.dart';
 import 'package:writefolio/screens/library/libary.dart';
@@ -10,6 +13,8 @@ import 'onboarding/onboard/onboarding_screen.dart';
 import 'onboarding/onboard/screens/sign_up.dart';
 import 'screens/library/tools/view_type.dart';
 import 'screens/navigation.dart';
+import 'utils/theme/theme_model.dart';
+import 'utils/widgets/loader.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,10 +22,13 @@ Future<void> main() async {
   Hive.registerAdapter<SavedPoems>(SavedPoemsAdapter());
   Hive.registerAdapter<UserArticle>(UserArticleAdapter());
   Hive.registerAdapter(LayoutTypeAdapter());
+  Hive.registerAdapter(ThemeAdapter());
+  await Hive.openBox<bool>('firstLaunch');
   await Hive.openBox<LayoutType>('Layout');
   await Hive.openBox<SavedPoems>("savedPoems");
   await Hive.openBox<UserArticle>("userArticles");
-  await Hive.openBox<bool>('themeBox');
+  await Hive.openBox<bool>('themeBox'); //light and dark theme
+  await Hive.openBox<Theme>('themes'); // accent colors
   await Hive.openBox<String>("avatarBox");
   runApp(const MyApp());
 }
@@ -35,46 +43,53 @@ class MyApp extends StatelessWidget {
       valueListenable: Hive.box<bool>("themeBox").listenable(),
       builder: (_, box, __) {
         final isDarkMode = box.get('isDarkMode', defaultValue: false);
-        return MaterialApp(
-          title: 'WriteFolio',
-          debugShowCheckedModeBanner: false,
-          theme: isDarkMode == null
-              ? ThemeData(
-                  brightness: WidgetsBinding.instance.window.platformBrightness,
-                )
-              : isDarkMode
-                  ? darkTheme()
-                  : lightTheme(),
-          // darkTheme: darkTheme(),
-          home: const WriteFolioApp(),
-          routes: {
-            "/onboarding": (_) => const IntroductionAnimationScreen(),
-            "/createAccount": (_) => const SignUpPage(),
-            "/noInternet": (_) => const NoInternet(isRouteBack: true),
-            "/home": (_) => const HomeScreen(),
-            "/library": (context) => const LibraryScreen(),
-            "/navigation": (_) => const Navigation(),
-            "settings": (_) => const SettingsPage()
+        return ValueListenableBuilder(
+          valueListenable: Hive.box<Theme>("themes").listenable(),
+          builder: (_, themeBox, __) {
+            final theme = themeBox.get('selected_theme',
+                defaultValue: Theme("default", const Color(0xfffbd38d).value));
+            return MaterialApp(
+              title: 'WriteFolio',
+              debugShowCheckedModeBanner: false,
+              theme: isDarkMode == null
+                  ? ThemeData(
+                      brightness:
+                          WidgetsBinding.instance.window.platformBrightness,
+                    )
+                  : isDarkMode
+                      ? darkTheme(theme!.colorValue)
+                      : lightTheme(theme!.colorValue),
+              home: const WriteFolioApp(),
+              routes: {
+                "/onboarding": (_) => const IntroductionAnimationScreen(),
+                "/createAccount": (_) => const SignUpPage(),
+                "/noInternet": (_) => const NoInternet(isRouteBack: true),
+                "/home": (_) => const HomeScreen(),
+                "/library": (context) => const LibraryScreen(),
+                "/navigation": (_) => const Navigation(),
+                "settings": (_) => const SettingsPage()
+              },
+            );
           },
         );
       },
     );
   }
 
-  ThemeData lightTheme() {
+  ThemeData lightTheme(int selectedColor) {
     return ThemeData(
       brightness: Brightness.light,
       useMaterial3: true,
-      colorSchemeSeed: const Color(0xfffbd38d),
+      colorSchemeSeed: Color(selectedColor),
       // primarySwatch: Colors.blue,
     );
   }
 
-  ThemeData darkTheme() {
+  ThemeData darkTheme(int selectedColor) {
     return ThemeData(
       brightness: Brightness.dark,
       useMaterial3: true,
-      colorSchemeSeed: const Color(0xfffbd38d),
+      colorSchemeSeed: Color(selectedColor),
     );
   }
 }
@@ -84,6 +99,24 @@ class WriteFolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const IntroductionAnimationScreen();
+    return Material(
+      child: FutureBuilder(
+        future: Hive.openBox<bool>('firstLaunch'),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            final bool? isFirstLaunch =
+                Hive.box<bool>('firstLaunch').get('value', defaultValue: true);
+            if (isFirstLaunch!) {
+              Hive.box<bool>('firstLaunch').put('value', false);
+              return const IntroductionAnimationScreen();
+            } else {
+              return const SignUpPage();
+            }
+          } else {
+            return const LoadingAnimation();
+          }
+        },
+      ),
+    );
   }
 }
