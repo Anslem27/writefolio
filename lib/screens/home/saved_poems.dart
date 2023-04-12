@@ -125,22 +125,19 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                                                 children: <Widget>[
                                                   SizedBox(
                                                     width: double.infinity,
-                                                    child: Hero(
-                                                      tag: "poemTitle",
-                                                      child: Text(
-                                                        savedPoem.title
-                                                            .trim()
-                                                            .toUpperCase(),
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style:
-                                                            GoogleFonts.roboto(
-                                                          color: Colors.grey,
-                                                          fontSize: 16.5,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
+                                                    child: Text(
+                                                      savedPoem.title
+                                                          .trim()
+                                                          .toUpperCase(),
+                                                      maxLines: 2,
+                                                      overflow: TextOverflow
+                                                          .ellipsis,
+                                                      style:
+                                                          GoogleFonts.roboto(
+                                                        color: Colors.grey,
+                                                        fontSize: 16.5,
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                       ),
                                                     ),
                                                   ),
