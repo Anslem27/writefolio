@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:writefolio/editor/create_article.dart';
 
 import 'components/avatar_picker.dart';
+import 'components/legalities.dart';
 import 'components/licences.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -84,22 +85,38 @@ class _SettingsPageState extends State<SettingsPage> {
               icon: PhosphorIcons.medium_logo,
             )
           ]),
-          const _SingleSection(
+          _SingleSection(
             title: "about Writefolio",
             children: [
-              _CustomListTile(
+              const _CustomListTile(
                 title: "faq/contact us",
                 icon: PhosphorIcons.info,
               ),
               _CustomListTile(
                 title: "terms of service",
                 icon: PhosphorIcons.shield,
+                ontap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const TermsOfUse(),
+                    ),
+                  );
+                },
               ),
               _CustomListTile(
                 title: "privacy policy",
                 icon: Icons.shield,
+                ontap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const PrivacyPolicy(),
+                    ),
+                  );
+                },
               ),
-              _CustomListTile(
+              const _CustomListTile(
                 title: "rate on the play store",
                 icon: PhosphorIcons.star,
               )
