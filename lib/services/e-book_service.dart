@@ -4,7 +4,6 @@ import 'dart:convert';
 import "package:http/http.dart" as http;
 import 'package:writefolio/editor/create_article.dart';
 import 'package:xml2json/xml2json.dart';
-
 import '../models/home/e-book_category_feed.dart';
 
 class EbookApi {

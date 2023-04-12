@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:profanity_filter/profanity_filter.dart';
@@ -25,7 +24,7 @@ class ExplorerRselfCard extends StatelessWidget {
         logger.i(listObject[index].description.trim());
         Navigator.push(
           context,
-          CupertinoPageRoute(
+          MaterialPageRoute(
             builder: (_) => ExplorerComponentView(component: component),
           ),
         );

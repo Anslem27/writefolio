@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -71,7 +70,7 @@ class _PoemViewState extends State<PoemView> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                CupertinoPageRoute(
+                                MaterialPageRoute(
                                   builder: (_) => PoemDetailView(
                                     poemtitle:
                                         snapshot.data!.poem![index].title,
@@ -226,7 +225,7 @@ class _PoemViewState extends State<PoemView> {
                                   onTap: () {
                                     Navigator.push(
                                       context,
-                                      CupertinoPageRoute(
+                                      MaterialPageRoute(
                                         builder: (_) => PoemDetailView(
                                           poemtitle: sonnetSnapshot
                                               .data!.poem![index].title,

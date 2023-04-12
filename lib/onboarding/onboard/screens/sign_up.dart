@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -175,7 +176,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 5),
               child: RichText(
                 text: TextSpan(
                   children: [
@@ -205,5 +206,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void _handlePress() {
     logger.i("Privacy Policy clicked");
+    HapticFeedback.vibrate();
   }
 }

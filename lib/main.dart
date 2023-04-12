@@ -6,7 +6,6 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:writefolio/screens/home/home.dart';
 import 'package:writefolio/screens/library/libary.dart';
 import 'package:writefolio/screens/settings/settings_page.dart';
-import 'package:writefolio/utils/widgets/no_internetscreen.dart';
 import 'models/articles/article.dart';
 import 'models/poems/saved_poems.dart';
 import 'onboarding/onboard/onboarding_screen.dart';
@@ -63,7 +62,6 @@ class MyApp extends StatelessWidget {
               routes: {
                 "/onboarding": (_) => const IntroductionAnimationScreen(),
                 "/createAccount": (_) => const SignUpPage(),
-                "/noInternet": (_) => const NoInternet(isRouteBack: true),
                 "/home": (_) => const HomeScreen(),
                 "/library": (context) => const LibraryScreen(),
                 "/navigation": (_) => const Navigation(),

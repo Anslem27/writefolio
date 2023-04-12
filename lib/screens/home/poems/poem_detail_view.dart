@@ -76,7 +76,7 @@ class _PoemDetailViewState extends State<PoemDetailView> {
                               ).show(context),
                               Navigator.pushReplacement(
                                 context,
-                                CupertinoPageRoute(
+                                MaterialPageRoute(
                                   builder: (_) => OfflinePoemView(
                                     poemtitle: widget.poemtitle,
                                     poemBody: widget.poemBody,

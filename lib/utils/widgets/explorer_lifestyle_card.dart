@@ -96,10 +96,7 @@ class LifeStyleCard extends StatelessWidget {
                             padding: const EdgeInsets.all(5.0),
                             child: Text(
                               listItem[index].categories[categoryIndex],
-                              style: GoogleFonts.roboto(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey,
-                              ),
+                              style: GoogleFonts.roboto(),
                             ),
                           ),
                         ),

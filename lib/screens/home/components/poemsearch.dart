@@ -110,7 +110,7 @@ class PoemQuerySearch extends SearchDelegate {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                CupertinoPageRoute(
+                                MaterialPageRoute(
                                   builder: (_) => PoemDetailView(
                                     poemtitle:
                                         snapshot.data!.poem![index].title,
