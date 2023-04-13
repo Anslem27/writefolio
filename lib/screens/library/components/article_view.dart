@@ -189,7 +189,7 @@ class _ArticleViewState extends State<ArticleView> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Hero(
-                  tag: "draftImage",
+                  tag: widget.userArticle.title,
                   child: Container(
                       width: double.maxFinite,
                       height: 200,

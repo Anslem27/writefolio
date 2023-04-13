@@ -100,7 +100,7 @@ class ArticleHomeCard extends StatelessWidget {
                       ),
                       Expanded(
                         child: Hero(
-                          tag: "draftImage",
+                          tag: userArticle.title,
                           child: Container(
                             decoration: BoxDecoration(
                               color: Colors.orange[100],

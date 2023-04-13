@@ -175,7 +175,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
               child: Column(
                 children: [
                   Hero(
-                    tag: "draftImage",
+                    tag: userArticle.title,
                     child: Container(
                       height: 130,
                       width: double.maxFinite,

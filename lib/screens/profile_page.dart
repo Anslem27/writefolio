@@ -26,8 +26,6 @@ class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    var currentDate = DateTime.now();
-    var formattedDate = DateFormat.yMMMd().format(currentDate);
     //TODO
 
     // ignore: unused_local_variable
@@ -65,6 +63,58 @@ class _ProfileScreenState extends State<ProfileScreen>
                 centerTitle: false,
                 actions: [
                   IconButton(
+                    onPressed: () async {
+                      showModalBottomSheet(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
+                        context: context,
+                        builder: (BuildContext context) {
+                          return SizedBox(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                ListTile(
+                                  leading: const Icon(Icons.exit_to_app),
+                                  title: const Text('Sign out'),
+                                  onTap: () async {
+                                    Navigator.pop(context);
+                                    bool confirmSignOut = await showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text(
+                                              'Are you sure you want to sign out?'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Text('Cancel'),
+                                              onPressed: () {
+                                                Navigator.pop(context, false);
+                                              },
+                                            ),
+                                            TextButton(
+                                              child: const Text('Sign out'),
+                                              onPressed: () {
+                                                Navigator.pop(context, true);
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                    if (confirmSignOut == true) {
+                                      await FirebaseAuth.instance.signOut();
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    icon: const Icon(Icons.logout_rounded),
+                  ),
+                  IconButton(
                     onPressed: () {
                       Navigator.pushNamed(context, "settings");
                     },
@@ -95,8 +145,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Padding(
+                                children: [
+                                  const Padding(
                                     padding:
                                         EdgeInsets.symmetric(vertical: 5.0),
                                     child: Text(
@@ -107,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       ),
                                     ),
                                   ),
-                                  Text("@username")
+                                  Text("@${loggedInWritefolioUser.email}")
                                 ],
                               ),
                             )
@@ -142,14 +192,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                         ),
                         TextButton.icon(
                           onPressed: () {},
-                          icon: const Icon(PhosphorIcons.twitch_logo),
+                          icon: const Icon(PhosphorIcons.reddit_logo),
                           label: const Text("add social"),
                         ),
                       ]),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 5),
-                        child: Text("joined $formattedDate"),
+                        child: Text(
+                            "joined ${DateFormat.yMMMd().format(loggedInWritefolioUser.metadata.creationTime!)}"),
                       ),
                       ListTile(
                         leading: Text(

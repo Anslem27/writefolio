@@ -66,13 +66,13 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         logger.wtf("Passwords do not match");
       }
       Navigator.pop(context); //pop to loading animation
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       Navigator.pop(context); //pop to loading animation
-      if (e.code == "user-not-found") {
-        logger.e("Error: ${e.code}");
-      } else if (e.code == "wrong-password") {
-        logger.e("Error: ${e.code}");
-      }
+      AnimatedSnackBar.material(
+        "Something unexpected occured",
+        type: AnimatedSnackBarType.error,
+        mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+      ).show(context);
     }
   }
 

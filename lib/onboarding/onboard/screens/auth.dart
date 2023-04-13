@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:writefolio/onboarding/onboard/screens/sign_in.dart';
-import '../../../screens/home/home.dart';
+import 'package:writefolio/screens/navigation.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -28,7 +28,7 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _isLoggedIn ? const HomeScreen() : const SignInPage(),
+      body: _isLoggedIn ? const Navigation() : const SignInPage(),
     );
   }
 }

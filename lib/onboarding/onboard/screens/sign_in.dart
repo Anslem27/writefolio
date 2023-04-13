@@ -57,18 +57,37 @@ class _SignInPageState extends State<SignInPage> {
       logger.wtf("Fields are not properly filled");
     } else {
       try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+        await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
-        );
+        )
+            .then((value) {
+          AnimatedSnackBar.material(
+            "Successfully logged in as ${emailController.text}",
+            type: AnimatedSnackBarType.success,
+            mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+          ).show(context);
+        });
         Navigator.pop(context); //pop to loading animation
         logger.i("signing in...");
       } on FirebaseAuthException catch (e) {
-        Navigator.pop(context); //pop to loading animation
         if (e.code == "user-not-found") {
+          AnimatedSnackBar.material(
+            "Oops user not found",
+            type: AnimatedSnackBarType.error,
+            mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+          ).show(context);
           logger.e("Error: ${e.code}");
+          Navigator.pop(context); //pop to loading animation
         } else if (e.code == "wrong-password") {
+          AnimatedSnackBar.material(
+            "Wrong Password",
+            type: AnimatedSnackBarType.info,
+            mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+          ).show(context);
           logger.e("Error: ${e.code}");
+          Navigator.pop(context); //pop to loading animation
         }
       }
     }
