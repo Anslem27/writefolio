@@ -101,7 +101,8 @@ class _ContinueEdittingState extends State<ContinueEditting> {
                     borderRadius: BorderRadius.circular(10),
                     // color: Colors.orange[900]!.withOpacity(0.5),
                   ),
-                  child: Card(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
                     child: CachedNetworkImage(
                       imageUrl: widget.userArticle.imageUrl,
                       placeholder: (context, url) =>

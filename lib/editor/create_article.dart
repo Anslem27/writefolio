@@ -189,15 +189,19 @@ class _ArticleEditorState extends State<ArticleEditor> {
                                               });
                                               Navigator.of(context).pop();
                                             },
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  images[index].downloadUrl,
-                                              progressIndicatorBuilder:
-                                                  (_, string, progress) {
-                                                return const Center(
-                                                  child: LoadingAnimation(),
-                                                );
-                                              },
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    images[index].downloadUrl,
+                                                progressIndicatorBuilder:
+                                                    (_, string, progress) {
+                                                  return const Center(
+                                                    child: LoadingAnimation(),
+                                                  );
+                                                },
+                                              ),
                                             ),
                                           ),
                                         );
@@ -380,7 +384,8 @@ class _ArticleEditorState extends State<ArticleEditor> {
                     borderRadius: BorderRadius.circular(10),
                     // color: Colors.orange[900]!.withOpacity(0.5),
                   ),
-                  child: Card(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
                     child: CachedNetworkImage(
                       imageUrl: selectedImageUrl,
                       placeholder: (context, url) =>

@@ -196,7 +196,8 @@ class _ArticleViewState extends State<ArticleView> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Card(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
                         child: CachedNetworkImage(
                           imageUrl: widget.userArticle.imageUrl,
                           placeholder: (context, url) =>

@@ -182,16 +182,18 @@ class _LibraryFilesState extends State<LibraryFiles> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Card(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
                         child: CachedNetworkImage(
                           imageUrl: savedArticlesList[index].imageUrl,
                           placeholder: (context, url) =>
                               const Center(child: LoadingAnimation()),
                           errorWidget: (context, url, error) => const Center(
-                              child: Icon(
-                            Icons.image_search_outlined,
-                            size: 80,
-                          )),
+                            child: Icon(
+                              Icons.image_search_outlined,
+                              size: 80,
+                            ),
+                          ),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -199,7 +201,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
                   ),
                   Text(
                     savedArticlesList[index].title,
-                    textAlign: TextAlign.start,
+                    textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: GoogleFonts.roboto(
