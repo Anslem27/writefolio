@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1088509430521",
+    "project_id": "writefolio-65a1a",
+    "storage_bucket": "writefolio-65a1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088509430521:android:16da36541c26b57c6a3028",
+        "android_client_info": {
+          "package_name": "com.example.medium_client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1088509430521-8s2auol2gg7gucb3cpulralu4c21i256.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNoSNSE_ShI5k1heyvgDELbd3UXK10CdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1088509430521-8s2auol2gg7gucb3cpulralu4c21i256.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1088509430521-doptkm4hq5m7vrcoisv2icmsi15ku747.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mediumClient"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

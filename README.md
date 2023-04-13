@@ -14,4 +14,8 @@
   - `flutter pub run flutter_oss_licenses:generate.dart`
 
 - Generate Hive Adaptors
+
   - `flutter packages pub run build_runner build`
+
+- Get firebase sha1 and sha256
+  - `keytool -list -v -keystore c:\users\user-name\.android\debug.keystore -alias androiddebugkey -storepass android -keypass android`

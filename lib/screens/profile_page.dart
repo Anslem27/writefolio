@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/svg.dart';
@@ -27,6 +28,15 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget build(BuildContext context) {
     var currentDate = DateTime.now();
     var formattedDate = DateFormat.yMMMd().format(currentDate);
+    //TODO
+
+    // ignore: unused_local_variable
+    final loggedInWritefolioUser = FirebaseAuth.instance.currentUser!;
+
+    // ignore: unused_element
+    void signOut() async {
+      await FirebaseAuth.instance.signOut();
+    }
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
