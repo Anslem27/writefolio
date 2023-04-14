@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/utils/widgets/loader.dart';
 import '../../models/articles/article.dart';
 import '../../screens/library/components/article_view.dart';
-import '../../screens/settings/components/avatar_picker.dart';
 import '../tools/reading_time_approximator.dart';
 
 class ArticleHomeCard extends StatelessWidget {
@@ -48,7 +47,7 @@ class ArticleHomeCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.start,
                           style: const TextStyle(
-                            fontSize: 19,
+                            fontSize: 17,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -86,8 +85,6 @@ class ArticleHomeCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const Spacer(),
-                        const AvatarComponent(radius: 17),
                       ],
                     ),
                   ),
@@ -110,8 +107,8 @@ class ArticleHomeCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                           child: CachedNetworkImage(
                             imageUrl: userArticle.imageUrl,
-                            placeholder: (context, url) => const Center(
-                                child: LoadingAnimation()),
+                            placeholder: (context, url) =>
+                                const Center(child: LoadingAnimation()),
                             errorWidget: (context, url, error) => const Center(
                                 child: Icon(
                               PhosphorIcons.image,
@@ -134,7 +131,7 @@ class ArticleHomeCard extends StatelessWidget {
                               userArticle.bodyText.replaceAll("\n", " "),
                               maxLines: 4,
                               overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.roboto(fontSize: 16.5),
+                              style: GoogleFonts.roboto(fontSize: 15),
                             ),
                           ),
                         ),

@@ -42,7 +42,7 @@ class _ArticleViewState extends State<ArticleView> {
           );
         },
         label: const Text("Edit"),
-        icon: const Icon(Icons.edit),
+        icon: const Icon(PhosphorIcons.pencil),
       ),
       appBar: AppBar(
         leading: IconButton(
@@ -176,9 +176,15 @@ class _ArticleViewState extends State<ArticleView> {
                             // Do something when an item is selected
                           },
                           itemBuilder: (BuildContext context) => [
-                            const PopupMenuItem(
+                            PopupMenuItem(
                               value: 'share',
-                              child: Text('Share'),
+                              child: Row(
+                                children: const [
+                                  Icon(Icons.share_outlined),
+                                  SizedBox(width: 3),
+                                  Text('Share'),
+                                ],
+                              ),
                             ),
                           ],
                         )

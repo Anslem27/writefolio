@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -28,6 +29,7 @@ class ArticleEditor extends StatefulWidget {
 
 class _ArticleEditorState extends State<ArticleEditor> {
   final QuillController _controller = QuillController.basic();
+
   final TextEditingController _titleController = TextEditingController();
   var articleDataStore = UserArticleDataStore();
   static var currentDate = DateTime.now();
@@ -56,6 +58,9 @@ class _ArticleEditorState extends State<ArticleEditor> {
 
   @override
   Widget build(BuildContext context) {
+    _controller.document = Document()
+      ..insert(0,
+          'You can start typing here and use all the formatting options available.');
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -240,7 +245,7 @@ class _ArticleEditorState extends State<ArticleEditor> {
               icon: const Icon(Icons.image))
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           if (_titleController.text.isNotEmpty &&
               _controller.document.toPlainText().isNotEmpty) {
@@ -355,10 +360,11 @@ class _ArticleEditorState extends State<ArticleEditor> {
             ).show(context);
           }
         },
-        child: const Icon(
-          Icons.save_as_rounded,
+        icon: const Icon(
+          PhosphorIcons.pen_nib,
           size: 30,
         ),
+        label: const Text("Create and save"),
       ),
       body: SafeArea(
         child: ListView(
@@ -371,7 +377,7 @@ class _ArticleEditorState extends State<ArticleEditor> {
                   Expanded(
                     child: AutoSizeTextField(
                       controller: _titleController,
-                      style: GoogleFonts.lora(
+                      style: GoogleFonts.urbanist(
                           fontWeight: FontWeight.w500, fontSize: 25),
                       decoration: const InputDecoration.collapsed(
                         //no decoration
@@ -396,7 +402,7 @@ class _ArticleEditorState extends State<ArticleEditor> {
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
                   width: double.maxFinite,
-                  height: isExpanded ? 400 : 220,
+                  height: isExpanded ? 150 : 220,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -408,8 +414,8 @@ class _ArticleEditorState extends State<ArticleEditor> {
                           const Center(child: CircularProgressIndicator()),
                       errorWidget: (context, url, error) => const Center(
                           child: Icon(
-                        Icons.image_search_outlined,
-                        size: 80,
+                        PhosphorIcons.image,
+                        size: 70,
                       )),
                       fit: BoxFit.cover,
                     ),

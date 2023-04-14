@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/editor/create_article.dart';
 import '../../utils/widgets/shimmer_component.dart';
@@ -25,13 +25,13 @@ class _LibraryScreenState extends State<LibraryScreen>
         onPressed: () {
           Navigator.push(
             context,
-            CupertinoPageRoute(
+            MaterialPageRoute(
               builder: (_) => const ArticleEditor(),
             ),
           );
         },
         label: const Text("Create"),
-        icon: const Icon(Icons.edit),
+        icon: const Icon(PhosphorIcons.pencil),
       ),
       body: CustomScrollView(
         slivers: [

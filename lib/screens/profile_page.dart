@@ -17,6 +17,7 @@ import '../services/reddit_user_fecth_service.dart';
 import '../services/user_service.dart';
 import '../utils/tools/date_parser.dart';
 import '../utils/widgets/loader.dart';
+import '../utils/widgets/medium_article_viewer.dart';
 import '../utils/widgets/shimmer_component.dart';
 import 'library/tools/draft_count.dart';
 import 'settings/components/avatar_picker.dart';
@@ -300,135 +301,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 itemBuilder: (_, index) {
                                   return FloatInAnimation(
                                     delay: (1.0 + index) / 4,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              logger.i(articles[index].pubDate);
-                                            },
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              padding: const EdgeInsets.all(3),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  7,
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Expanded(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: <Widget>[
-                                                        SizedBox(
-                                                          width:
-                                                              double.infinity,
-                                                          child: Text(
-                                                            articles[index]
-                                                                .title
-                                                                .trim()
-                                                                .toUpperCase(),
-                                                            maxLines: 2,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: GoogleFonts
-                                                                .roboto(
-                                                              color:
-                                                                  Colors.grey,
-                                                              fontSize: 16.5,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        const Padding(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                            vertical: 2.0,
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width:
-                                                              double.infinity,
-                                                          child: Text(
-                                                            "By ${articles[index].author}",
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          ),
-                                                        ),
-                                                        const Padding(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  vertical:
-                                                                      2.0),
-                                                        ),
-                                                        const Spacer(),
-                                                        Row(
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      right:
-                                                                          5.0),
-                                                              child: SizedBox(
-                                                                child: Text(
-                                                                  "pub : ${dateParser(articles[index].pubDate)}",
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 8.0),
-                                                  ),
-                                                  Container(
-                                                    width: 80.0,
-                                                    height: 80.0,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                    ),
-                                                    child: CachedNetworkImage(
-                                                      imageUrl: articles[index]
-                                                          .thumbnail,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child:
-                                                const Divider(thickness: 0.5),
-                                          )
-                                        ],
-                                      ),
-                                    ),
+                                    child: mediumArticleComponent(
+                                        articles, index, context),
                                   );
                                 });
                           }
@@ -439,6 +313,127 @@ class _ProfileScreenState extends State<ProfileScreen>
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Padding mediumArticleComponent(
+      List<Items> articles, int index, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          InkWell(
+            borderRadius: BorderRadius.circular(8),
+            onTap: () {
+              logger.i(articles[index].content);
+              var component = articles[index];
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => MediumArticleViewer(component: component),
+                ),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 6,
+                padding: const EdgeInsets.all(3),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              articles[index].title.trim().toUpperCase(),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.roboto(
+                                color: Colors.grey,
+                                fontSize: 16.5,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 2.0,
+                            ),
+                          ),
+                          Expanded(
+                            child: Wrap(
+                              children: List.generate(
+                                articles[index].categories.take(1).length,
+                                (categoryIndex) => Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Card(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: Text(
+                                        articles[index]
+                                            .categories[categoryIndex],
+                                        style: GoogleFonts.roboto(),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 2.0),
+                          ),
+                          const Spacer(),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 5.0),
+                                child: SizedBox(
+                                  child: Text(
+                                    "${dateParser(articles[index].pubDate)}",
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    ),
+                    Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: CachedNetworkImage(
+                          imageUrl: articles[index].thumbnail,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: const Divider(thickness: 0.5),
+          )
+        ],
       ),
     );
   }

@@ -1,14 +1,11 @@
 // ignore_for_file: file_names
 
-import 'package:animated_snack_bar/animated_snack_bar.dart';
-import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/screens/settings/components/avatar_picker.dart';
 import 'package:writefolio/utils/tools/date_parser.dart';
-import '../../../editor/create_article.dart';
 import '../../../models/home/guardian_lifestyle.dart';
 import '../../../utils/tools/html_parser.dart';
 import 'package:profanity_filter/profanity_filter.dart';

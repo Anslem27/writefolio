@@ -21,9 +21,9 @@ class _AuthPageState extends State<AuthPage> {
   final Stream<User?> _authStateStream =
       FirebaseAuth.instance.authStateChanges();
   StreamSubscription<InternetConnectionStatus>? _connectionSubscription;
-  // ignore: unused_field
 
   final internetAvailabilityStream = InternetConnectionChecker().onStatusChange;
+  // ignore: unused_field
   bool _isOnline = true;
 
   @override
