@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -92,7 +93,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
                               value: 'card',
                               child: Row(
                                 children: const [
-                                  Icon(Icons.grid_view),
+                                  Icon(PhosphorIcons.cards),
                                   SizedBox(width: 2),
                                   Text('Card view'),
                                 ],

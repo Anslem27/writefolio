@@ -22,6 +22,8 @@ class _AuthPageState extends State<AuthPage> {
       FirebaseAuth.instance.authStateChanges();
   StreamSubscription<InternetConnectionStatus>? _connectionSubscription;
   // ignore: unused_field
+
+  final internetAvailabilityStream = InternetConnectionChecker().onStatusChange;
   bool _isOnline = true;
 
   @override
@@ -47,7 +49,7 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<InternetConnectionStatus>(
-      stream: InternetConnectionChecker().onStatusChange,
+      stream: internetAvailabilityStream,
       builder: (_, internetConnectionSnapshot) {
         if (internetConnectionSnapshot.connectionState ==
             ConnectionState.waiting) {
@@ -90,6 +92,17 @@ class _AuthPageState extends State<AuthPage> {
           // physics: const ScrollPhysics(),
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Connect to the internet to get the full writefolio experience.",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.roboto(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             SvgPicture.asset(
               "assets/illustrations/no-connection.svg",
               height: 200,
