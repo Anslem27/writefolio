@@ -1,11 +1,12 @@
 import 'dart:convert';
-
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:writefolio/data/user_article_datastore.dart';
 import 'package:writefolio/editor/editting.dart';
 import '../../../models/articles/article.dart';
 import '../../../utils/tools/reading_time_approximator.dart';
@@ -85,7 +86,24 @@ class _ArticleViewState extends State<ArticleView> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () async {
+                                  /// delete an existing article and push to navigation route
+                                  await UserArticleDataStore()
+                                      .deleteSavedArticle(
+                                          savedArticle: widget.userArticle)
+                                      .then((value) {
+                                    Navigator.pushNamedAndRemoveUntil(context,
+                                        "/navigation", (route) => false);
+
+                                    AnimatedSnackBar.material(
+                                      "Article deleted successfully",
+                                      type: AnimatedSnackBarType.info,
+                                      mobileSnackBarPosition:
+                                          MobileSnackBarPosition.bottom,
+                                    ).show(context);
+                                  });
+                                  setState(() {});
+                                },
                                 child: const Text("Yes"),
                               ),
                             ),
@@ -97,7 +115,9 @@ class _ArticleViewState extends State<ArticleView> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
                                 child: const Text("No"),
                               ),
                             ),

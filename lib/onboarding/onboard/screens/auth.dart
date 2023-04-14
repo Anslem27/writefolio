@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/onboarding/onboard/screens/sign_in.dart';
 import 'package:writefolio/screens/library/libary.dart';
 import 'package:writefolio/screens/navigation.dart';
@@ -19,6 +21,7 @@ class _AuthPageState extends State<AuthPage> {
   final Stream<User?> _authStateStream =
       FirebaseAuth.instance.authStateChanges();
   StreamSubscription<InternetConnectionStatus>? _connectionSubscription;
+  // ignore: unused_field
   bool _isOnline = true;
 
   @override
@@ -43,59 +46,82 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_isOnline) {
-      // Show the offline widget if there is no internet connectivity
-      return Scaffold(
-        body: Center(
-          child: Column(
-            // physics: const ScrollPhysics(),
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.wifi_off, size: 64),
-              const SizedBox(height: 16),
-              const Text("No internet connection."),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _checkInternetConnectivity();
-                  });
-                },
-                child: const Text("Refresh"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const LibraryScreen(),
-                    ),
+    return StreamBuilder<InternetConnectionStatus>(
+      stream: InternetConnectionChecker().onStatusChange,
+      builder: (_, internetConnectionSnapshot) {
+        if (internetConnectionSnapshot.connectionState ==
+            ConnectionState.waiting) {
+          return const Center(
+            child: LoadingAnimation(),
+          );
+        }
+
+        final status = internetConnectionSnapshot.data;
+        if (status == InternetConnectionStatus.connected) {
+          return Scaffold(
+            body: StreamBuilder<User?>(
+              stream: _authStateStream,
+              builder: (_, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: LoadingAnimation(),
                   );
-                },
-                child: const Text("Open Library"),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
+                }
 
+                if (snapshot.hasData) {
+                  return const Navigation();
+                } else {
+                  return const SignInPage();
+                }
+              },
+            ),
+          );
+        } else {
+          return noInternetBody(context);
+        }
+      },
+    );
+  }
+
+  Scaffold noInternetBody(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<User?>(
-        stream: _authStateStream,
-        builder: (_, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: LoadingAnimation(),
-            );
-          }
-
-          if (snapshot.hasData) {
-            return const Navigation();
-          } else {
-            return const SignInPage();
-          }
-        },
+      body: Center(
+        child: Column(
+          // physics: const ScrollPhysics(),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              "assets/illustrations/no-connection.svg",
+              height: 200,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              "It looks like your offline",
+              style: GoogleFonts.roboto(fontSize: 16),
+            ),
+            const Text("Check your connection and try again"),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  _checkInternetConnectivity();
+                });
+              },
+              child: const Text("Refresh"),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const LibraryScreen(),
+                  ),
+                );
+              },
+              child: const Text("Open Library"),
+            ),
+          ],
+        ),
       ),
     );
   }

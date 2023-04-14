@@ -108,17 +108,20 @@ class ArticleHomeCard extends StatelessWidget {
                             ),
                             width: 90,
                             height: 100,
-                            child: CachedNetworkImage(
-                              imageUrl: userArticle.imageUrl,
-                              placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator()),
-                              errorWidget: (context, url, error) =>
-                                  const Center(
-                                      child: Icon(
-                                Icons.image_search_outlined,
-                                size: 80,
-                              )),
-                              fit: BoxFit.cover,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: CachedNetworkImage(
+                                imageUrl: userArticle.imageUrl,
+                                placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) =>
+                                    const Center(
+                                        child: Icon(
+                                  Icons.image_search_outlined,
+                                  size: 80,
+                                )),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),

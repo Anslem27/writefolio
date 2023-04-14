@@ -35,6 +35,7 @@ class _ArticleEditorState extends State<ArticleEditor> {
 
   String selectedImageUrl = "";
   late List<ImageModel> images;
+  bool isExpanded = false;
 
   Future<List<ImageModel>> fetchImages() async {
     final response = await http
@@ -315,16 +316,21 @@ class _ArticleEditorState extends State<ArticleEditor> {
                                 //create article object
                                 await articleDataStore
                                     .saveArticle(userArticle: userArticle)
-                                    .then((value) => AnimatedSnackBar.material(
-                                          "${userArticle.title} has been saved",
-                                          type: AnimatedSnackBarType.success,
-                                          duration: const Duration(seconds: 4),
-                                          mobileSnackBarPosition:
-                                              MobileSnackBarPosition.bottom,
-                                        ).show(context));
+                                    .then((value) {
+                                  AnimatedSnackBar.material(
+                                    "${userArticle.title} has been saved",
+                                    type: AnimatedSnackBarType.success,
+                                    duration: const Duration(seconds: 4),
+                                    mobileSnackBarPosition:
+                                        MobileSnackBarPosition.bottom,
+                                  ).show(context).then((value) {
+                                    Navigator.pop(context);
+                                  });
+                                });
 
                                 // ignore: use_build_context_synchronously
-                                Navigator.popAndPushNamed(context, "/library");
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, "/navigation", (route) => false);
                               },
                               label: const Text(
                                 "Save Article",
@@ -340,11 +346,14 @@ class _ArticleEditorState extends State<ArticleEditor> {
               ),
             );
           }
-          AnimatedSnackBar.material(
-            'Title or body can not be empty.',
-            type: AnimatedSnackBarType.warning,
-            mobileSnackBarPosition: MobileSnackBarPosition.bottom,
-          ).show(context);
+          if (_titleController.text.isEmpty &&
+              _controller.document.toPlainText().isEmpty) {
+            AnimatedSnackBar.material(
+              'Title or body can not be empty.',
+              type: AnimatedSnackBarType.warning,
+              mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+            ).show(context);
+          }
         },
         child: const Icon(
           Icons.save_as_rounded,
@@ -375,14 +384,21 @@ class _ArticleEditorState extends State<ArticleEditor> {
               ),
             ),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  isExpanded = !isExpanded;
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
                   width: double.maxFinite,
-                  height: 220,
+                  height: isExpanded ? 400 : 220,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    // color: Colors.orange[900]!.withOpacity(0.5),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
@@ -397,7 +413,9 @@ class _ArticleEditorState extends State<ArticleEditor> {
                       )),
                       fit: BoxFit.cover,
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ),
             QuillToolbar.basic(controller: _controller),
             Padding(
