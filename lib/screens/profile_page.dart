@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,15 +29,9 @@ class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    //TODO
 
-    // ignore: unused_local_variable
+
     final loggedInWritefolioUser = FirebaseAuth.instance.currentUser!;
-
-    // ignore: unused_element
-    void signOut() async {
-      await FirebaseAuth.instance.signOut();
-    }
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -101,8 +98,23 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         );
                                       },
                                     );
-                                    if (confirmSignOut == true) {
-                                      await FirebaseAuth.instance.signOut();
+                                    try {
+                                      if (confirmSignOut) {
+                                        /* AnimatedSnackBar.material(
+                                          "Successfuly signed out",
+                                          type: AnimatedSnackBarType.error,
+                                          mobileSnackBarPosition:
+                                              MobileSnackBarPosition.bottom,
+                                        ).show(context); */
+                                        await FirebaseAuth.instance.signOut();
+                                      }
+                                    } catch (e) {
+                                      AnimatedSnackBar.material(
+                                        "Error signing out",
+                                        type: AnimatedSnackBarType.error,
+                                        mobileSnackBarPosition:
+                                            MobileSnackBarPosition.bottom,
+                                      ).show(context);
                                     }
                                   },
                                 ),
