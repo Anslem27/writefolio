@@ -52,7 +52,9 @@ class _AuthPageState extends State<AuthPage> {
       stream: internetAvailabilityStream,
       builder: (_, internetConnectionSnapshot) {
         if (internetConnectionSnapshot.connectionState ==
-            ConnectionState.waiting) {
+                ConnectionState.waiting ||
+            internetConnectionSnapshot.connectionState ==
+                ConnectionState.none) {
           return const Center(
             child: LoadingAnimation(),
           );
@@ -68,6 +70,9 @@ class _AuthPageState extends State<AuthPage> {
                   return const Center(
                     child: LoadingAnimation(),
                   );
+                } else if (snapshot.connectionState == ConnectionState.none) {
+                  //TODO: Add a  something unexpected occured
+                  return const SizedBox();
                 }
 
                 if (snapshot.hasData) {
@@ -87,53 +92,56 @@ class _AuthPageState extends State<AuthPage> {
 
   Scaffold noInternetBody(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          // physics: const ScrollPhysics(),
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Connect to the internet to get the full writefolio experience.",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.roboto(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+      body: RefreshIndicator(
+        onRefresh: _checkInternetConnectivity,
+        child: Center(
+          child: Column(
+            // physics: const ScrollPhysics(),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Connect to the internet to get the full writefolio experience.",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.roboto(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            SvgPicture.asset(
-              "assets/illustrations/no-connection.svg",
-              height: 200,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              "It looks like your offline",
-              style: GoogleFonts.roboto(fontSize: 16),
-            ),
-            const Text("Check your connection and try again"),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _checkInternetConnectivity();
-                });
-              },
-              child: const Text("Refresh"),
-            ),
-            OutlinedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const LibraryScreen(),
-                  ),
-                );
-              },
-              child: const Text("Open Library"),
-            ),
-          ],
+              SvgPicture.asset(
+                "assets/illustrations/no-connection.svg",
+                height: 200,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                "It looks like your offline",
+                style: GoogleFonts.roboto(fontSize: 16),
+              ),
+              const Text("Check your connection and try again"),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _checkInternetConnectivity();
+                  });
+                },
+                child: const Text("Refresh"),
+              ),
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const LibraryScreen(),
+                    ),
+                  );
+                },
+                child: const Text("Open Library"),
+              ),
+            ],
+          ),
         ),
       ),
     );
