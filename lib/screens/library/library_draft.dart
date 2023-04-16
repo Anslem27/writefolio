@@ -7,7 +7,6 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:logger/logger.dart';
 import 'package:writefolio/models/articles/article.dart';
 import 'package:writefolio/screens/library/tools/view_type.dart';
-import 'package:writefolio/screens/settings/components/avatar_picker.dart';
 import 'package:writefolio/utils/tools/reading_time_approximator.dart';
 import '../../data/user_article_datastore.dart';
 import '../../utils/widgets/article_home_card.dart';
@@ -251,6 +250,11 @@ class _LibraryFilesState extends State<LibraryFiles> {
                     },
                   ),
                 ),
+                /* Positioned(
+                  top: 0,
+                  left: 0,
+                  child: AvatarComponent(radius: 17)
+                ), */
               ],
             ),
           ),

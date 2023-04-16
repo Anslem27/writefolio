@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/screens/home/poem_view.dart';
 import 'package:writefolio/screens/home/components/poemsearch.dart';
 import '../../utils/widgets/shimmer_component.dart';
+import 'components/e_book.dart';
 import 'components/explorer.dart';
 import 'saved_poems.dart';
 
@@ -17,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    TabController tabcontroller = TabController(length: 3, vsync: this);
+    TabController tabcontroller = TabController(length: 4, vsync: this);
 
     return Scaffold(
       body: SafeArea(
@@ -71,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 controller: tabcontroller,
                 children: const [
                   Explorer(),
+                  EbookListScreen(),
                   PoemView(),
                   SavedPoemsScreen(),
                 ],
@@ -98,6 +100,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     Tab(
       child: Text(
         "For you",
+        style: GoogleFonts.roboto(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    ),
+    Tab(
+      child: Text(
+        "Read",
         style: GoogleFonts.roboto(
           fontSize: 14,
           fontWeight: FontWeight.w400,

@@ -4,14 +4,17 @@
 
 ## Features
 
+- Sign in Email-Password or Google Account
 - Dark Mode
 - Material 3 design
+- Theme
+  - Choose from multiple color swatches [Premium]
 - User medium artiles
 
 - Home Page (For You)
 
   - self content from `"r/self"`
-  - Lifestyle content from `"the guardian"`
+  - Lifestyle and Culture content from `"the guardian"`
 
   ***
 
@@ -26,13 +29,14 @@
 - Create Articles
   - Add images from `https://picsum.photos/`
   - Reading time
+  - Edit them
 
 ### To add
 
 ```
 add tags to articles.
+add  a "hide for now" on home For You
 add previously read poem to under container
-add theming colors
 ```
 
 ### In progress

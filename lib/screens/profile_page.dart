@@ -13,10 +13,9 @@ import '../animations/fade_in_animation.dart';
 import '../animations/profile_containers.dart';
 import '../editor/create_article.dart';
 import '../models/user/medium_user_model.dart';
-import '../services/reddit_user_fecth_service.dart';
+import '../onboarding/onboard/screens/get_user_prefs.dart';
 import '../services/user_service.dart';
 import '../utils/tools/date_parser.dart';
-import '../utils/widgets/loader.dart';
 import '../utils/widgets/medium_article_viewer.dart';
 import '../utils/widgets/shimmer_component.dart';
 import 'library/tools/draft_count.dart';
@@ -36,11 +35,6 @@ class _ProfileScreenState extends State<ProfileScreen>
     final loggedInWritefolioUser = FirebaseAuth.instance.currentUser!;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: const Text("Profile"),
-        icon: const Icon(Icons.person),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: CustomScrollView(
@@ -129,6 +123,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
                 IconButton(
                   onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const WritefolioUserPage(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.person,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
                     Navigator.pushNamed(context, "settings");
                   },
                   icon: const Icon(
@@ -208,7 +215,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         label: const Text("add social"),
                       ),
                     ]),
-                    FutureBuilder(
+                    /*  FutureBuilder(
                       future: fetchRedditInfo("Infamous-Date-355"),
                       builder: (_, snapshot) {
                         if (!snapshot.hasData) {
@@ -220,7 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           );
                         }
                       },
-                    ),
+                    ), */
                     const ConnectedAccountsAvatars(),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -358,7 +365,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.roboto(
-                                color: Colors.grey,
                                 fontSize: 16.5,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -381,7 +387,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       child: Text(
                                         articles[index]
                                             .categories[categoryIndex],
-                                        style: GoogleFonts.roboto(),
                                       ),
                                     ),
                                   ),

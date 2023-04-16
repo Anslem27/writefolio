@@ -58,9 +58,17 @@ class _ArticleEditorState extends State<ArticleEditor> {
 
   @override
   Widget build(BuildContext context) {
-    _controller.document = Document()
-      ..insert(0,
-          'You can start typing here and use all the formatting options available.');
+    /* _controller.addListener(() {
+      if (_controller.document.toPlainText().isEmpty) {
+        // Document is empty, so insert default text
+        _controller.document = Document()
+          ..insert(0,
+              'You can start typing here and use all the formatting options available.');
+      } else {
+        // Document is not empty, so clear it
+        _controller.document.delete(0, _controller.document.length);
+      }
+    }); */
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
