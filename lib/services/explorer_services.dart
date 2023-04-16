@@ -35,4 +35,18 @@ class ExplorerContents {
       throw Exception(err);
     }
   }
+
+  Future<GuardianLifestyle> fetchGuardianCulture() async {
+    var url = Uri.parse(
+        'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.theguardian.com%2Fculture%2Frss');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      return GuardianLifestyle.fromJson(json.decode(response.body));
+    } else {
+      var err = "Failed to fetch contents url: $url info";
+      logger.e(err);
+      throw Exception(err);
+    }
+  }
 }

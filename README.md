@@ -4,8 +4,10 @@
 
 ## Api's
 
-- Poetry db (https://poetrydb.org/)
-- rss2json for r/self and the guardian contents (https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@medium-username)
+- Poetry db [link](https://poetrydb.org/)
+- rss2json for r/self ,medium user and the guardian contents [rss api](https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@medium-username)
+
+- Reddit user endpoint [here](https://www.reddit.com/user/USER_NAME/about.json)
 
 ## Build
 
@@ -14,4 +16,8 @@
   - `flutter pub run flutter_oss_licenses:generate.dart`
 
 - Generate Hive Adaptors
+
   - `flutter packages pub run build_runner build`
+
+- Get firebase sha1 and sha256
+  - `keytool -list -v -keystore c:\users\user-name\.android\debug.keystore -alias androiddebugkey -storepass android -keypass android`

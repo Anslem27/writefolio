@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -92,7 +93,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
                               value: 'card',
                               child: Row(
                                 children: const [
-                                  Icon(Icons.grid_view),
+                                  Icon(PhosphorIcons.cards),
                                   SizedBox(width: 2),
                                   Text('Card view'),
                                 ],
@@ -147,7 +148,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
   GridView articleCard(List<UserArticle> savedArticlesList) {
     return GridView.count(
       shrinkWrap: true,
-      childAspectRatio: 0.7,
+      childAspectRatio: 0.8,
       padding: EdgeInsets.zero,
       mainAxisSpacing: 5,
       physics: const ScrollPhysics(),
@@ -160,78 +161,97 @@ class _LibraryFilesState extends State<LibraryFiles> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
             ),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(8),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => ArticleView(
-                      userArticle: userArticle,
-                    ),
-                  ),
-                );
-              },
-              child: Column(
-                children: [
-                  Hero(
-                    tag: "draftImage",
-                    child: Container(
-                      height: 130,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Card(
-                        child: CachedNetworkImage(
-                          imageUrl: savedArticlesList[index].imageUrl,
-                          placeholder: (context, url) =>
-                              const Center(child: LoadingAnimation()),
-                          errorWidget: (context, url, error) => const Center(
-                              child: Icon(
-                            Icons.image_search_outlined,
-                            size: 80,
-                          )),
-                          fit: BoxFit.cover,
+            child: Stack(
+              children: [
+                InkWell(
+                  borderRadius: BorderRadius.circular(8),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ArticleView(
+                          userArticle: userArticle,
                         ),
                       ),
-                    ),
-                  ),
-                  Text(
-                    savedArticlesList[index].title,
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: GoogleFonts.roboto(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        const AvatarComponent(radius: 17),
-                        const SizedBox(width: 10),
-                        Text(savedArticlesList[index].updateDate)
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          "${calculateReadingTime(savedArticlesList[index].bodyText.trim()).toString()} min read  •  ${savedArticlesList[index].bodyText.trim().split(" ").length.toString()} words",
-                          style: const TextStyle(
-                            color: Colors.grey,
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Hero(
+                        tag: userArticle.title,
+                        child: Container(
+                          height: 100,
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: CachedNetworkImage(
+                              imageUrl: savedArticlesList[index].imageUrl,
+                              placeholder: (context, url) =>
+                                  const Center(child: LoadingAnimation()),
+                              errorWidget: (context, url, error) =>
+                                  const Center(
+                                child: Icon(
+                                  Icons.image_search_outlined,
+                                  size: 80,
+                                ),
+                              ),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        child: Text(
+                          savedArticlesList[index].title,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: GoogleFonts.roboto(
+                            fontSize: 15,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        savedArticlesList[index].bodyText,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "${calculateReadingTime(savedArticlesList[index].bodyText.trim()).toString()} min read  •  ${savedArticlesList[index].bodyText.trim().split(" ").length.toString()} words",
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.bookmark_border,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      // Handle bookmark icon press
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         );

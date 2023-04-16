@@ -1,22 +1,27 @@
 // ignore_for_file: implementation_imports, unnecessary_import
 
+import 'package:firebase_core/firebase_core.dart';
 import "package:flutter/src/material/theme.dart" hide Theme;
 import 'package:flutter/material.dart' hide Theme;
 import 'package:hive_flutter/adapters.dart';
+import 'package:writefolio/onboarding/onboard/screens/create_account.dart';
 import 'package:writefolio/screens/home/home.dart';
 import 'package:writefolio/screens/library/libary.dart';
 import 'package:writefolio/screens/settings/settings_page.dart';
 import 'models/articles/article.dart';
 import 'models/poems/saved_poems.dart';
 import 'onboarding/onboard/onboarding_screen.dart';
-import 'onboarding/onboard/screens/sign_up.dart';
+import 'onboarding/onboard/screens/auth.dart';
+import 'onboarding/onboard/screens/sign_in.dart';
 import 'screens/library/tools/view_type.dart';
 import 'screens/navigation.dart';
 import 'utils/theme/theme_model.dart';
 import 'utils/widgets/loader.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Hive.initFlutter();
   Hive.registerAdapter<SavedPoems>(SavedPoemsAdapter());
   Hive.registerAdapter<UserArticle>(UserArticleAdapter());
@@ -61,7 +66,9 @@ class MyApp extends StatelessWidget {
               home: const WriteFolioApp(),
               routes: {
                 "/onboarding": (_) => const IntroductionAnimationScreen(),
-                "/createAccount": (_) => const SignUpPage(),
+                "/signIn": (_) => const SignInPage(),
+                "/auth": (_) => const AuthPage(),
+                "/createAccount": (_) => const CreateAccountPage(),
                 "/home": (_) => const HomeScreen(),
                 "/library": (context) => const LibraryScreen(),
                 "/navigation": (_) => const Navigation(),
@@ -108,7 +115,7 @@ class WriteFolioApp extends StatelessWidget {
               Hive.box<bool>('firstLaunch').put('value', false);
               return const IntroductionAnimationScreen();
             } else {
-              return const SignUpPage();
+              return const AuthPage();
             }
           } else {
             return const LoadingAnimation();

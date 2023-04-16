@@ -1,4 +1,3 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:writefolio/screens/home/home.dart';
@@ -25,7 +24,7 @@ class _NavigationState extends State<Navigation> {
     return Scaffold(
       body: appBody[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        iconSize: 25,
+        iconSize: 28,
         currentIndex: currentIndex,
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -36,14 +35,14 @@ class _NavigationState extends State<Navigation> {
         },
         items: const [
           BottomNavigationBarItem(
-            activeIcon: Icon(EvaIcons.home),
-            icon: Icon(EvaIcons.homeOutline),
+            activeIcon: Icon(PhosphorIcons.house_fill),
+            icon: Icon(PhosphorIcons.house),
             tooltip: "Home",
             label: "Home",
           ),
           BottomNavigationBarItem(
-            activeIcon: Icon(PhosphorIcons.bookmark_fill),
-            icon: Icon(PhosphorIcons.bookmark),
+            activeIcon: Icon(PhosphorIcons.bookmarks_simple_fill),
+            icon: Icon(PhosphorIcons.bookmarks_simple),
             tooltip: "Your library",
             label: "Your library",
           ),

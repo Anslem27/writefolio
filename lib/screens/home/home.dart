@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   style: GoogleFonts.roboto(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
-                    color: Colors.grey,
                   ),
                 ),
               ),

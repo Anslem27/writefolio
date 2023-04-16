@@ -1,11 +1,12 @@
 import 'dart:convert';
-
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:writefolio/data/user_article_datastore.dart';
 import 'package:writefolio/editor/editting.dart';
 import '../../../models/articles/article.dart';
 import '../../../utils/tools/reading_time_approximator.dart';
@@ -41,7 +42,7 @@ class _ArticleViewState extends State<ArticleView> {
           );
         },
         label: const Text("Edit"),
-        icon: const Icon(Icons.edit),
+        icon: const Icon(PhosphorIcons.pencil),
       ),
       appBar: AppBar(
         leading: IconButton(
@@ -85,7 +86,24 @@ class _ArticleViewState extends State<ArticleView> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () async {
+                                  /// delete an existing article and push to navigation route
+                                  await UserArticleDataStore()
+                                      .deleteSavedArticle(
+                                          savedArticle: widget.userArticle)
+                                      .then((value) {
+                                    Navigator.pushNamedAndRemoveUntil(context,
+                                        "/navigation", (route) => false);
+
+                                    AnimatedSnackBar.material(
+                                      "Article deleted successfully",
+                                      type: AnimatedSnackBarType.info,
+                                      mobileSnackBarPosition:
+                                          MobileSnackBarPosition.bottom,
+                                    ).show(context);
+                                  });
+                                  setState(() {});
+                                },
                                 child: const Text("Yes"),
                               ),
                             ),
@@ -97,7 +115,9 @@ class _ArticleViewState extends State<ArticleView> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
                                 child: const Text("No"),
                               ),
                             ),
@@ -156,9 +176,15 @@ class _ArticleViewState extends State<ArticleView> {
                             // Do something when an item is selected
                           },
                           itemBuilder: (BuildContext context) => [
-                            const PopupMenuItem(
+                            PopupMenuItem(
                               value: 'share',
-                              child: Text('Share'),
+                              child: Row(
+                                children: const [
+                                  Icon(Icons.share_outlined),
+                                  SizedBox(width: 3),
+                                  Text('Share'),
+                                ],
+                              ),
                             ),
                           ],
                         )
@@ -189,14 +215,15 @@ class _ArticleViewState extends State<ArticleView> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Hero(
-                  tag: "draftImage",
+                  tag: widget.userArticle.title,
                   child: Container(
                       width: double.maxFinite,
                       height: 200,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Card(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
                         child: CachedNetworkImage(
                           imageUrl: widget.userArticle.imageUrl,
                           placeholder: (context, url) =>

@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -28,6 +29,7 @@ class ArticleEditor extends StatefulWidget {
 
 class _ArticleEditorState extends State<ArticleEditor> {
   final QuillController _controller = QuillController.basic();
+
   final TextEditingController _titleController = TextEditingController();
   var articleDataStore = UserArticleDataStore();
   static var currentDate = DateTime.now();
@@ -35,6 +37,7 @@ class _ArticleEditorState extends State<ArticleEditor> {
 
   String selectedImageUrl = "";
   late List<ImageModel> images;
+  bool isExpanded = false;
 
   Future<List<ImageModel>> fetchImages() async {
     final response = await http
@@ -55,6 +58,9 @@ class _ArticleEditorState extends State<ArticleEditor> {
 
   @override
   Widget build(BuildContext context) {
+    _controller.document = Document()
+      ..insert(0,
+          'You can start typing here and use all the formatting options available.');
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -189,15 +195,19 @@ class _ArticleEditorState extends State<ArticleEditor> {
                                               });
                                               Navigator.of(context).pop();
                                             },
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  images[index].downloadUrl,
-                                              progressIndicatorBuilder:
-                                                  (_, string, progress) {
-                                                return const Center(
-                                                  child: LoadingAnimation(),
-                                                );
-                                              },
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    images[index].downloadUrl,
+                                                progressIndicatorBuilder:
+                                                    (_, string, progress) {
+                                                  return const Center(
+                                                    child: LoadingAnimation(),
+                                                  );
+                                                },
+                                              ),
                                             ),
                                           ),
                                         );
@@ -235,7 +245,7 @@ class _ArticleEditorState extends State<ArticleEditor> {
               icon: const Icon(Icons.image))
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           if (_titleController.text.isNotEmpty &&
               _controller.document.toPlainText().isNotEmpty) {
@@ -311,16 +321,21 @@ class _ArticleEditorState extends State<ArticleEditor> {
                                 //create article object
                                 await articleDataStore
                                     .saveArticle(userArticle: userArticle)
-                                    .then((value) => AnimatedSnackBar.material(
-                                          "${userArticle.title} has been saved",
-                                          type: AnimatedSnackBarType.success,
-                                          duration: const Duration(seconds: 4),
-                                          mobileSnackBarPosition:
-                                              MobileSnackBarPosition.bottom,
-                                        ).show(context));
+                                    .then((value) {
+                                  AnimatedSnackBar.material(
+                                    "${userArticle.title} has been saved",
+                                    type: AnimatedSnackBarType.success,
+                                    duration: const Duration(seconds: 4),
+                                    mobileSnackBarPosition:
+                                        MobileSnackBarPosition.bottom,
+                                  ).show(context).then((value) {
+                                    Navigator.pop(context);
+                                  });
+                                });
 
                                 // ignore: use_build_context_synchronously
-                                Navigator.popAndPushNamed(context, "/library");
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, "/navigation", (route) => false);
                               },
                               label: const Text(
                                 "Save Article",
@@ -336,16 +351,20 @@ class _ArticleEditorState extends State<ArticleEditor> {
               ),
             );
           }
-          AnimatedSnackBar.material(
-            'Title or body can not be empty.',
-            type: AnimatedSnackBarType.warning,
-            mobileSnackBarPosition: MobileSnackBarPosition.bottom,
-          ).show(context);
+          if (_titleController.text.isEmpty &&
+              _controller.document.toPlainText().isEmpty) {
+            AnimatedSnackBar.material(
+              'Title or body can not be empty.',
+              type: AnimatedSnackBarType.warning,
+              mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+            ).show(context);
+          }
         },
-        child: const Icon(
-          Icons.save_as_rounded,
+        icon: const Icon(
+          PhosphorIcons.pen_nib,
           size: 30,
         ),
+        label: const Text("Create and save"),
       ),
       body: SafeArea(
         child: ListView(
@@ -358,7 +377,7 @@ class _ArticleEditorState extends State<ArticleEditor> {
                   Expanded(
                     child: AutoSizeTextField(
                       controller: _titleController,
-                      style: GoogleFonts.lora(
+                      style: GoogleFonts.urbanist(
                           fontWeight: FontWeight.w500, fontSize: 25),
                       decoration: const InputDecoration.collapsed(
                         //no decoration
@@ -371,28 +390,38 @@ class _ArticleEditorState extends State<ArticleEditor> {
               ),
             ),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  isExpanded = !isExpanded;
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
                   width: double.maxFinite,
-                  height: 220,
+                  height: isExpanded ? 150 : 220,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    // color: Colors.orange[900]!.withOpacity(0.5),
                   ),
-                  child: Card(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
                     child: CachedNetworkImage(
                       imageUrl: selectedImageUrl,
                       placeholder: (context, url) =>
                           const Center(child: CircularProgressIndicator()),
                       errorWidget: (context, url, error) => const Center(
                           child: Icon(
-                        Icons.image_search_outlined,
-                        size: 80,
+                        PhosphorIcons.image,
+                        size: 70,
                       )),
                       fit: BoxFit.cover,
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ),
             QuillToolbar.basic(controller: _controller),
             Padding(
