@@ -9,7 +9,6 @@ import 'package:logger/logger.dart';
 import 'package:writefolio/models/articles/article.dart';
 import 'package:writefolio/screens/library/tools/view_type.dart';
 import 'package:writefolio/utils/tools/reading_time_approximator.dart';
-import '../../animations/fade_in_animation.dart';
 import '../../data/user_article_datastore.dart';
 import '../../utils/widgets/article_home_card.dart';
 import '../../utils/widgets/loader.dart';
