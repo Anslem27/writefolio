@@ -8,7 +8,6 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-
 import '../data/user_article_datastore.dart';
 import '../models/articles/article.dart';
 
@@ -104,7 +103,7 @@ class _ContinueEdittingState extends State<ContinueEditting> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: CachedNetworkImage(
-                      imageUrl: widget.userArticle.imageUrl,
+                      imageUrl: widget.userArticle.imageUrl!,
                       placeholder: (context, url) =>
                           const Center(child: CircularProgressIndicator()),
                       errorWidget: (context, url, error) => const Center(

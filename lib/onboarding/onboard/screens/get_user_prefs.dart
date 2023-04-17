@@ -1,6 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../editor/create_article.dart';
@@ -17,16 +19,14 @@ class WritefolioUserPage extends StatefulWidget {
 class _WritefolioUserPageState extends State<WritefolioUserPage> {
   final _formKey = GlobalKey<FormState>();
 
-  String? _userName;
-  String? _email;
   String? _mediumUsername;
   String? _redditUsername;
   String? _bio;
   Gender? _gender;
   // ignore: unnecessary_nullable_for_final_variable_declarations
   final List<String>? _readingInterests = ["noteworthy"];
-  // ignore: unused_field
-  DateTime? _dateTime;
+
+  final loggedInWritefolioUser = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +40,12 @@ class _WritefolioUserPageState extends State<WritefolioUserPage> {
           key: _formKey,
           child: ListView(
             children: [
+              Text(
+                "Hey ${loggedInWritefolioUser.email}",
+                style: GoogleFonts.roboto(
+                  fontSize: 30,
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
@@ -51,53 +57,43 @@ class _WritefolioUserPageState extends State<WritefolioUserPage> {
                 ),
               ),
               TextFormField(
-                decoration: const InputDecoration(labelText: 'User Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a user name';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _userName = value;
-                },
-              ),
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter an email';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _email = value;
-                },
-              ),
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Medium Username'),
+                decoration: const InputDecoration(
+                  labelText: 'Medium Username',
+                  prefixIcon: Icon(PhosphorIcons.medium_logo),
+                ),
                 onSaved: (value) {
                   _mediumUsername = value;
                 },
               ),
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Reddit Username'),
+                decoration: const InputDecoration(
+                    labelText: 'Reddit Username',
+                    prefixIcon: Icon(
+                      PhosphorIcons.reddit_logo,
+                    )),
                 onSaved: (value) {
                   _redditUsername = value;
                 },
               ),
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Bio'),
-                onSaved: (value) {
-                  _bio = value;
-                },
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Bio',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
+                  onSaved: (value) {
+                    _bio = value;
+                  },
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   "Your gender?",
                   style: GoogleFonts.roboto(
-                    fontSize: 25,
+                    fontSize: 20,
                     color: Colors.grey,
                   ),
                 ),
@@ -149,7 +145,7 @@ class _WritefolioUserPageState extends State<WritefolioUserPage> {
                 child: Text(
                   "What are your reading preferances?",
                   style: GoogleFonts.roboto(
-                    fontSize: 25,
+                    fontSize: 20,
                     color: Colors.grey,
                   ),
                 ),
@@ -190,14 +186,11 @@ class _WritefolioUserPageState extends State<WritefolioUserPage> {
                     if (_formKey.currentState?.validate() ?? false) {
                       _formKey.currentState?.save();
                       final user = WritefolioUser(
-                        userName: _userName,
-                        email: _email,
                         mediumUsername: _mediumUsername,
                         redditUsername: _redditUsername,
                         bio: _bio,
                         gender: _gender,
                         readingInterests: _readingInterests,
-                        joinedDate: DateTime.now(),
                       );
                       logger.i(user.toJson());
                     }

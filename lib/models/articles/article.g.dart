@@ -22,7 +22,7 @@ class UserArticleAdapter extends TypeAdapter<UserArticle> {
       bodyText: fields[3] as String,
       id: fields[0] as String,
       updateDate: fields[4] as String,
-      imageUrl: fields[5] as String,
+      imageUrl: fields[5] as String?,
     );
   }
 

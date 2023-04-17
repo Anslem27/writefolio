@@ -225,7 +225,7 @@ class _ArticleViewState extends State<ArticleView> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
                         child: CachedNetworkImage(
-                          imageUrl: widget.userArticle.imageUrl,
+                          imageUrl: widget.userArticle.imageUrl!,
                           placeholder: (context, url) =>
                               const Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) => const Center(

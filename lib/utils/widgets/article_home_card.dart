@@ -106,7 +106,7 @@ class ArticleHomeCard extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: CachedNetworkImage(
-                            imageUrl: userArticle.imageUrl,
+                            imageUrl: userArticle.imageUrl!,
                             placeholder: (context, url) =>
                                 const Center(child: LoadingAnimation()),
                             errorWidget: (context, url, error) => const Center(

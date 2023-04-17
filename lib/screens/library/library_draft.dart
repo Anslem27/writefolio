@@ -187,7 +187,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: CachedNetworkImage(
-                              imageUrl: savedArticlesList[index].imageUrl,
+                              imageUrl: savedArticlesList[index].imageUrl!,
                               placeholder: (context, url) =>
                                   const Center(child: LoadingAnimation()),
                               errorWidget: (context, url, error) =>

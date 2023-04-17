@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:writefolio/editor/create_article.dart';
+import 'package:writefolio/editor/create_article.dart' hide logger;
+import '../../models/articles/article.dart';
 import '../../utils/widgets/shimmer_component.dart';
 import 'library_draft.dart';
 
@@ -23,11 +25,105 @@ class _LibraryScreenState extends State<LibraryScreen>
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => const ArticleEditor(),
+          // logger.wtf("Wtf");
+          showModalBottomSheet(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
+            context: context,
+            builder: (_) {
+              return Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: SizedBox(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "What do you want to create?",
+                          style: GoogleFonts.roboto(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
+                      ),
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        spacing: 5,
+                        children: [
+                          for (var articleType in ArticleType.values)
+                            InkWell(
+                              borderRadius: BorderRadius.circular(8),
+                              onTap: () {
+                                /* articleType == ArticleType.shortStory
+                                            ? "assets/illustrations/french.svg"
+                                            : articleType == ArticleType.poem
+                                                ? "assets/illustrations/gimlet.svg"
+                                                : articleType ==
+                                                        ArticleType.quote
+                                                    ? "assets/illustrations/bulb.svg"
+                                                    : "assets/illustrations/bag.svg", */
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const ArticleEditor(),
+                                  ),
+                                );
+                              },
+                              child: Card(
+                                  child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      height: 100,
+                                      width: 90,
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      child: SvgPicture.asset(
+                                        articleType == ArticleType.shortStory
+                                            ? "assets/illustrations/french.svg"
+                                            : articleType == ArticleType.poem
+                                                ? "assets/illustrations/gimlet.svg"
+                                                : articleType ==
+                                                        ArticleType.quote
+                                                    ? "assets/illustrations/bulb.svg"
+                                                    : "assets/illustrations/bag.svg",
+                                        height: 60,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        articleType == ArticleType.shortStory
+                                            ? "ShortStory"
+                                            : articleType == ArticleType.poem
+                                                ? "Poem"
+                                                : articleType ==
+                                                        ArticleType.quote
+                                                    ? "Quote"
+                                                    : "Article",
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           );
         },
         label: const Text("Create"),

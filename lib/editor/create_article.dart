@@ -34,8 +34,10 @@ class _ArticleEditorState extends State<ArticleEditor> {
   var articleDataStore = UserArticleDataStore();
   static var currentDate = DateTime.now();
   var formattedDate = DateFormat.yMMMd().format(currentDate);
+  var defaultImage =
+      "https://fastly.picsum.photos/id/20/3670/2462.jpg?hmac=CmQ0ln-k5ZqkdtLvVO23LjVAEabZQx2wOaT4pyeG10I";
 
-  String selectedImageUrl = "";
+  String? selectedImageUrl = "";
   late List<ImageModel> images;
   bool isExpanded = false;
 
@@ -319,8 +321,7 @@ class _ArticleEditorState extends State<ArticleEditor> {
                                   body: bodyJson,
                                   bodyText: _controller.document.toPlainText(),
                                   updateDate: formattedDate,
-                                  imageUrl:
-                                      selectedImageUrl, //TODO: Attribute for null instance.
+                                  imageUrl: selectedImageUrl ==""? defaultImage:selectedImageUrl,
                                 );
 
                                 logger.i(
@@ -417,7 +418,9 @@ class _ArticleEditorState extends State<ArticleEditor> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: CachedNetworkImage(
-                      imageUrl: selectedImageUrl,
+                      imageUrl: selectedImageUrl == ""
+                          ? defaultImage
+                          : selectedImageUrl!,
                       placeholder: (context, url) =>
                           const Center(child: CircularProgressIndicator()),
                       errorWidget: (context, url, error) => const Center(
