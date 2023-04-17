@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/data/user_article_datastore.dart';
 import 'package:writefolio/editor/editting.dart';
@@ -70,7 +71,7 @@ class _ArticleViewState extends State<ArticleView> {
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            "Are you sure you want to\ndelete this article?",
+                            "Are you sure you want to\ndelete?",
                             textAlign: TextAlign.center,
                             style: TextStyle(fontSize: 17),
                           ),
@@ -133,8 +134,9 @@ class _ArticleViewState extends State<ArticleView> {
           ),
         ],
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               Padding(
@@ -163,10 +165,22 @@ class _ArticleViewState extends State<ArticleView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.bookmark_add_outlined,
+                        Container(
+                          width: 100,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Colors.pink,
+                              width: 1.5,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Text(
+                              widget.userArticle.type ?? "Article",
+                              style: const TextStyle(fontSize: 17),
+                            ),
                           ),
                         ),
                         PopupMenuButton<String>(
@@ -212,32 +226,47 @@ class _ArticleViewState extends State<ArticleView> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Hero(
-                  tag: widget.userArticle.title,
-                  child: Container(
-                      width: double.maxFinite,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+              widget.userArticle.type == "Poem"
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: CachedNetworkImage(
-                          imageUrl: widget.userArticle.imageUrl!,
-                          placeholder: (context, url) =>
-                              const Center(child: CircularProgressIndicator()),
-                          errorWidget: (context, url, error) => const Center(
-                              child: Icon(
-                            Icons.image_search_outlined,
-                            size: 80,
-                          )),
-                          fit: BoxFit.cover,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10.0),
                         ),
-                      )),
-                ),
-              ),
+                        child: SvgPicture.asset(
+                          "assets/illustrations/gimlet.svg",
+                          height: 200,
+                          width: 200,
+                        ),
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Hero(
+                        tag: widget.userArticle.title,
+                        child: Container(
+                            width: double.maxFinite,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: CachedNetworkImage(
+                                imageUrl: widget.userArticle.imageUrl!,
+                                placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) =>
+                                    const Center(
+                                        child: Icon(
+                                  Icons.image_search_outlined,
+                                  size: 80,
+                                )),
+                                fit: BoxFit.cover,
+                              ),
+                            )),
+                      ),
+                    ),
               const Padding(
                 padding: EdgeInsets.only(left: 8.0, right: 8),
                 child: SizedBox(
@@ -245,13 +274,22 @@ class _ArticleViewState extends State<ArticleView> {
                   child: Divider(),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: QuillEditor.basic(
-                  controller: controller,
-                  readOnly: true, // true for view only mode
-                ),
-              )
+              widget.userArticle.type == "Poem"
+                  ? Text(
+                      widget.userArticle.bodyText,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.urbanist(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: QuillEditor.basic(
+                        controller: controller,
+                        readOnly: true, // true for view only mode
+                      ),
+                    )
             ],
           ),
         ),

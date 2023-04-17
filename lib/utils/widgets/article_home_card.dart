@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/utils/widgets/loader.dart';
 import '../../models/articles/article.dart';
 import '../../screens/library/components/article_view.dart';
@@ -10,23 +9,21 @@ import '../tools/reading_time_approximator.dart';
 class ArticleHomeCard extends StatelessWidget {
   final UserArticle userArticle;
   const ArticleHomeCard({super.key, required this.userArticle});
-  //TODO: Add tags
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(8),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => ArticleView(userArticle: userArticle),
-            ),
-          );
-        },
-        child: Card(
+      child: Card(
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ArticleView(userArticle: userArticle),
+              ),
+            );
+          },
           child: Padding(
             padding: const EdgeInsets.all(3.0),
             child: Container(
@@ -60,7 +57,7 @@ class ArticleHomeCard extends StatelessWidget {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 4.0, bottom: 4),
+                    padding: const EdgeInsets.only(top: 2.0, bottom: 2),
                     child: Row(
                       children: [
                         const Text(
@@ -88,33 +85,33 @@ class ArticleHomeCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    width: double.maxFinite,
-                    child: Divider(),
-                  ),
-                  SizedBox(
-                    width: double.maxFinite,
-                    child: Hero(
-                      tag: userArticle.title,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.orange[100],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        width: 90,
-                        height: 100,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: CachedNetworkImage(
-                            imageUrl: userArticle.imageUrl!,
-                            placeholder: (context, url) =>
-                                const Center(child: LoadingAnimation()),
-                            errorWidget: (context, url, error) => const Center(
-                                child: Icon(
-                              PhosphorIcons.image,
-                              size: 80,
-                            )),
-                            fit: BoxFit.cover,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: double.maxFinite,
+                      child: Hero(
+                        tag: userArticle.title,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.orange[100],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          width: 90,
+                          height: 100,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: CachedNetworkImage(
+                              imageUrl: userArticle.imageUrl!,
+                              placeholder: (context, url) =>
+                                  const Center(child: LoadingAnimation()),
+                              errorWidget: (context, url, error) =>
+                                  const Center(
+                                      child: Icon(
+                                PhosphorIcons.image,
+                                size: 80,
+                              )),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -129,9 +126,8 @@ class ArticleHomeCard extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               userArticle.bodyText.replaceAll("\n", " "),
-                              maxLines: 4,
+                              maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.roboto(fontSize: 15),
                             ),
                           ),
                         ),

@@ -66,67 +66,73 @@ class _ContinueEdittingState extends State<ContinueEditting> {
       ),
       appBar: AppBar(),
       body: SafeArea(
-        child: ListView(
-          physics: const ScrollPhysics(),
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: AutoSizeTextField(
-                      controller: _titleController,
-                      style: GoogleFonts.roboto(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+            physics: const ScrollPhysics(),
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: AutoSizeTextField(
+                        controller: _titleController,
+                        style: GoogleFonts.roboto(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                        ),
+                        decoration: const InputDecoration.collapsed(
+                          //no decoration
+                          hintText: "An Interesting title.",
+                        ),
+                        maxLines: null,
                       ),
-                      decoration: const InputDecoration.collapsed(
-                        //no decoration
-                        hintText: "An Interesting title.",
-                      ),
-                      maxLines: null,
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                  width: double.maxFinite,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    // color: Colors.orange[900]!.withOpacity(0.5),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: CachedNetworkImage(
-                      imageUrl: widget.userArticle.imageUrl!,
-                      placeholder: (context, url) =>
-                          const Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) => const Center(
-                          child: Icon(
-                        Icons.image_search_outlined,
-                        size: 80,
-                      )),
-                      fit: BoxFit.cover,
-                    ),
-                  )),
-            ),
-            const SizedBox(height: 10),
-            QuillToolbar.basic(controller: controller),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: SizedBox(
-                child: QuillEditor.basic(
-                  controller: controller,
-                  readOnly: false, // true for view only mode
+                  ],
                 ),
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Hero(
+                  tag: widget.userArticle.title,
+                  child: Container(
+                      width: double.maxFinite,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        // color: Colors.orange[900]!.withOpacity(0.5),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.userArticle.imageUrl!,
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => const Center(
+                              child: Icon(
+                            Icons.image_search_outlined,
+                            size: 80,
+                          )),
+                          fit: BoxFit.cover,
+                        ),
+                      )),
+                ),
+              ),
+              const SizedBox(height: 10),
+              QuillToolbar.basic(controller: controller),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: SizedBox(
+                  child: QuillEditor.basic(
+                    controller: controller,
+                    readOnly: false, // true for view only mode
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
