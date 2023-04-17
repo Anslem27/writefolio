@@ -21,7 +21,8 @@ import '../utils/widgets/loader.dart';
 var logger = Logger();
 
 class ArticleEditor extends StatefulWidget {
-  const ArticleEditor({super.key});
+  final String articleType;
+  const ArticleEditor({super.key, required this.articleType});
 
   @override
   State<ArticleEditor> createState() => _ArticleEditorState();
@@ -150,6 +151,22 @@ class _ArticleEditorState extends State<ArticleEditor> {
             }
           },
           icon: const Icon(CupertinoIcons.chevron_back),
+        ),
+        title: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: Theme.of(context).secondaryHeaderColor,
+              width: 2,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Text(
+              widget.articleType,
+              style: const TextStyle(fontSize: 17),
+            ),
+          ),
         ),
         actions: [
           IconButton(
@@ -305,7 +322,7 @@ class _ArticleEditorState extends State<ArticleEditor> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: OutlinedButton.icon(
-                              icon: const Icon(Icons.save_as_outlined),
+                              icon: const Icon(PhosphorIcons.quotes),
                               style: OutlinedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -321,12 +338,16 @@ class _ArticleEditorState extends State<ArticleEditor> {
                                   body: bodyJson,
                                   bodyText: _controller.document.toPlainText(),
                                   updateDate: formattedDate,
-                                  imageUrl: selectedImageUrl ==""? defaultImage:selectedImageUrl,
+                                  type: widget.articleType,
+                                  imageUrl: selectedImageUrl == ""
+                                      ? defaultImage
+                                      : selectedImageUrl,
                                 );
 
                                 logger.i(
                                   "${userArticle.body}\n${userArticle.updateDate}\n${userArticle.id}\n${userArticle.bodyText}\n${userArticle.imageUrl}",
                                 );
+                                logger.wtf(userArticle.type);
                                 //create article object
                                 await articleDataStore
                                     .saveArticle(userArticle: userArticle)

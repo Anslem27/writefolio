@@ -53,24 +53,48 @@ class _LibraryScreenState extends State<LibraryScreen>
                         alignment: WrapAlignment.center,
                         spacing: 5,
                         children: [
-                          for (var articleType in ArticleType.values)
+                          for (var articleType in articleType)
                             InkWell(
                               borderRadius: BorderRadius.circular(8),
                               onTap: () {
-                                /* articleType == ArticleType.shortStory
-                                            ? "assets/illustrations/french.svg"
-                                            : articleType == ArticleType.poem
-                                                ? "assets/illustrations/gimlet.svg"
-                                                : articleType ==
-                                                        ArticleType.quote
-                                                    ? "assets/illustrations/bulb.svg"
-                                                    : "assets/illustrations/bag.svg", */
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const ArticleEditor(),
-                                  ),
-                                );
+                                articleType == "shortStory"
+                                    ? Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => const ArticleEditor(
+                                            articleType: "ShortStory",
+                                          ),
+                                        ),
+                                      )
+                                    : articleType == "poem"
+                                        ? Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  const ArticleEditor(
+                                                articleType: "Poem",
+                                              ),
+                                            ),
+                                          )
+                                        : articleType == "quote"
+                                            ? Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      const ArticleEditor(
+                                                    articleType: "Quote",
+                                                  ),
+                                                ),
+                                              )
+                                            : Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      const ArticleEditor(
+                                                    articleType: "Article",
+                                                  ),
+                                                ),
+                                              );
                               },
                               child: Card(
                                   child: Padding(
@@ -89,12 +113,11 @@ class _LibraryScreenState extends State<LibraryScreen>
                                           borderRadius:
                                               BorderRadius.circular(8)),
                                       child: SvgPicture.asset(
-                                        articleType == ArticleType.shortStory
+                                        articleType == "shortStory"
                                             ? "assets/illustrations/french.svg"
-                                            : articleType == ArticleType.poem
+                                            : articleType == "poem"
                                                 ? "assets/illustrations/gimlet.svg"
-                                                : articleType ==
-                                                        ArticleType.quote
+                                                : articleType == "quote"
                                                     ? "assets/illustrations/bulb.svg"
                                                     : "assets/illustrations/bag.svg",
                                         height: 60,
@@ -103,12 +126,11 @@ class _LibraryScreenState extends State<LibraryScreen>
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        articleType == ArticleType.shortStory
+                                        articleType == "shortStory"
                                             ? "ShortStory"
-                                            : articleType == ArticleType.poem
+                                            : articleType == "poem"
                                                 ? "Poem"
-                                                : articleType ==
-                                                        ArticleType.quote
+                                                : articleType == "quote"
                                                     ? "Quote"
                                                     : "Article",
                                       ),

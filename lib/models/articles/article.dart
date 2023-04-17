@@ -23,8 +23,8 @@ class UserArticle extends HiveObject {
   @HiveField(5)
   String? imageUrl;
 
-  // @HiveField(6)
-  // ArticleType? articleType;
+  @HiveField(6)
+  String? type;
 
   UserArticle({
     required this.title,
@@ -32,8 +32,8 @@ class UserArticle extends HiveObject {
     required this.bodyText,
     required this.id,
     required this.updateDate,
+    required this.type,
     required this.imageUrl,
-    // required this.articleType,
   });
 
   factory UserArticle.create({
@@ -42,8 +42,8 @@ class UserArticle extends HiveObject {
     required String body,
     required String bodyText,
     required String updateDate,
+    required String? type,
     required String? imageUrl,
-    // ArticleType? articleType,
   }) =>
       UserArticle(
         id: const Uuid().v1(), //unique id
@@ -52,13 +52,8 @@ class UserArticle extends HiveObject {
         bodyText: bodyText,
         updateDate: updateDate,
         imageUrl: imageUrl,
-        // articleType: articleType,
+        type: type,
       );
 }
 
-enum ArticleType {
-  article,
-  poem,
-  shortStory,
-  quote,
-}
+List<String> articleType = ["article", "poem", "shortStory", "quote"];
