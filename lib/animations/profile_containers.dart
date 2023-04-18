@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/editor/create_article.dart';
 import 'package:writefolio/models/user/reddit_user_model.dart';
 import 'package:writefolio/utils/widgets/loader.dart';
@@ -22,18 +23,47 @@ class _ConnectedAccountsAvatarsState extends State<ConnectedAccountsAvatars> {
 
   @override
   Widget build(BuildContext context) {
-    FutureBuilder<Data?> getUserRedditAvatar() {
+    FutureBuilder<Data?> getUserRedditAvatar(bool isSelected) {
       return FutureBuilder(
         future: getUserRedditFuture,
         builder: (_, snapshot) {
-          if (!snapshot.hasData) {
-            return const LoadingAnimation();
+          if (snapshot.hasError) {
+            logger.i(snapshot.error);
+            return const Center(
+              child: Icon(PhosphorIcons.reddit_logo),
+            );
           }
-
-          logger.i(snapshot.data!.snoovatarImg!);
-          return SizedBox(
-            child: Image.network(snapshot.data!.snoovatarImg!),
-          );
+          if (!snapshot.hasData) {
+            return const Center(
+              child: LoadingAnimation(),
+            );
+          } else {
+            var imageUrl = snapshot.data!.snoovatarImg;
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  height: isSelected ? 150 : 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(imageUrl!),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Karma : ${snapshot.data!.totalKarma}",
+                    style: GoogleFonts.roboto(
+                      fontSize: 15,
+                      color: Colors.orange,
+                    ),
+                  ),
+                )
+              ],
+            );
+          }
         },
       );
     }
@@ -64,7 +94,7 @@ class _ConnectedAccountsAvatarsState extends State<ConnectedAccountsAvatars> {
                   ),
                   child: Center(
                     child: index == 0
-                        ? getUserRedditAvatar()
+                        ? getUserRedditAvatar(isSelected)
                         : Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,

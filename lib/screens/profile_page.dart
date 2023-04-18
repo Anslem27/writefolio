@@ -34,7 +34,6 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     final loggedInWritefolioUser = FirebaseAuth.instance.currentUser!;
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -216,15 +215,27 @@ class _ProfileScreenState extends State<ProfileScreen>
                         label: const Text("add social"),
                       ),
                     ]),
-                    /*  FutureBuilder(
-                      future: fetchRedditInfo("Infamous-Date-355"),
+                   /*  FutureBuilder(
+                      future: fetchRedditInfo2,
                       builder: (_, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text("No internet");
+                        }
                         if (!snapshot.hasData) {
-                          return const LoadingAnimation();
+                          return Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                LoadingAnimation(),
+                              ]);
                         } else {
-                          logger.i(snapshot.data!.snoovatarImg!);
-                          return SizedBox(
-                            child: Image.network(snapshot.data!.snoovatarImg!),
+                          var imgURl = snapshot.data!.snoovatarImg.toString();
+                          return Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(imgURl),
+                              ),
+                            ),
                           );
                         }
                       },
