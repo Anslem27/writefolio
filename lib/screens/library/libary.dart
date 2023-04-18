@@ -3,6 +3,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/editor/create_article.dart' hide logger;
+import 'package:writefolio/screens/navigation.dart';
 import '../../models/articles/article.dart';
 import '../../utils/widgets/shimmer_component.dart';
 import 'library_draft.dart';
@@ -166,6 +167,14 @@ class _LibraryScreenState extends State<LibraryScreen>
                 ),
               ),
             ),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => const Navigation()));
+                  },
+                  icon: Icon(Icons.houseboat_outlined))
+            ],
             pinned: true,
             centerTitle: false,
             bottom: PreferredSize(

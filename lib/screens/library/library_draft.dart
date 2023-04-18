@@ -295,7 +295,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
     }
   }
 
-   poemCard(BuildContext context, UserArticle userArticle) {
+  poemCard(BuildContext context, UserArticle userArticle) {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
@@ -354,13 +354,13 @@ class _LibraryFilesState extends State<LibraryFiles> {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     Material(
                       type: MaterialType.transparency,
                       child: Text(
                         userArticle.bodyText,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
                         style: TextStyle(
                           fontSize: 14.0,
                           fontWeight: FontWeight.w800,

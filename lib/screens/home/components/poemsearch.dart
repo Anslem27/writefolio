@@ -14,7 +14,6 @@ import '../poems/poem_detail_view.dart';
 //flutter search delegate page with 3 taps each with a body for different futures building a different resuly
 //taps should be postioned to mainaxisalignment.start
 
-
 var logger = Logger();
 
 class PoemQuerySearch extends SearchDelegate {
@@ -62,8 +61,7 @@ class PoemQuerySearch extends SearchDelegate {
           return ListView.builder(
             itemCount: snapshot.data!.poem!.length,
             itemBuilder: (_, index) {
-              int randomIndex = Random().nextInt(avatars.length);
-              return searchPoemComponent(context, snapshot, index, randomIndex);
+              return homePoemQueryComponent(context, snapshot, index, false);
             },
           );
         }
@@ -71,14 +69,15 @@ class PoemQuerySearch extends SearchDelegate {
     );
   }
 
-  Padding searchPoemComponent(BuildContext context,
-      AsyncSnapshot<HomePoemList> snapshot, int index, int randomIndex) {
+  homePoemQueryComponent(BuildContext context,
+      AsyncSnapshot<HomePoemList> snapshot, int index, bool isSonnet) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           InkWell(
+            borderRadius: BorderRadius.circular(8),
             onTap: () {
               Navigator.push(
                 context,
@@ -92,71 +91,142 @@ class PoemQuerySearch extends SearchDelegate {
                 ),
               );
             },
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(3),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
-              height: MediaQuery.of(context).size.height / 7,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(
-                          width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(3),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                height: MediaQuery.of(context).size.height / 7,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            snapshot.data!.poem![index].title
-                                .trim()
-                                .toUpperCase(),
-                            overflow: TextOverflow.ellipsis,
+                            "0${index + 1}",
                             style: GoogleFonts.urbanist(
-                                fontSize: 16.5, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2.0),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Text(
-                            "By ${snapshot.data!.poem![index].author}",
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2.0),
-                        ),
-                        const Spacer(),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 5.0),
-                              child: SizedBox(
-                                child: Text(
-                                  "${snapshot.data!.poem![index].linecount} reading lines |  ${calculateReadingTime(snapshot.data!.poem![index].lines.toString().replaceAll("\n", "").replaceAll("]", "").replaceAll("[", "")).toString()} min read",
-                                ),
-                              ),
+                              fontSize: 32,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
-                        )
+                          ),
+                        ),
+                        isSonnet
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: int.parse(snapshot
+                                                .data!.poem![index].linecount) >
+                                            50
+                                        ? Colors.redAccent
+                                        : Colors.blueAccent,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: Text(
+                                    "sonnet",
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: int.parse(snapshot
+                                          .data!.poem![index].linecount) >
+                                      50
+                                  ? Colors.pink
+                                  : Colors.blueGrey,
+                              width: 2,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Text(
+                              int.parse(snapshot.data!.poem![index].linecount) >
+                                      50
+                                  ? "long read"
+                                  : "short read",
+                              style: const TextStyle(fontSize: 13),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  ),
-                  Container(
-                    width: 80.0,
-                    height: 80.0,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(5),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              snapshot.data!.poem![index].title
+                                  .trim()
+                                  .toUpperCase(),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.roboto(
+                                fontSize: 16.5,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 2.0,
+                            ),
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              "By ${snapshot.data!.poem![index].author}",
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 2.0),
+                          ),
+                          const Spacer(),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 5.0),
+                                child: SizedBox(
+                                  child: Text(
+                                    "${snapshot.data!.poem![index].linecount} reading lines . ${calculateReadingTime(snapshot.data!.poem![index].lines.toString().replaceAll("\n", "").replaceAll("]", "").replaceAll("[", "")).toString()} min read",
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                  int.parse(snapshot
+                                              .data!.poem![index].linecount) >
+                                          50
+                                      ? "| long read"
+                                      : "| short read",
+                                  style: GoogleFonts.roboto(
+                                    color: Colors.pink,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
-                    child: Image.asset(avatars[randomIndex]),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -296,5 +366,4 @@ class PoemQuerySearch extends SearchDelegate {
       ],
     );
   }
-
 }
