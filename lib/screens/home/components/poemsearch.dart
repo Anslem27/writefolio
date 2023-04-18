@@ -1,11 +1,9 @@
-import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:writefolio/models/poems/poem_models.dart';
-import '../../../utils/constants.dart';
 import '../../../services/poem_service.dart';
 import '../../../utils/tools/reading_time_approximator.dart';
 import '../../../utils/widgets/loader.dart';

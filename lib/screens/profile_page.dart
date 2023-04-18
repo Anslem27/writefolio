@@ -16,6 +16,7 @@ import '../models/user/medium_user_model.dart';
 import '../onboarding/onboard/screens/get_user_prefs.dart';
 import '../services/user_service.dart';
 import '../utils/tools/date_parser.dart';
+import '../utils/widgets/loader.dart';
 import '../utils/widgets/medium_article_viewer.dart';
 import '../utils/widgets/shimmer_component.dart';
 import 'library/tools/draft_count.dart';
@@ -235,20 +236,36 @@ class _ProfileScreenState extends State<ProfileScreen>
                       child: Text(
                           "joined ${DateFormat.yMMMd().format(loggedInWritefolioUser.metadata.creationTime!)}"),
                     ),
-                    ListTile(
-                      leading: Text(
-                        "23",
-                        style: GoogleFonts.roboto(
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      title: const Text(
-                        "published medium articles",
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                      //else not Connected
+                    FutureBuilder<MediumUser>(
+                      future: fetchUserInfo("anslemAnsy"),
+                      builder: (_, snapshot) {
+                        if (snapshot.hasError) {
+                          return nullMediumArticleCount();
+                        }
+                        if (!snapshot.hasData) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [LoadingAnimation()],
+                          );
+                        } else {
+                          var articles = snapshot.data!.items;
+                          return ListTile(
+                            leading: Text(
+                              articles.length.toString(),
+                              style: GoogleFonts.roboto(
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            title: const Text(
+                              "published medium articles",
+                              style: TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                            //else not Connected
+                          );
+                        }
+                      },
                     ),
                     const SizedBox(height: 20),
                     Padding(
@@ -262,63 +279,91 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                     ),
                     FutureBuilder<MediumUser>(
-                        future: fetchUserInfo("anslemAnsy"),
-                        builder: (_, snapshot) {
-                          if (snapshot.hasError) {
-                            return Center(
-                              child: SizedBox(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 30.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                        "assets/illustrations/network-failure.svg",
-                                        height: 200,
-                                      ),
-                                      const SizedBox(width: 5),
-                                      const Text("Seems like you are offline"),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          if (!snapshot.hasData) {
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: const ScrollPhysics(),
-                              itemCount: 10,
-                              itemBuilder: (_, index) {
-                                return ShimmerComponent(
-                                  deviceWidth:
-                                      MediaQuery.of(context).size.width,
-                                  deviceHeight:
-                                      MediaQuery.of(context).size.height,
-                                );
-                              },
-                            );
-                          } else {
-                            var articles = snapshot.data!.items;
-                            return ListView.builder(
-                                physics: const ScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: articles.length,
-                                itemBuilder: (_, index) {
-                                  return FloatInAnimation(
-                                    delay: (1.0 + index) / 4,
-                                    child: mediumArticleComponent(
-                                        articles, index, context),
-                                  );
-                                });
-                          }
-                        }),
+                      future: fetchUserInfo("anslemAnsy"),
+                      builder: (_, snapshot) {
+                        if (snapshot.hasError) {
+                          return noInternetComponent();
+                        }
+                        if (!snapshot.hasData) {
+                          return shimmerBuilder(context);
+                        } else {
+                          var articles = snapshot.data!.items;
+                          return userArticlceBuilder(articles, context);
+                        }
+                      },
+                    ),
                   ],
                 ),
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  ListTile nullMediumArticleCount() {
+    return ListTile(
+      leading: Text(
+        "--",
+        style: GoogleFonts.roboto(
+          fontSize: 35,
+          fontWeight: FontWeight.bold,
+          color: Colors.grey,
+        ),
+      ),
+      title: const Text(
+        "published medium articles",
+        style: TextStyle(fontWeight: FontWeight.w500),
+      ),
+      //else not Connected
+    );
+  }
+
+  userArticlceBuilder(List<Items> articles, BuildContext context) {
+    return ListView.builder(
+        physics: const ScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: articles.length,
+        itemBuilder: (_, index) {
+          return FloatInAnimation(
+            delay: (1.0 + index) / 4,
+            child: mediumArticleComponent(articles, index, context),
+          );
+        });
+  }
+
+  shimmerBuilder(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const ScrollPhysics(),
+      itemCount: 10,
+      itemBuilder: (_, index) {
+        return ShimmerComponent(
+          deviceWidth: MediaQuery.of(context).size.width,
+          deviceHeight: MediaQuery.of(context).size.height,
+        );
+      },
+    );
+  }
+
+  noInternetComponent() {
+    return Center(
+      child: SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 30.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                "assets/illustrations/network-failure.svg",
+                height: 200,
+              ),
+              const SizedBox(width: 5),
+              const Text("Seems like you are offline"),
+            ],
+          ),
         ),
       ),
     );
