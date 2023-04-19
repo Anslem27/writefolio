@@ -4,21 +4,21 @@
 
 ## Features
 
-- Sign in Email-Password or Google Account
-- Dark Mode
-- Material 3 design
-- Theme
+- #### Sign in Email-Password or Google Account
+- #### Dark Mode
+- #### Material 3 design
+- #### Theme
   - Choose from multiple color swatches [Premium]
-- User medium artiles
+- #### User medium artiles
 
-- Home Page (For You)
+- #### Home Page (For You)
 
   - self content from `"r/self"`
   - Lifestyle and Culture content from `"the guardian"`
 
   ***
 
-- Poems
+- #### Poems
 
   - Random feed
   - Search
@@ -26,7 +26,7 @@
 
   ***
 
-- Create Articles
+- #### Create Articles
   - Add images from `https://picsum.photos/`
   - Reading time
   - Edit them
@@ -34,7 +34,6 @@
 ### To add
 
 ```
-add tags to articles.
 add  a "hide for now" on home For You
 add previously read poem to under container
 ```
@@ -42,7 +41,7 @@ add previously read poem to under container
 ### In progress
 
 ```
-`
+
 ```
 
 ### Slogans
