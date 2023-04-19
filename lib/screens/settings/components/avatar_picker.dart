@@ -45,18 +45,20 @@ class _AvatarListState extends State<AvatarList> {
   @override
   Widget build(BuildContext context) {
     return Wrap(
+      alignment: WrapAlignment.center,
       children: widget.imageUrls.asMap().entries.map((entry) {
         final index = entry.key;
         final imageUrl = entry.value;
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
+          child: InkWell(
+            borderRadius: BorderRadius.circular(100),
             onTap: () => _onAvatarTapped(index),
             child: Stack(
               children: [
                 CircleAvatar(
                   backgroundImage: AssetImage(imageUrl),
-                  radius: 40,
+                  radius: selectedIndex == index ? 60 : 40,
                 ),
                 if (selectedIndex == index)
                   const Positioned(

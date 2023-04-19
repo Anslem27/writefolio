@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:writefolio/screens/home/home.dart';
-import 'package:writefolio/screens/profile_page.dart';
+import 'package:writefolio/screens/profile/profile_page.dart';
 import 'package:writefolio/screens/settings/components/avatar_picker.dart';
 import 'library/libary.dart';
 

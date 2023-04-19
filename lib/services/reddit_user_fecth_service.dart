@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../editor/create_article.dart';
 import '../models/user/reddit_user_model.dart';
 
-Future<Data?> fetchRedditInfo(String userUrl) async {
+Future<Data?>? fetchRedditInfo(String userUrl) async {
   var url = Uri.https('www.reddit.com', 'user/$userUrl/about.json');
   final response = await http.get(url);
 

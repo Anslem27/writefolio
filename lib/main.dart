@@ -34,6 +34,7 @@ Future<void> main() async {
   await Hive.openBox<bool>('themeBox'); //light and dark theme
   await Hive.openBox<Theme>('themes'); // accent colors
   await Hive.openBox<String>("avatarBox");
+  await Hive.openBox("settingsBox");
   runApp(const MyApp());
 }
 
