@@ -46,8 +46,7 @@ class _PoemViewState extends State<PoemView> {
                   textAlign: TextAlign.start,
                   style: GoogleFonts.urbanist(
                     fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    color: Colors.grey.shade500,
+                    fontSize: 25,
                   ),
                 ),
               ),
@@ -58,8 +57,7 @@ class _PoemViewState extends State<PoemView> {
                 itemBuilder: (_, index) {
                   return FloatInAnimation(
                     delay: (1.0 + index) / 4,
-                    child:
-                        homePoemQueryComponent(context, snapshot, index, false),
+                    child: homePoemQueryComponent(context, snapshot, index),
                   );
                 },
               ),
@@ -67,12 +65,11 @@ class _PoemViewState extends State<PoemView> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
                 child: Text(
-                  "sonnets",
+                  "sonnets and more",
                   textAlign: TextAlign.start,
                   style: GoogleFonts.urbanist(
                     fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    color: Colors.grey.shade500,
+                    fontSize: 25,
                   ),
                 ),
               ),
@@ -95,8 +92,8 @@ class _PoemViewState extends State<PoemView> {
                       itemBuilder: (_, index) {
                         return FloatInAnimation(
                           delay: (1.0 + index) / 4,
-                          child: homePoemQueryComponent(
-                              context, snapshot, index, true),
+                          child:
+                              homePoemQueryComponent(context, snapshot, index),
                         );
                       },
                     );
@@ -108,8 +105,8 @@ class _PoemViewState extends State<PoemView> {
     );
   }
 
-  homePoemQueryComponent(BuildContext context,
-      AsyncSnapshot<HomePoemList> snapshot, int index, bool isSonnet) {
+  homePoemQueryComponent(
+      BuildContext context, AsyncSnapshot<HomePoemList> snapshot, int index) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -156,28 +153,6 @@ class _PoemViewState extends State<PoemView> {
                             ),
                           ),
                         ),
-                        isSonnet
-                            ? Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                    color: int.parse(snapshot
-                                                .data!.poem![index].linecount) >
-                                            50
-                                        ? Colors.redAccent
-                                        : Colors.blueAccent,
-                                    width: 2,
-                                  ),
-                                ),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Text(
-                                    "sonnet",
-                                    style: TextStyle(fontSize: 13),
-                                  ),
-                                ),
-                              )
-                            : const SizedBox(),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
@@ -250,15 +225,15 @@ class _PoemViewState extends State<PoemView> {
                                 ),
                               ),
                               Text(
-                                  int.parse(snapshot
-                                              .data!.poem![index].linecount) >
-                                          50
-                                      ? "| long read"
-                                      : "| short read",
-                                  style: GoogleFonts.roboto(
-                                    color: Colors.pink,
-                                    fontWeight: FontWeight.bold,
-                                  )),
+                                int.parse(snapshot
+                                            .data!.poem![index].linecount) ==
+                                        14
+                                    ? "| sonnet"
+                                    : "",
+                                style: const TextStyle(
+                                  color: Colors.blue,
+                                ),
+                              )
                             ],
                           )
                         ],

@@ -212,6 +212,14 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                                   ),
                                 ),
                               ),
+                              Text(
+                                int.parse(savedPoem.linecount) == 14
+                                    ? "| sonnet"
+                                    : "",
+                                style: const TextStyle(
+                                  color: Colors.blue,
+                                ),
+                              )
                             ],
                           )
                         ],

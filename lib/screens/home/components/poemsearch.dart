@@ -115,28 +115,6 @@ class PoemQuerySearch extends SearchDelegate {
                             ),
                           ),
                         ),
-                        isSonnet
-                            ? Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                    color: int.parse(snapshot
-                                                .data!.poem![index].linecount) >
-                                            50
-                                        ? Colors.redAccent
-                                        : Colors.blueAccent,
-                                    width: 2,
-                                  ),
-                                ),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Text(
-                                    "sonnet",
-                                    style: TextStyle(fontSize: 13),
-                                  ),
-                                ),
-                              )
-                            : const SizedBox(),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
@@ -209,15 +187,15 @@ class PoemQuerySearch extends SearchDelegate {
                                 ),
                               ),
                               Text(
-                                  int.parse(snapshot
-                                              .data!.poem![index].linecount) >
-                                          50
-                                      ? "| long read"
-                                      : "| short read",
-                                  style: GoogleFonts.roboto(
-                                    color: Colors.pink,
-                                    fontWeight: FontWeight.bold,
-                                  )),
+                                int.parse(snapshot
+                                            .data!.poem![index].linecount) ==
+                                        14
+                                    ? "| sonnet"
+                                    : "",
+                                style: const TextStyle(
+                                  color: Colors.blue,
+                                ),
+                              )
                             ],
                           )
                         ],
