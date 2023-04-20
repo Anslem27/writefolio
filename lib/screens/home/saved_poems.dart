@@ -10,6 +10,7 @@ import '../../animations/fade_in_animation.dart';
 import '../../models/poems/saved_poems.dart';
 import '../../data/saved_poem_datastore.dart';
 import '../../utils/tools/reading_time_approximator.dart';
+import 'home.dart';
 import 'poems/offline_poemView.dart';
 
 var logger = Logger();

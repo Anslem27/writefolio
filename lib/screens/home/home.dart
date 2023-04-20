@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/screens/home/poem_view.dart';
 import 'package:writefolio/screens/home/components/poemsearch.dart';
@@ -16,66 +18,127 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  final scrollController = ScrollController();
+  bool _isVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        setState(() {
+          _isVisible = false;
+        });
+      } else {
+        setState(() {
+          _isVisible = true;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     TabController tabcontroller = TabController(length: 4, vsync: this);
-
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              automaticallyImplyLeading: false,
-              expandedHeight: 110,
-              title: Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: Text(
-                  "Writefolio",
-                  style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
+        child: Stack(
+          children: [
+            CustomScrollView(
+              controller: scrollController,
+              slivers: [
+                SliverAppBar(
+                  automaticallyImplyLeading: false,
+                  expandedHeight: 110,
+                  title: Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Text(
+                      "Writefolio",
+                      style: GoogleFonts.roboto(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                  pinned: true,
+                  centerTitle: false,
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        showSearch(
+                            context: context, delegate: PoemQuerySearch());
+                      },
+                      icon: const Icon(PhosphorIcons.magnifying_glass),
+                    ),
+                  ],
+                  bottom: PreferredSize(
+                    preferredSize: const Size.fromHeight(40),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: TabBar(
+                        controller: tabcontroller,
+                        isScrollable: true,
+                        splashFactory: NoSplash.splashFactory,
+                        overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                          (Set<MaterialState> states) {
+                            return states.contains(MaterialState.focused)
+                                ? null
+                                : Colors.transparent;
+                          },
+                        ),
+                        tabs: _tabs,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              pinned: true,
-              centerTitle: false,
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    showSearch(context: context, delegate: PoemQuerySearch());
-                  },
-                  icon: const Icon(PhosphorIcons.magnifying_glass),
+                SliverFillRemaining(
+                  child: TabBarView(
+                    controller: tabcontroller,
+                    children: const [
+                      Explorer(),
+                      EbookListScreen(),
+                      PoemView(),
+                      SavedPoemsScreen(),
+                    ],
+                  ),
                 ),
               ],
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(40),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: TabBar(
-                    controller: tabcontroller,
-                    isScrollable: true,
-                    splashFactory: NoSplash.splashFactory,
-                    overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                        return states.contains(MaterialState.focused)
-                            ? null
-                            : Colors.transparent;
-                      },
+            ),
+            Visibility(
+              visible: _isVisible,
+              child: Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  color: Colors.transparent,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: [
+                        Card(
+                          child: Container(
+                            height: MediaQuery.of(context).size.height / 10.5,
+                            decoration: BoxDecoration(
+                              // color: Colors.red[200],
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            width: double.maxFinite,
+                          ),
+                        ),
+                        Positioned(
+                          top: 1,
+                          left: 1,
+                          child: SvgPicture.asset(
+                            "assets/illustrations/french.svg",
+                            height: 80,
+                          ),
+                        ),
+                      ],
                     ),
-                    tabs: _tabs,
                   ),
                 ),
-              ),
-            ),
-            SliverFillRemaining(
-              child: TabBarView(
-                controller: tabcontroller,
-                children: const [
-                  Explorer(),
-                  EbookListScreen(),
-                  PoemView(),
-                  SavedPoemsScreen(),
-                ],
               ),
             )
           ],
