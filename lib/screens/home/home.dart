@@ -16,70 +16,70 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  final scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     TabController tabcontroller = TabController(length: 4, vsync: this);
-
     return Scaffold(
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              automaticallyImplyLeading: false,
-              expandedHeight: 110,
-              title: Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: Text(
-                  "Writefolio",
-                  style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                  ),
-                ),
-              ),
-              pinned: true,
-              centerTitle: false,
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    showSearch(context: context, delegate: PoemQuerySearch());
-                  },
-                  icon: const Icon(PhosphorIcons.magnifying_glass),
-                ),
-              ],
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(40),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: TabBar(
-                    controller: tabcontroller,
-                    isScrollable: true,
-                    splashFactory: NoSplash.splashFactory,
-                    overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                        return states.contains(MaterialState.focused)
-                            ? null
-                            : Colors.transparent;
-                      },
-                    ),
-                    tabs: _tabs,
-                  ),
+      body: CustomScrollView(
+        controller: scrollController,
+        slivers: [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            expandedHeight: 110,
+            title: Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Text(
+                "Writefolio",
+                style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
                 ),
               ),
             ),
-            SliverFillRemaining(
-              child: TabBarView(
-                controller: tabcontroller,
-                children: const [
-                  Explorer(),
-                  EbookListScreen(),
-                  PoemView(),
-                  SavedPoemsScreen(),
-                ],
+            pinned: true,
+            centerTitle: false,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  showSearch(context: context, delegate: PoemQuerySearch());
+                },
+                icon: const Icon(PhosphorIcons.magnifying_glass),
               ),
-            )
-          ],
-        ),
+            ],
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(40),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: TabBar(
+                  controller: tabcontroller,
+                  isScrollable: true,
+                  splashFactory: NoSplash.splashFactory,
+                  overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                      return states.contains(MaterialState.focused)
+                          ? null
+                          : Colors.transparent;
+                    },
+                  ),
+                  tabs: _tabs,
+                ),
+              ),
+            ),
+          ),
+          SliverFillRemaining(
+            child: TabBarView(
+              controller: tabcontroller,
+              children: const [
+                Explorer(),
+                EbookListScreen(),
+                PoemView(),
+                SavedPoemsScreen(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

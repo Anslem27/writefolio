@@ -173,7 +173,7 @@ class _LibraryScreenState extends State<LibraryScreen>
                     Navigator.push(context,
                         MaterialPageRoute(builder: (_) => const Navigation()));
                   },
-                  icon: Icon(Icons.houseboat_outlined))
+                  icon:  const Icon(Icons.houseboat_outlined))
             ],
             pinned: true,
             centerTitle: false,

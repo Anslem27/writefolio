@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/data/user_article_datastore.dart';
 import 'package:writefolio/editor/editting.dart';
@@ -171,16 +170,13 @@ class _ArticleViewState extends State<ArticleView> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: Colors.pink,
-                              width: 1.5,
+                              color: Colors.grey,
+                              width: 2,
                             ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Text(
-                              widget.userArticle.type ?? "Article",
-                              style: const TextStyle(fontSize: 17),
-                            ),
+                          child: Text(
+                            widget.userArticle.type ?? "Article",
+                            style: const TextStyle(fontSize: 17),
                           ),
                         ),
                         PopupMenuButton<String>(
@@ -194,9 +190,13 @@ class _ArticleViewState extends State<ArticleView> {
                               value: 'share',
                               child: Row(
                                 children: const [
-                                  Icon(Icons.share_outlined),
+                                  Icon(Icons.share_outlined, size: 20),
+                                  SizedBox(width: 2),
                                   SizedBox(width: 3),
-                                  Text('Share'),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text('Share'),
+                                  ),
                                 ],
                               ),
                             ),
@@ -213,33 +213,20 @@ class _ArticleViewState extends State<ArticleView> {
                   children: [
                     Text(
                       "Last updated: ${widget.userArticle.updateDate}",
-                      style: const TextStyle(
-                        color: Colors.grey,
+                      style: TextStyle(
+                        color: Colors.grey[500],
                       ),
                     ),
                     const Spacer(),
                     const Icon(Icons.timer_outlined),
                     Text(
                       " ${calculateReadingTime(widget.userArticle.bodyText).toString()} min read",
-                      style: const TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ],
                 ),
               ),
               widget.userArticle.type == "Poem"
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(10.0),
-                        ),
-                        child: SvgPicture.asset(
-                          "assets/illustrations/gimlet.svg",
-                          height: 200,
-                          width: 200,
-                        ),
-                      ),
-                    )
+                  ? const SizedBox()
                   : Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Hero(

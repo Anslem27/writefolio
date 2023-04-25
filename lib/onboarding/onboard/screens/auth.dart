@@ -98,17 +98,6 @@ class _AuthPageState extends State<AuthPage> {
             // physics: const ScrollPhysics(),
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Connect to the internet to get the full writefolio experience.",
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.roboto(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
               SvgPicture.asset(
                 "assets/illustrations/no-connection.svg",
                 height: 200,

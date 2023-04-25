@@ -14,8 +14,8 @@ class SavedPoemsHiveDataStore {
     return box.get(savedPoemId);
   }
 
-  Future<void> deleteSavedPoem({required SavedPoems savedPoem}) async {
-    await savedPoem.delete();
+  Future<void> deleteSavedPoem({required String savedPoemId}) async {
+    await box.delete(savedPoemId);
   }
 
   ValueListenable<Box<SavedPoems>> listenToSavedPoems() {

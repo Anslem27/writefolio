@@ -296,89 +296,93 @@ class _LibraryFilesState extends State<LibraryFiles> {
   }
 
   poemCard(BuildContext context, UserArticle userArticle) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(8),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => ArticleView(
-              userArticle: userArticle,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ArticleView(
+                userArticle: userArticle,
+              ),
             ),
-          ),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          height: 150.0,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Card(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10.0),
-                  ),
-                ),
-                elevation: 4,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(10.0),
-                  ),
-                  child: SvgPicture.asset(
-                    "assets/illustrations/gimlet.svg",
-                    height: 120,
-                    width: 80,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10.0),
-              Flexible(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Material(
-                      type: MaterialType.transparency,
-                      child: Text(
-                        userArticle.title,
-                        style: TextStyle(
-                          fontSize: 19.0,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).textTheme.titleLarge!.color,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: 150.0,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Card(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
                     ),
-                    const SizedBox(height: 5),
-                    Material(
-                      type: MaterialType.transparency,
-                      child: Text(
-                        userArticle.bodyText,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w800,
-                          color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  elevation: 4,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                    child: SvgPicture.asset(
+                      "assets/illustrations/gimlet.svg",
+                      height: 120,
+                      width: 80,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10.0),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Material(
+                        type: MaterialType.transparency,
+                        child: Text(
+                          userArticle.title,
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color:
+                                Theme.of(context).textTheme.titleMedium!.color,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                    ),
-                    Text(
-                      userArticle.updateDate,
-                      style: TextStyle(
-                        fontSize: 13.0,
-                        color: Theme.of(context).textTheme.bodySmall!.color,
+                      const SizedBox(height: 5),
+                      Material(
+                        type: MaterialType.transparency,
+                        child: Text(
+                          userArticle.bodyText,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w800,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 15.0),
+                      Text(
+                        "Last editted • ${userArticle.updateDate}",
+                        style: TextStyle(
+                          fontSize: 13.0,
+                          color: Theme.of(context).textTheme.bodySmall!.color,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -4,7 +4,7 @@ import 'package:uuid/uuid.dart';
 part 'saved_poems.g.dart';
 
 @HiveType(typeId: 0)
-class SavedPoems extends HiveObject {
+class SavedPoems {
   @HiveField(0)
   final String title;
 

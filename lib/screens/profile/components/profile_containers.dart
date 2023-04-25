@@ -102,9 +102,9 @@ class _ConnectedAccountsAvatarsState extends State<ConnectedAccountsAvatars> {
                                                     const EdgeInsets.all(8.0),
                                                 child: Text(
                                                   "Karma : ${snapshot.data!.totalKarma}",
+                                                  textAlign: TextAlign.center,
                                                   style: GoogleFonts.roboto(
-                                                    fontSize:
-                                                        isSelected ? 12 : 15,
+                                                    fontSize: 12,
                                                     color: Colors.orange,
                                                   ),
                                                 ),
@@ -138,11 +138,23 @@ class _ConnectedAccountsAvatarsState extends State<ConnectedAccountsAvatars> {
                                         } else {
                                           return Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: CircleAvatar(
-                                              radius: 60,
-                                              backgroundImage: NetworkImage(
-                                                snapshot.data!.feed.image,
-                                              ),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                CircleAvatar(
+                                                  radius: 65,
+                                                  backgroundImage: NetworkImage(
+                                                    snapshot.data!.feed.image,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "connected medium",
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts.roboto(
+                                                    fontSize: 12,
+                                                  ),
+                                                )
+                                              ],
                                             ),
                                           );
                                         }
