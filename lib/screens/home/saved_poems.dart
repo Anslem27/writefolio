@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,6 @@ import '../../animations/fade_in_animation.dart';
 import '../../models/poems/saved_poems.dart';
 import '../../data/saved_poem_datastore.dart';
 import '../../utils/tools/reading_time_approximator.dart';
-import 'home.dart';
 import 'poems/offline_poemView.dart';
 
 var logger = Logger();
@@ -24,6 +25,7 @@ class SavedPoemsScreen extends StatefulWidget {
 
 class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
   var poemDatastore = SavedPoemsHiveDataStore();
+  var settingsBox = Hive.box("settingsBox");
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,6 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                         physics: const ScrollPhysics(),
                         itemBuilder: (_, index) {
                           var savedPoem = savedPoems[index];
-                          logger.wtf(savedPoem); //log returned query
                           return FloatInAnimation(
                             delay: (1.0 + index) / 5,
                             child: Slidable(
@@ -57,7 +58,8 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
                                   SlidableAction(
                                     onPressed: (_) async {
                                       await SavedPoemsHiveDataStore()
-                                          .deleteSavedPoem(savedPoem: savedPoem)
+                                          .deleteSavedPoem(
+                                              savedPoemId: savedPoem.id)
                                           .then((value) {
                                         AnimatedSnackBar.material(
                                           "Deleted: ${savedPoem.title}",
@@ -104,7 +106,9 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
         children: [
           InkWell(
             borderRadius: BorderRadius.circular(8),
-            onTap: () {
+            onTap: () async {
+              await settingsBox.put('recentlyViewedPoem', savedPoem);
+              logger.i("Added ${savedPoem.title} to recently read");
               Navigator.push(
                 context,
                 MaterialPageRoute(

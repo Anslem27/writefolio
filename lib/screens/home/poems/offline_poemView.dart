@@ -42,10 +42,10 @@ class _OfflinePoemViewState extends State<OfflinePoemView> {
         valueListenable: poemDatastore.listenToSavedPoems(),
         builder: (_, __, ___) {
           return Scaffold(
-            floatingActionButton: FloatingActionButton(
+           /*  floatingActionButton: FloatingActionButton(
               onPressed: () {},
               child: const Icon(PhosphorIcons.microphone),
-            ),
+            ), */
             appBar: AppBar(
               leading: IconButton(
                 onPressed: () {

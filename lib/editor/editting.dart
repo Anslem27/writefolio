@@ -79,7 +79,6 @@ class _ContinueEdittingState extends State<ContinueEditting> {
                       child: AutoSizeTextField(
                         controller: _titleController,
                         style: GoogleFonts.roboto(
-                          color: Colors.grey,
                           fontWeight: FontWeight.bold,
                           fontSize: 25,
                         ),
