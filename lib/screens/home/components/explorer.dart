@@ -7,7 +7,6 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vs_scrollbar/vs_scrollbar.dart';
-import 'package:writefolio/screens/home/components/recently_read.dart';
 import '../../../models/home/guardian_lifestyle.dart';
 import '../../../models/home/rself-model.dart';
 import '../../../services/explorer_services.dart';
@@ -23,26 +22,6 @@ class Explorer extends StatefulWidget {
 }
 
 class _ExplorerState extends State<Explorer> {
-  final hideComponentController = ScrollController();
-  bool _isVisible = true;
-
-  @override
-  void initState() {
-    super.initState();
-    hideComponentController.addListener(() {
-      if (hideComponentController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        setState(() {
-          _isVisible = false;
-        });
-      } else {
-        setState(() {
-          _isVisible = true;
-        });
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     var explorerContents = ExplorerContents();
@@ -71,8 +50,8 @@ class _ExplorerState extends State<Explorer> {
             physics: const ScrollPhysics(),
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 12.0, horizontal: 12),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
                 child: Row(
                   children: [
                     const Icon(
@@ -118,8 +97,8 @@ class _ExplorerState extends State<Explorer> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 12.0, horizontal: 12),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
                 child: Row(
                   children: [
                     const Icon(
@@ -159,8 +138,8 @@ class _ExplorerState extends State<Explorer> {
                 },
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 12.0, horizontal: 12),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
                 child: Row(
                   children: [
                     const Icon(

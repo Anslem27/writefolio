@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import '../../animations/fade_in_animation.dart';
 import '../../models/poems/saved_poems.dart';
 import '../../data/saved_poem_datastore.dart';
 import '../../utils/tools/reading_time_approximator.dart';
+import 'components/recently_read.dart';
 import 'poems/offline_poemView.dart';
 
 var logger = Logger();
@@ -26,6 +28,26 @@ class SavedPoemsScreen extends StatefulWidget {
 class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
   var poemDatastore = SavedPoemsHiveDataStore();
   var settingsBox = Hive.box("settingsBox");
+  ScrollController scrollController = ScrollController();
+
+  bool _isVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        setState(() {
+          _isVisible = false;
+        });
+      } else {
+        setState(() {
+          _isVisible = true;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,60 +60,75 @@ class _SavedPoemsScreenState extends State<SavedPoemsScreen> {
         return Scaffold(
           body: savedPoems.isEmpty
               ? _emptySavedPoems()
-              : SingleChildScrollView(
-                  physics: const ScrollPhysics(),
-                  child: Column(
-                    children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: savedPoems.length,
-                        physics: const ScrollPhysics(),
-                        itemBuilder: (_, index) {
-                          var savedPoem = savedPoems[index];
-                          return FloatInAnimation(
-                            delay: (1.0 + index) / 5,
-                            child: Slidable(
-                              key: const ValueKey(0),
-                              startActionPane: ActionPane(
-                                motion: const ScrollMotion(),
-                                children: [
-                                  SlidableAction(
-                                    onPressed: (_) async {
-                                      await SavedPoemsHiveDataStore()
-                                          .deleteSavedPoem(
-                                              savedPoemId: savedPoem.id)
-                                          .then((value) {
-                                        AnimatedSnackBar.material(
-                                          "Deleted: ${savedPoem.title}",
-                                          type: AnimatedSnackBarType.info,
-                                          duration: const Duration(seconds: 4),
-                                          mobileSnackBarPosition:
-                                              MobileSnackBarPosition.bottom,
-                                        ).show(context);
-                                      });
+              : Stack(
+                  children: [
+                    SingleChildScrollView(
+                      controller: scrollController,
+                      physics: const ScrollPhysics(),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: savedPoems.length,
+                            physics: const ScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              var savedPoem = savedPoems[index];
+                              return FloatInAnimation(
+                                delay: (1.0 + index) / 5,
+                                child: Slidable(
+                                  key: const ValueKey(0),
+                                  startActionPane: ActionPane(
+                                    motion: const ScrollMotion(),
+                                    children: [
+                                      SlidableAction(
+                                        onPressed: (_) async {
+                                          await SavedPoemsHiveDataStore()
+                                              .deleteSavedPoem(
+                                                  savedPoemId: savedPoem.id)
+                                              .then((value) {
+                                            AnimatedSnackBar.material(
+                                              "Deleted: ${savedPoem.title}",
+                                              type: AnimatedSnackBarType.info,
+                                              duration:
+                                                  const Duration(seconds: 4),
+                                              mobileSnackBarPosition:
+                                                  MobileSnackBarPosition.bottom,
+                                            ).show(context);
+                                          });
 
-                                      setState(() {});
-                                    },
-                                    backgroundColor: Colors.pink,
-                                    icon: PhosphorIcons.trash,
-                                    label: 'Delete',
+                                          setState(() {});
+                                        },
+                                        backgroundColor: Colors.pink,
+                                        icon: PhosphorIcons.trash,
+                                        label: 'Delete',
+                                      ),
+                                      SlidableAction(
+                                        onPressed: (_) {},
+                                        backgroundColor: Colors.brown,
+                                        icon: Icons.share,
+                                        label: 'Share',
+                                      ),
+                                    ],
                                   ),
-                                  SlidableAction(
-                                    onPressed: (_) {},
-                                    backgroundColor: Colors.brown,
-                                    icon: Icons.share,
-                                    label: 'Share',
-                                  ),
-                                ],
-                              ),
-                              child:
-                                  savedPoemComponent(context, savedPoem, index),
-                            ),
-                          );
-                        },
+                                  child: savedPoemComponent(
+                                      context, savedPoem, index),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Visibility(
+                        visible: _isVisible,
+                        child: const RecentlyRead(),
+                      ),
+                    )
+                  ],
                 ),
         );
       },

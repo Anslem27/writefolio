@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/screens/home/poem_view.dart';
@@ -7,7 +6,6 @@ import 'package:writefolio/screens/home/components/poemsearch.dart';
 import '../../utils/widgets/shimmer_component.dart';
 import 'components/e_book.dart';
 import 'components/explorer.dart';
-import 'components/recently_read.dart';
 import 'saved_poems.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,24 +17,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final scrollController = ScrollController();
-  bool _isVisible = true;
-
-  @override
-  void initState() {
-    super.initState();
-    scrollController.addListener(() {
-      if (scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        setState(() {
-          _isVisible = false;
-        });
-      } else {
-        setState(() {
-          _isVisible = true;
-        });
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +43,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             actions: [
               IconButton(
                 onPressed: () {
-                  showSearch(
-                      context: context, delegate: PoemQuerySearch());
+                  showSearch(context: context, delegate: PoemQuerySearch());
                 },
                 icon: const Icon(PhosphorIcons.magnifying_glass),
               ),
