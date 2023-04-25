@@ -447,7 +447,6 @@ class _LibraryFilesState extends State<LibraryFiles> {
                       maxLines: 2,
                       style: GoogleFonts.roboto(
                         fontSize: 15,
-                        color: Colors.grey.shade600,
                       ),
                     ),
                   ),
@@ -456,6 +455,9 @@ class _LibraryFilesState extends State<LibraryFiles> {
                     maxLines: 2,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.grey.shade600,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),

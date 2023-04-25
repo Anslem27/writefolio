@@ -175,9 +175,8 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 text,
-                textAlign: TextAlign.start,
-                style: GoogleFonts.urbanist(
-                  fontWeight: FontWeight.w400,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.roboto(
                   fontSize: 16.5,
                 ),
               ),

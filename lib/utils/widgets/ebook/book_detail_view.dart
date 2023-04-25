@@ -11,6 +11,7 @@ import '../loader.dart';
 import 'book_description_text.dart';
 import 'book_list_item.dart';
 
+
 class Details extends StatefulWidget {
   final Entry entry;
   final String imgTag;

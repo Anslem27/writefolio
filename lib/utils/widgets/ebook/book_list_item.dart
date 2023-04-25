@@ -55,7 +55,7 @@ class BookListItem extends StatelessWidget {
                   tag: imgTag,
                   child: CachedNetworkImage(
                       imageUrl: entry.link![1].href!,
-                      placeholder: (context, url) => const SizedBox(child: LoadingAnimation()),
+                      placeholder: (context, url) => const Center(child: LoadingAnimation()),
                       errorWidget: (context, url, error) =>
                           const Icon(PhosphorIcons.image)),
                 ),
