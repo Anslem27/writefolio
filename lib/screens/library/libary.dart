@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/editor/create_article.dart' hide logger;
 import 'package:writefolio/screens/navigation.dart';
 import '../../models/articles/article.dart';
-import '../../utils/widgets/shimmer_component.dart';
-import 'library_draft.dart';
+import 'components/archived_view.dart';
+import 'components/library_draft_view.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
@@ -20,8 +20,6 @@ class _LibraryScreenState extends State<LibraryScreen>
   @override
   Widget build(BuildContext context) {
     TabController tabcontroller = TabController(length: 2, vsync: this);
-    var deviceHeight = MediaQuery.of(context).size.height;
-    var deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -173,7 +171,7 @@ class _LibraryScreenState extends State<LibraryScreen>
                     Navigator.push(context,
                         MaterialPageRoute(builder: (_) => const Navigation()));
                   },
-                  icon:  const Icon(Icons.houseboat_outlined))
+                  icon: const Icon(Icons.houseboat_outlined))
             ],
             pinned: true,
             centerTitle: false,
@@ -200,26 +198,14 @@ class _LibraryScreenState extends State<LibraryScreen>
           SliverFillRemaining(
             child: TabBarView(
               controller: tabcontroller,
-              children: [
-                const LibraryFiles(),
-                shimmerLoader(deviceWidth, deviceHeight),
+              children: const [
+                LibraryFiles(),
+                ArchivedView(),
               ],
             ),
           )
         ],
       ),
-    );
-  }
-
-  ListView shimmerLoader(double deviceWidth, double deviceHeight) {
-    return ListView.builder(
-      itemCount: 10,
-      itemBuilder: (_, index) {
-        return ShimmerComponent(
-          deviceWidth: deviceWidth,
-          deviceHeight: deviceHeight,
-        );
-      },
     );
   }
 

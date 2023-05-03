@@ -4,7 +4,7 @@ import 'package:uuid/uuid.dart';
 part 'article.g.dart';
 
 @HiveType(typeId: 1)
-class UserArticle extends HiveObject {
+class UserArticle /* extends HiveObject */ {
   @HiveField(0)
   String id;
 

@@ -33,10 +33,6 @@ class _GuardianComponentViewViewState extends State<GuardianComponentView> {
     final filter = ProfanityFilter();
 
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(PhosphorIcons.microphone),
-        ),
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {

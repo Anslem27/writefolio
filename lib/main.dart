@@ -36,6 +36,7 @@ Future<void> main() async {
   await Hive.openBox<Theme>('themes'); // accent colors
   await Hive.openBox<String>("avatarBox");
   await Hive.openBox("settingsBox");
+  await Hive.openBox<UserArticle>("archiveBox");
 
   /// lock app to only portrait mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])

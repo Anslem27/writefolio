@@ -45,10 +45,7 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
 
     bool hasProfanity = filter.hasProfanity(text);
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(PhosphorIcons.microphone),
-      ),
+  
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
