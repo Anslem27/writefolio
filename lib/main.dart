@@ -28,7 +28,6 @@ Future<void> main() async {
   Hive.registerAdapter<UserArticle>(UserArticleAdapter());
   Hive.registerAdapter(LayoutTypeAdapter());
   Hive.registerAdapter(ThemeAdapter());
-  await Hive.openBox<bool>('firstLaunch');
   await Hive.openBox<LayoutType>('Layout');
   await Hive.openBox<SavedPoems>("savedPoems");
   await Hive.openBox<UserArticle>("userArticles");
@@ -114,13 +113,13 @@ class WriteFolioApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: FutureBuilder(
-        future: Hive.openBox<bool>('firstLaunch'),
+        future: Hive.openBox('settingsBox'),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             final bool? isFirstLaunch =
-                Hive.box<bool>('firstLaunch').get('value', defaultValue: true);
+                Hive.box('settingsBox').get('value', defaultValue: true);
             if (isFirstLaunch!) {
-              Hive.box<bool>('firstLaunch').put('value', false);
+              Hive.box('settingsBox').put('value', false);
               return const IntroductionAnimationScreen();
             } else {
               return const AuthPage();
