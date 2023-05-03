@@ -174,10 +174,10 @@ class _LibraryFilesState extends State<LibraryFiles> {
             shrinkWrap: true,
             padding: EdgeInsets.zero,
             physics: const ScrollPhysics(),
-            itemCount: savedArticlesList.length,
+            itemCount: nonPoems.length,
             itemBuilder: (_, index) {
-              logger.i(savedArticlesList[index]);
-              var userArticle = savedArticlesList[index];
+              logger.i(nonPoems[index]);
+              var userArticle = nonPoems[index];
               return ArticleHomeCard(userArticle: userArticle);
             },
           )
@@ -347,8 +347,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
                         userArticle.title,
                         style: TextStyle(
                           fontSize: 18.0,
-                          color:
-                              Theme.of(context).textTheme.titleMedium!.color,
+                          color: Theme.of(context).textTheme.titleMedium!.color,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
