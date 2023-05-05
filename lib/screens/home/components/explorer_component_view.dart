@@ -215,7 +215,7 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
   /// apparently [canLaunchUrl] doesnt work for emulators
 
   Future<void> _launchUrl() async {
-    if (!await canLaunchUrl(Uri.parse(widget.component.link))) {
+    if (!await launchUrl(Uri.parse(widget.component.link))) {
       throw Exception('Could not launch ${widget.component.link}');
     }
   }

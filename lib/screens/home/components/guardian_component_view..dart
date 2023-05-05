@@ -172,7 +172,7 @@ class _GuardianComponentViewViewState extends State<GuardianComponentView> {
                         onTap: () {},
                         child: TextButton(
                             onPressed: () async {
-                              if (!await canLaunchUrl(
+                              if (!await launchUrl(
                                   Uri.parse(component.link))) {
                                 throw Exception(
                                     'Could not launch ${component.link}');
