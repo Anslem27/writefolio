@@ -10,6 +10,8 @@ import 'package:writefolio/utils/tools/date_parser.dart';
 import '../../../models/home/rself-model.dart';
 import '../../../utils/tools/html_parser.dart';
 import 'package:profanity_filter/profanity_filter.dart';
+// ignore: depend_on_referenced_packages
+import 'package:url_launcher/url_launcher.dart';
 
 var logger = Logger();
 
@@ -45,7 +47,6 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
 
     bool hasProfanity = filter.hasProfanity(text);
     return Scaffold(
-  
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -186,7 +187,7 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
                 child: InkWell(
                   onTap: () {},
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: _launchUrl,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -209,5 +210,13 @@ class _ExplorerComponentViewState extends State<ExplorerComponentView> {
         ),
       )),
     );
+  }
+
+  /// apparently [canLaunchUrl] doesnt work for emulators
+
+  Future<void> _launchUrl() async {
+    if (!await canLaunchUrl(Uri.parse(widget.component.link))) {
+      throw Exception('Could not launch ${widget.component.link}');
+    }
   }
 }

@@ -14,7 +14,9 @@ import '../../settings/components/avatar_picker.dart';
 
 class ArticleView extends StatefulWidget {
   final UserArticle userArticle;
-  const ArticleView({super.key, required this.userArticle});
+  final bool isArchived;
+  const ArticleView(
+      {super.key, required this.userArticle, required this.isArchived});
 
   @override
   State<ArticleView> createState() => _ArticleViewState();
@@ -54,83 +56,106 @@ class _ArticleViewState extends State<ArticleView> {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              showModalBottomSheet(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                context: context,
-                builder: (_) => Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SizedBox(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Are you sure you want to\ndelete?",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 17),
+          widget.isArchived
+              ? IconButton(
+                  onPressed: () async {
+                    await UserArticleDataStore()
+                        .deleteArchived(userArticle: widget.userArticle)
+                        .then((value) {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, "/navigation", (route) => false);
+
+                      AnimatedSnackBar.material(
+                        "Archived deleted successfully",
+                        type: AnimatedSnackBarType.info,
+                        mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+                      ).show(context);
+                    });
+                  },
+                  icon: const Icon(PhosphorIcons.trash),
+                )
+              : IconButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      context: context,
+                      builder: (_) => Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SizedBox(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Are you sure you want to\ndelete?",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 17),
+                                ),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        /// delete an existing article and push to navigation route
+                                        await UserArticleDataStore()
+                                            .deleteSavedArticle(
+                                                savedArticle:
+                                                    widget.userArticle)
+                                            .then((value) {
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              "/navigation",
+                                              (route) => false);
+
+                                          AnimatedSnackBar.material(
+                                            "Article deleted successfully",
+                                            type: AnimatedSnackBarType.info,
+                                            mobileSnackBarPosition:
+                                                MobileSnackBarPosition.bottom,
+                                          ).show(context);
+                                        });
+                                        setState(() {});
+                                      },
+                                      child: const Text("Yes"),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text("No"),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
                           ),
                         ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  /// delete an existing article and push to navigation route
-                                  await UserArticleDataStore()
-                                      .deleteSavedArticle(
-                                          savedArticle: widget.userArticle)
-                                      .then((value) {
-                                    Navigator.pushNamedAndRemoveUntil(context,
-                                        "/navigation", (route) => false);
-
-                                    AnimatedSnackBar.material(
-                                      "Article deleted successfully",
-                                      type: AnimatedSnackBarType.info,
-                                      mobileSnackBarPosition:
-                                          MobileSnackBarPosition.bottom,
-                                    ).show(context);
-                                  });
-                                  setState(() {});
-                                },
-                                child: const Text("Yes"),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("No"),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
+                  icon: const Icon(PhosphorIcons.trash),
                 ),
-              );
-            },
-            icon: const Icon(PhosphorIcons.trash),
-          ),
         ],
       ),
       body: SingleChildScrollView(

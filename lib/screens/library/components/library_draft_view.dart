@@ -301,6 +301,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
           context,
           MaterialPageRoute(
             builder: (_) => ArticleView(
+              isArchived: false,
               userArticle: userArticle,
             ),
           ),
@@ -400,6 +401,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
                   context,
                   MaterialPageRoute(
                     builder: (_) => ArticleView(
+                           isArchived: false,
                       userArticle: userArticle,
                     ),
                   ),

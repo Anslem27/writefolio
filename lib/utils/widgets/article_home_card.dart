@@ -20,7 +20,8 @@ class ArticleHomeCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => ArticleView(userArticle: userArticle),
+                builder: (_) =>
+                    ArticleView(isArchived: false, userArticle: userArticle),
               ),
             );
           },

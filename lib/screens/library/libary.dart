@@ -17,10 +17,16 @@ class LibraryScreen extends StatefulWidget {
 
 class _LibraryScreenState extends State<LibraryScreen>
     with TickerProviderStateMixin {
+  late TabController tabcontroller;
+
+  @override
+  void initState() {
+    tabcontroller = TabController(length: 2, vsync: this);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    TabController tabcontroller = TabController(length: 2, vsync: this);
-
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {

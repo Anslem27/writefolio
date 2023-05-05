@@ -118,7 +118,6 @@ class _ArchivedViewState extends State<ArchivedView> {
     }
   }
 
-
   AnimatedContainer gridCardComponent(
       UserArticle userArticle, List<UserArticle> savedArticlesList, int index) {
     return AnimatedContainer(
@@ -136,6 +135,7 @@ class _ArchivedViewState extends State<ArchivedView> {
                   context,
                   MaterialPageRoute(
                     builder: (_) => ArticleView(
+                      isArchived: true,
                       userArticle: userArticle,
                     ),
                   ),
@@ -230,6 +230,7 @@ class _ArchivedViewState extends State<ArchivedView> {
           context,
           MaterialPageRoute(
             builder: (_) => ArticleView(
+              isArchived: true,
               userArticle: userArticle,
             ),
           ),

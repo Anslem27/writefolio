@@ -31,7 +31,6 @@ Future<void> main() async {
   await Hive.openBox<LayoutType>('Layout');
   await Hive.openBox<SavedPoems>("savedPoems");
   await Hive.openBox<UserArticle>("userArticles");
-  await Hive.openBox<bool>('themeBox'); //light and dark theme
   await Hive.openBox<Theme>('themes'); // accent colors
   await Hive.openBox<String>("avatarBox");
   await Hive.openBox("settingsBox");
@@ -51,9 +50,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: Hive.box<bool>("themeBox").listenable(),
-      builder: (_, box, __) {
-        final isDarkMode = box.get('isDarkMode', defaultValue: false);
+      valueListenable: Hive.box("settingsBox").listenable(),
+      builder: (_, settingsBox, __) {
+        final isDarkMode = settingsBox.get('isDarkMode', defaultValue: false);
         return ValueListenableBuilder(
           valueListenable: Hive.box<Theme>("themes").listenable(),
           builder: (_, themeBox, __) {
