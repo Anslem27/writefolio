@@ -61,6 +61,8 @@ class _ArticleEditorState extends State<ArticleEditor> {
 
   @override
   Widget build(BuildContext context) {
+    /// hide FAB when keyboard is on
+    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     /* _controller.addListener(() {
       if (_controller.document.toPlainText().isEmpty) {
         // Document is empty, so insert default text
@@ -272,129 +274,133 @@ class _ArticleEditorState extends State<ArticleEditor> {
               icon: const Icon(Icons.image))
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          if (_titleController.text.isNotEmpty &&
-              _controller.document.toPlainText().isNotEmpty) {
-            showModalBottomSheet(
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              context: context,
-              builder: (_) => SizedBox(
-                height: MediaQuery.of(context).size.height / 4,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "You are creating\n'${_titleController.text.trim()}'",
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text(
-                                "Keep Editting",
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: OutlinedButton.icon(
-                              icon: const Icon(PhosphorIcons.quotes),
-                              style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              onPressed: () async {
-                                var bodyJson = jsonEncode(
-                                    _controller.document.toDelta().toJson());
-
-                                // create article object
-                                var userArticle = UserArticle.create(
-                                  title: _titleController.text.trim(),
-                                  body: bodyJson,
-                                  bodyText: _controller.document.toPlainText(),
-                                  updateDate: formattedDate,
-                                  type: widget.articleType,
-                                  imageUrl: selectedImageUrl == ""
-                                      ? defaultImage
-                                      : selectedImageUrl,
-                                );
-
-                                logger.i(
-                                  "${userArticle.body}\n${userArticle.updateDate}\n${userArticle.id}\n${userArticle.bodyText}\n${userArticle.imageUrl}",
-                                );
-                                logger.wtf(userArticle.type);
-                                //create article object
-                                await articleDataStore
-                                    .saveArticle(userArticle: userArticle)
-                                    .then((value) {
-                                  AnimatedSnackBar.material(
-                                    "${userArticle.title} has been saved",
-                                    type: AnimatedSnackBarType.success,
-                                    duration: const Duration(seconds: 4),
-                                    mobileSnackBarPosition:
-                                        MobileSnackBarPosition.bottom,
-                                  ).show(context).then((value) {
-                                    Navigator.pop(context);
-                                  });
-                                });
-
-                                // ignore: use_build_context_synchronously
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context, "/navigation", (route) => false);
-                              },
-                              label: const Text(
-                                "Save Article",
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+      floatingActionButton: Visibility(
+        visible: showFab,
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            if (_titleController.text.isNotEmpty &&
+                _controller.document.toPlainText().isNotEmpty) {
+              showModalBottomSheet(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              ),
-            );
-          }
-          if (_titleController.text.isEmpty &&
-              _controller.document.toPlainText().isEmpty) {
-            AnimatedSnackBar.material(
-              'Title or body can not be empty.',
-              type: AnimatedSnackBarType.warning,
-              mobileSnackBarPosition: MobileSnackBarPosition.bottom,
-            ).show(context);
-          }
-        },
-        icon: const Icon(
-          PhosphorIcons.pen_nib,
-          size: 30,
+                context: context,
+                builder: (_) => SizedBox(
+                  height: MediaQuery.of(context).size.height / 4,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "You are creating\n'${_titleController.text.trim()}'",
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text(
+                                  "Keep Editting",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: OutlinedButton.icon(
+                                icon: const Icon(PhosphorIcons.quotes),
+                                style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  var bodyJson = jsonEncode(
+                                      _controller.document.toDelta().toJson());
+
+                                  // create article object
+                                  var userArticle = UserArticle.create(
+                                    title: _titleController.text.trim(),
+                                    body: bodyJson,
+                                    bodyText:
+                                        _controller.document.toPlainText(),
+                                    updateDate: formattedDate,
+                                    type: widget.articleType,
+                                    imageUrl: selectedImageUrl == ""
+                                        ? defaultImage
+                                        : selectedImageUrl,
+                                  );
+
+                                  logger.i(
+                                    "${userArticle.body}\n${userArticle.updateDate}\n${userArticle.id}\n${userArticle.bodyText}\n${userArticle.imageUrl}",
+                                  );
+                                  logger.wtf(userArticle.type);
+                                  //create article object
+                                  await articleDataStore
+                                      .saveArticle(userArticle: userArticle)
+                                      .then((value) {
+                                    AnimatedSnackBar.material(
+                                      "${userArticle.title} has been saved",
+                                      type: AnimatedSnackBarType.success,
+                                      duration: const Duration(seconds: 4),
+                                      mobileSnackBarPosition:
+                                          MobileSnackBarPosition.bottom,
+                                    ).show(context).then((value) {
+                                      Navigator.pop(context);
+                                    });
+                                  });
+
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context, "/navigation", (route) => false);
+                                },
+                                label: const Text(
+                                  "Save Article",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }
+            if (_titleController.text.isEmpty &&
+                _controller.document.toPlainText().isEmpty) {
+              AnimatedSnackBar.material(
+                'Title or body can not be empty.',
+                type: AnimatedSnackBarType.warning,
+                mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+              ).show(context);
+            }
+          },
+          icon: const Icon(
+            PhosphorIcons.pen_nib,
+            size: 30,
+          ),
+          label: const Text("Create and save"),
         ),
-        label: const Text("Create and save"),
       ),
       body: SafeArea(
         child: ListView(

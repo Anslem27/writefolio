@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:writefolio/onboarding/onboard/screens/auth.dart';
 import 'package:writefolio/services/auth_service.dart';
 import 'package:writefolio/utils/widgets/loader.dart';
 import '../../../editor/create_article.dart';
@@ -69,7 +70,10 @@ class _SignInPageState extends State<SignInPage> {
             mobileSnackBarPosition: MobileSnackBarPosition.bottom,
           ).show(context);
         });
-        Navigator.pop(context); //pop to loading animation
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => const AuthPage()),
+            (route) => false); //pop to loading animation
         logger.i("signing in...");
       } on FirebaseAuthException catch (e) {
         if (e.code == "user-not-found") {

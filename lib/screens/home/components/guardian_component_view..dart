@@ -9,6 +9,8 @@ import 'package:writefolio/utils/tools/date_parser.dart';
 import '../../../models/home/guardian_lifestyle.dart';
 import '../../../utils/tools/html_parser.dart';
 import 'package:profanity_filter/profanity_filter.dart';
+// ignore: depend_on_referenced_packages
+import 'package:url_launcher/url_launcher.dart';
 
 class GuardianComponentView extends StatefulWidget {
   final GuardianLifestyle component;
@@ -33,10 +35,6 @@ class _GuardianComponentViewViewState extends State<GuardianComponentView> {
     final filter = ProfanityFilter();
 
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(PhosphorIcons.microphone),
-        ),
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
@@ -173,7 +171,13 @@ class _GuardianComponentViewViewState extends State<GuardianComponentView> {
                       child: InkWell(
                         onTap: () {},
                         child: TextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              if (!await launchUrl(
+                                  Uri.parse(component.link))) {
+                                throw Exception(
+                                    'Could not launch ${component.link}');
+                              }
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

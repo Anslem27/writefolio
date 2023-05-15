@@ -9,10 +9,10 @@ import 'package:logger/logger.dart';
 import 'package:writefolio/models/articles/article.dart';
 import 'package:writefolio/screens/library/tools/view_type.dart';
 import 'package:writefolio/utils/tools/reading_time_approximator.dart';
-import '../../data/user_article_datastore.dart';
-import '../../utils/widgets/article_home_card.dart';
-import '../../utils/widgets/loader.dart';
-import 'components/article_view.dart';
+import '../../../data/user_article_datastore.dart';
+import '../../../utils/widgets/article_home_card.dart';
+import '../../../utils/widgets/loader.dart';
+import 'article_view.dart';
 
 var logger = Logger();
 
@@ -28,8 +28,6 @@ class _LibraryFilesState extends State<LibraryFiles> {
 
   @override
   Widget build(BuildContext context) {
-    bool darkModeOn =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
     final savedArticleBox = articleDataStore.box;
 
     return ValueListenableBuilder(
@@ -38,7 +36,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
           var savedArticlesList = savedArticleBox.values.toList();
 
           if (savedArticlesList.isEmpty) {
-            return _emptyArticles(darkModeOn);
+            return _emptyArticles();
           } else {
             return SingleChildScrollView(
               physics: const ScrollPhysics(),
@@ -303,6 +301,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
           context,
           MaterialPageRoute(
             builder: (_) => ArticleView(
+              isArchived: false,
               userArticle: userArticle,
             ),
           ),
@@ -402,6 +401,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
                   context,
                   MaterialPageRoute(
                     builder: (_) => ArticleView(
+                           isArchived: false,
                       userArticle: userArticle,
                     ),
                   ),
@@ -488,7 +488,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
     );
   }
 
-  _emptyArticles(bool darkModeOn) {
+  _emptyArticles() {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,

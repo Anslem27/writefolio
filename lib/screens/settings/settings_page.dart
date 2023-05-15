@@ -28,7 +28,6 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    final themeBox = Hive.box<bool>('themeBox');
     final settingsBox = Hive.box("settingsBox");
     TextEditingController mediumUsernameController = TextEditingController();
     TextEditingController redditUsernameController = TextEditingController();
@@ -91,10 +90,11 @@ class _SettingsPageState extends State<SettingsPage> {
                     title: "dark mode",
                     icon: PhosphorIcons.moon,
                     trailing: Switch(
-                      value: themeBox.get('isDarkMode', defaultValue: null) ??
-                          false,
+                      value:
+                          settingsBox.get('isDarkMode', defaultValue: null) ??
+                              false,
                       onChanged: (value) {
-                        themeBox.put('isDarkMode', value);
+                        settingsBox.put('isDarkMode', value);
                         setState(() {});
                         logger.i(value); //value to be stored.
                       },
