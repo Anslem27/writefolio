@@ -191,10 +191,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     return nullMediumArticleCount();
                                   }
                                   if (!snapshot.hasData) {
-                                    return Row(
+                                    return const Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: const [LoadingAnimation()],
+                                      children: [LoadingAnimation()],
                                     );
                                   } else {
                                     var articles = snapshot.data!.items;

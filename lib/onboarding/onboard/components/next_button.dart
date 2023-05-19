@@ -96,13 +96,13 @@ class CenterNextButton extends StatelessWidget {
                         ? InkWell(
                             key: const ValueKey('Sign Up button'),
                             onTap: onNextClick,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
+                            child: const Padding(
+                              padding: EdgeInsets.only(
                                   left: 16.0, right: 16.0),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: const [
+                                children: [
                                   Text(
                                     'Sign Up',
                                     style: TextStyle(
@@ -135,9 +135,9 @@ class CenterNextButton extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8),
             child: SlideTransition(
               position: loginTextMoveAnimation,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     'Already have an account? ',
                     style: TextStyle(

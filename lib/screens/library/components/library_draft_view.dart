@@ -87,20 +87,20 @@ class _LibraryFilesState extends State<LibraryFiles> {
                             }
                           },
                           itemBuilder: (BuildContext context) => [
-                            PopupMenuItem(
+                            const PopupMenuItem(
                               value: 'card',
                               child: Row(
-                                children: const [
+                                children: [
                                   Icon(PhosphorIcons.cards),
                                   SizedBox(width: 2),
                                   Text('Card view'),
                                 ],
                               ),
                             ),
-                            PopupMenuItem(
+                            const PopupMenuItem(
                               value: 'list',
                               child: Row(
-                                children: const [
+                                children: [
                                   Icon(Icons.list_rounded),
                                   SizedBox(width: 2),
                                   Text('List view'),

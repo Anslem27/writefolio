@@ -46,9 +46,9 @@ class PoemQuerySearch extends SearchDelegate {
       future: PoemService.fetchSearch(query.trim()),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Column(
+          return const Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Center(child: LoadingAnimation()),
             ],
           );

@@ -21,3 +21,26 @@
 
 - Get firebase sha1 and sha256
   - `keytool -list -v -keystore c:\users\user-name\.android\debug.keystore -alias androiddebugkey -storepass android -keypass android`
+
+### Code analysis
+
+```bash
+# scan dart code
+dart fix --dry-run
+
+# apply suggested fixes
+dart fix --apply
+
+```
+
+### Scripts
+
+> Python scripts
+
+```bash
+# run image optimizer
+./scripts/optimizer.py
+
+# run line counter
+./scripts/lib.py
+```

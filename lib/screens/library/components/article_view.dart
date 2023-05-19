@@ -211,10 +211,10 @@ class _ArticleViewState extends State<ArticleView> {
                             // Do something when an item is selected
                           },
                           itemBuilder: (BuildContext context) => [
-                            PopupMenuItem(
+                            const PopupMenuItem(
                               value: 'share',
                               child: Row(
-                                children: const [
+                                children: [
                                   Icon(Icons.share_outlined, size: 20),
                                   SizedBox(width: 2),
                                   SizedBox(width: 3),

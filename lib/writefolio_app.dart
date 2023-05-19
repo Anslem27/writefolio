@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
               theme: isDarkMode == null
                   ? ThemeData(
                       brightness:
+                          // ignore: deprecated_member_use
                           WidgetsBinding.instance.window.platformBrightness,
                     )
                   : isDarkMode
