@@ -379,6 +379,22 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                 ),
               ]),
+              _SingleSection(title: "Preferances", children: [
+                _CustomListTile(
+                  title: "hide navbar labels",
+                  icon: PhosphorIcons.eye_closed,
+                  trailing: Switch(
+                    value: settingsBox.get('hideNavbarLabels',
+                        defaultValue: false),
+                    onChanged: (value) {
+                      settingsBox.put('hideNavbarLabels', value);
+                      setState(() {});
+                      logger.i(
+                          "Hide Navbar set to :$value"); //value to be stored.
+                    },
+                  ),
+                ),
+              ]),
               _SingleSection(
                 title: "about Writefolio",
                 children: [

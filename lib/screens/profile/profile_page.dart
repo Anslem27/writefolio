@@ -229,12 +229,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ),
                         ),
                         currentMediumUser == ""
-                            ? const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  "You need to set your medium username to see your articles",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.grey),
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Icon(Icons.info, color: Colors.red[800]),
+                                    Text(
+                                      "You need to set your medium username to see your articles.",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.roboto(
+                                        color: Colors.grey.shade700,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               )
                             : FutureBuilder<MediumUser>(

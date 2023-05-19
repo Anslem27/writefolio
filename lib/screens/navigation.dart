@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:writefolio/screens/home/home.dart';
 import 'package:writefolio/screens/profile/profile_page.dart';
 import 'package:writefolio/screens/settings/components/avatar_picker.dart';
@@ -21,39 +22,47 @@ class _NavigationState extends State<Navigation> {
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: appBody[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        iconSize: 28,
-        currentIndex: currentIndex,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            activeIcon: Icon(PhosphorIcons.house_fill),
-            icon: Icon(PhosphorIcons.house),
-            tooltip: "Home",
-            label: "Home",
+    return ValueListenableBuilder(
+      valueListenable: Hive.box("settingsBox").listenable(),
+      builder: (_, settingsBox, ___) {
+        bool hideNavBarLabels = Hive.box("settingsBox")
+            .get('hideNavbarLabels', defaultValue: false);
+        return Scaffold(
+          body: appBody[currentIndex],
+          bottomNavigationBar: NavigationBar(
+            animationDuration: const Duration(milliseconds: 800),
+            selectedIndex: currentIndex,
+            labelBehavior: !hideNavBarLabels
+                ? NavigationDestinationLabelBehavior.alwaysShow
+                : NavigationDestinationLabelBehavior.alwaysHide,
+            onDestinationSelected: (index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+            destinations: const [
+              NavigationDestination(
+                selectedIcon: Icon(PhosphorIcons.house_fill),
+                icon: Icon(PhosphorIcons.house),
+                tooltip: "Home",
+                label: "Home",
+              ),
+              NavigationDestination(
+                selectedIcon: Icon(PhosphorIcons.bookmarks_simple_fill),
+                icon: Icon(PhosphorIcons.bookmarks_simple),
+                tooltip: "Your library",
+                label: "Your library",
+              ),
+              NavigationDestination(
+                selectedIcon: AvatarComponent(radius: 17),
+                icon: AvatarComponent(radius: 17),
+                tooltip: "Profile",
+                label: "Profile",
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(PhosphorIcons.bookmarks_simple_fill),
-            icon: Icon(PhosphorIcons.bookmarks_simple),
-            tooltip: "Your library",
-            label: "Your library",
-          ),
-          BottomNavigationBarItem(
-            activeIcon: AvatarComponent(radius: 17),
-            icon: AvatarComponent(radius: 17),
-            tooltip: "Writefolio profile",
-            label: "Writefolio Profile",
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

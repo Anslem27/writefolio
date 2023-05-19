@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/svg.dart';
@@ -172,12 +173,16 @@ class _LibraryScreenState extends State<LibraryScreen>
               ),
             ),
             actions: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const Navigation()));
-                  },
-                  icon: const Icon(Icons.houseboat_outlined))
+              // bool to override debug parameters
+              if (kDebugMode)
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const Navigation()));
+                    },
+                    icon: const Icon(Icons.houseboat_outlined))
             ],
             pinned: true,
             centerTitle: false,
