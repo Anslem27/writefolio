@@ -5,6 +5,7 @@ import 'package:writefolio/screens/home/poem_view.dart';
 import 'package:writefolio/screens/home/components/poemsearch.dart';
 import '../../utils/widgets/shimmer_component.dart';
 import 'components/e_book.dart';
+import 'components/social.dart';
 import 'saved_poems.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    TabController tabcontroller = TabController(length: 3, vsync: this);
+    TabController tabcontroller = TabController(length: 4, vsync: this);
     return Scaffold(
       body: CustomScrollView(
         controller: scrollController,
@@ -71,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             child: TabBarView(
               controller: tabcontroller,
               children: const [
+                Social(),
                 EbookListScreen(),
                 PoemView(),
                 SavedPoemsScreen(),
@@ -95,6 +97,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   final List<Tab> _tabs = [
+    Tab(
+      child: Text(
+        "Social wall",
+        style: GoogleFonts.roboto(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    ),
     Tab(
       child: Text(
         "Read",

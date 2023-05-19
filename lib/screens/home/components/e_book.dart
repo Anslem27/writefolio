@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:writefolio/utils/widgets/loader.dart';
 import '../../../models/home/e-book_category_feed.dart';
-import '../../../utils/widgets/ebook/book_card.dart';
-import '../../../utils/widgets/ebook/book_list_item.dart';
+import '../../../utils/widgets/home/ebook/book_card.dart';
+import '../../../utils/widgets/home/ebook/book_list_item.dart';
 import '../tools/e_book_tools.dart';
 
 class EbookListScreen extends StatefulWidget {

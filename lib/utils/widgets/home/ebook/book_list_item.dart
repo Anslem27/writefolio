@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:uuid/uuid.dart';
 import 'package:writefolio/utils/widgets/loader.dart';
-import '../../../models/home/e-book_category_feed.dart';
+import '../../../../models/home/e-book_category_feed.dart';
 import 'book_detail_view.dart';
 
 class BookListItem extends StatelessWidget {

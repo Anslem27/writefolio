@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vocsy_epub_viewer/epub_viewer.dart';
-import '../../../models/home/e-book_category_feed.dart';
-import '../../../screens/home/tools/e_book_detailservice.dart';
-import '../loader.dart';
+import '../../../../models/home/e-book_category_feed.dart';
+import '../../../../screens/home/tools/e_book_detailservice.dart';
+import '../../loader.dart';
 import 'book_description_text.dart';
 import 'book_list_item.dart';
 
