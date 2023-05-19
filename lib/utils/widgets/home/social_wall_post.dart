@@ -1,15 +1,57 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
-
+import 'package:writefolio/utils/widgets/home/social_wall_item_likebutton.dart';
 import '../../../screens/settings/components/avatar_picker.dart';
 
-class SocialWallPost extends StatelessWidget {
+class SocialWallPost extends StatefulWidget {
   final String message, user;
+  final String postId;
+  final List<String> likes;
   const SocialWallPost({
     super.key,
     required this.message,
     required this.user,
+    required this.postId,
+    required this.likes,
   });
+
+  @override
+  State<SocialWallPost> createState() => _SocialWallPostState();
+}
+
+class _SocialWallPostState extends State<SocialWallPost> {
+  final currentUser = FirebaseAuth.instance.currentUser!;
+  bool isLiked = false;
+
+  @override
+  void initState() {
+    isLiked = widget.likes.contains(currentUser.email);
+    super.initState();
+  }
+
+  // toggle like
+  void toggleLike() {
+    setState(() {
+      isLiked = !isLiked;
+    });
+
+    // access document in firebase
+    DocumentReference postRef =
+        FirebaseFirestore.instance.collection("User Posts").doc(widget.postId);
+
+    if (isLiked) {
+      // add to liked users list
+      postRef.update({
+        "Likes": FieldValue.arrayUnion([currentUser.email])
+      });
+    } else {
+      // remove from liked users list
+      postRef.update({
+        "Likes": FieldValue.arrayRemove([currentUser.email])
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +93,9 @@ class SocialWallPost extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(user),
+                        child: Text(widget.user),
                       ),
-                      Text(message),
+                      Text(widget.message),
                     ],
                   ),
                 ),
@@ -62,14 +104,13 @@ class SocialWallPost extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: () {},
-                        icon: const Icon(PhosphorIcons.heart),
+                      WallComponentLikeButton(
+                        isLiked: isLiked,
+                        ontap: toggleLike,
                       ),
-                      const Text(
-                        "4",
-                        style: TextStyle(
+                      Text(
+                        "${widget.likes.length}",
+                        style: const TextStyle(
                           color: Colors.grey,
                         ),
                       ),

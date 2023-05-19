@@ -26,7 +26,8 @@ class _SocialState extends State<Social> {
         FirebaseFirestore.instance.collection("User Posts").add({
           "UserEmail": currentUser.email,
           "Writing": textEditingController.text.trim(),
-          "TimeStamp": Timestamp.now()
+          "TimeStamp": Timestamp.now(),
+          "Likes": []
         });
         Navigator.pop(context);
       }
@@ -36,7 +37,7 @@ class _SocialState extends State<Social> {
     setState(() {
       textEditingController.clear();
     });
-    Navigator.pop(context);
+    // Navigator.pop(context);
   }
 
   @override
@@ -121,6 +122,8 @@ class _SocialState extends State<Social> {
                       return SocialWallPost(
                         message: post["Writing"],
                         user: post["UserEmail"],
+                        postId: post.id,
+                        likes: List<String>.from(post["Likes"] ?? []),
                       );
                     },
                   );
