@@ -42,7 +42,7 @@ dependencies:
   shimmer: ^2.0.0
   vs_scrollbar: ^0.2.1
   loading_animation_widget: ^1.2.0+4
-  flutter_quill: ^6.4.4
+  flutter_quill: ^7.1.19
   modal_bottom_sheet: ^2.1.2
   simple_animations: ^5.0.0+3
   auto_size_text_field: ^2.2.1
