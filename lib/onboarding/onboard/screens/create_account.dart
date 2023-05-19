@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -50,9 +51,23 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
     try {
       if (passwordController.text == rechechpasswordsController.text) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
+        );
+
+        /// create docs in firestore [Users]
+        /// get email name before [@] for [username]
+        /// TODO: Add more values ie gender, user interests etc at start up
+        FirebaseFirestore.instance
+            .collection("Users")
+            .doc(userCredential.user!.email)
+            .set(
+          {
+            "username": emailController.text.split("@")[0],
+            "bio": "Empty bio..."
+          },
         );
 
         logger.i("signing up...");
@@ -199,18 +214,19 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 width: double.maxFinite,
                 height: 55,
                 child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    onPressed: signUp,
-                    child: Text(
-                      "Create account",
-                      style: GoogleFonts.roboto(
-                        fontSize: 16,
-                      ),
-                    )),
+                  ),
+                  onPressed: signUp,
+                  child: Text(
+                    "Create account",
+                    style: GoogleFonts.roboto(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
               ),
             ),
 
