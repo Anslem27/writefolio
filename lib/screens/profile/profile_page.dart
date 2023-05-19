@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 import '../../animations/fade_in_animation.dart';
+import 'components/edit_bio.dart';
 import 'components/profile_containers.dart';
 import '../../editor/create_article.dart';
 import '../../models/user/medium_user_model.dart';
@@ -129,10 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             ],
                           ),
                         ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text("Add a bio"),
-                        ),
+                        const BioButton(),
                         Row(children: [
                           TextButton.icon(
                             onPressed: () {

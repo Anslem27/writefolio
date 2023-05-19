@@ -174,7 +174,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                       ),
                                     ),
                                     Text(
-                                      "Currently username is ${settingsBox.get('mediumUsername')}",
+                                      "Currently username is ${settingsBox.get('mediumUsername') == null ? "empty" : {
+                                          settingsBox.get('mediumUsername')
+                                        }}",
                                       style: const TextStyle(
                                         color: Colors.blue,
                                       ),
