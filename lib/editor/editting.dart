@@ -39,30 +39,34 @@ class _ContinueEdittingState extends State<ContinueEditting> {
       document: Document.fromJson(bodyJson),
       selection: const TextSelection.collapsed(offset: 0),
     );
+    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        icon: const Icon(PhosphorIcons.pencil_circle),
-        onPressed: () async {
-          var bodyJson = jsonEncode(controller.document.toDelta().toJson());
+      floatingActionButton: Visibility(
+        visible: showFab,
+        child: FloatingActionButton.extended(
+          icon: const Icon(PhosphorIcons.pencil_circle),
+          onPressed: () async {
+            var bodyJson = jsonEncode(controller.document.toDelta().toJson());
 
-          widget.userArticle.body = bodyJson;
-          widget.userArticle.bodyText =
-              controller.document.toPlainText().trim();
-          widget.userArticle.title = _titleController.text.trim();
-          widget.userArticle.updateDate = formattedDate;
-          await userArticleDataStore
-              .updateArticle(savedArticle: widget.userArticle)
-              .then((value) => AnimatedSnackBar.material(
-                    "${widget.userArticle.title} has been updated",
-                    type: AnimatedSnackBarType.success,
-                    duration: const Duration(seconds: 4),
-                    mobileSnackBarPosition: MobileSnackBarPosition.bottom,
-                  ).show(context));
+            widget.userArticle.body = bodyJson;
+            widget.userArticle.bodyText =
+                controller.document.toPlainText().trim();
+            widget.userArticle.title = _titleController.text.trim();
+            widget.userArticle.updateDate = formattedDate;
+            await userArticleDataStore
+                .updateArticle(savedArticle: widget.userArticle)
+                .then((value) => AnimatedSnackBar.material(
+                      "${widget.userArticle.title} has been updated",
+                      type: AnimatedSnackBarType.success,
+                      duration: const Duration(seconds: 4),
+                      mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+                    ).show(context));
 
-          setState(() {});
-        },
-        label: const Text("Save"),
+            setState(() {});
+          },
+          label: const Text("Save"),
+        ),
       ),
       appBar: AppBar(),
       body: SafeArea(

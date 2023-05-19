@@ -30,7 +30,6 @@ class _NavigationState extends State<Navigation> {
         return Scaffold(
           body: appBody[currentIndex],
           bottomNavigationBar: NavigationBar(
-            animationDuration: const Duration(milliseconds: 800),
             selectedIndex: currentIndex,
             labelBehavior: !hideNavBarLabels
                 ? NavigationDestinationLabelBehavior.alwaysShow

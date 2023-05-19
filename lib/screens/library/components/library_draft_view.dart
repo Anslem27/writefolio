@@ -276,6 +276,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
       );
     } else if (nonPoems.isNotEmpty) {
       return StaggeredGridView.countBuilder(
+        padding: EdgeInsets.zero,
         shrinkWrap: true,
         crossAxisCount: 2,
         mainAxisSpacing: 5,
@@ -307,182 +308,176 @@ class _LibraryFilesState extends State<LibraryFiles> {
           ),
         );
       },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          height: 150.0,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Card(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10.0),
-                  ),
-                ),
-                elevation: 4,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(10.0),
-                  ),
-                  child: SvgPicture.asset(
-                    "assets/illustrations/gimlet.svg",
-                    height: 120,
-                    width: 80,
-                  ),
+      child: SizedBox(
+        height: 150.0,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
                 ),
               ),
-              const SizedBox(width: 10.0),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Material(
-                      type: MaterialType.transparency,
-                      child: Text(
-                        userArticle.title,
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: Theme.of(context).textTheme.titleMedium!.color,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Material(
-                      type: MaterialType.transparency,
-                      child: Text(
-                        userArticle.bodyText,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w800,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 15.0),
-                    Text(
-                      "Last editted • ${userArticle.updateDate}",
-                      style: TextStyle(
-                        fontSize: 13.0,
-                        color: Theme.of(context).textTheme.bodySmall!.color,
-                      ),
-                    ),
-                  ],
+              elevation: 4,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
+                child: SvgPicture.asset(
+                  "assets/illustrations/gimlet.svg",
+                  height: 100,
+                  width: 80,
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  AnimatedContainer gridCardComponent(
-      UserArticle userArticle, List<UserArticle> savedArticlesList, int index) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 500),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Stack(
-          children: [
-            InkWell(
-              borderRadius: BorderRadius.circular(8),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => ArticleView(
-                           isArchived: false,
-                      userArticle: userArticle,
-                    ),
-                  ),
-                );
-              },
+            ),
+            const SizedBox(width: 10.0),
+            Expanded(
               child: Column(
-                children: [
-                  Hero(
-                    tag: userArticle.title,
-                    child: Container(
-                      height: 100,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: CachedNetworkImage(
-                          imageUrl: savedArticlesList[index].imageUrl!,
-                          placeholder: (context, url) =>
-                              const Center(child: LoadingAnimation()),
-                          errorWidget: (context, url, error) => const Center(
-                            child: Icon(
-                              Icons.image_search_outlined,
-                              size: 80,
-                            ),
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Material(
+                    type: MaterialType.transparency,
                     child: Text(
-                      savedArticlesList[index].title,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: GoogleFonts.roboto(
-                        fontSize: 15,
+                      userArticle.title,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Theme.of(context).textTheme.titleMedium!.color,
                       ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Text(
-                    savedArticlesList[index].bodyText,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
+                    "Last editted • ${userArticle.updateDate}",
                     style: TextStyle(
-                      color: Colors.grey.shade600,
+                      fontSize: 13.0,
+                      color: Theme.of(context).textTheme.bodySmall!.color,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          "${calculateReadingTime(savedArticlesList[index].bodyText.trim()).toString()} min read  •  ${savedArticlesList[index].bodyText.trim().split(" ").length.toString()} words",
-                          style: const TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
+                  Material(
+                    type: MaterialType.transparency,
+                    child: Text(
+                      userArticle.bodyText,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w800,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            Positioned(
-              top: 0,
-              right: 0,
-              child: IconButton(
-                icon: const Icon(
-                  Icons.bookmark_border,
-                  color: Colors.black,
-                ),
-                onPressed: () {},
-              ),
-            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  gridCardComponent(
+      UserArticle userArticle, List<UserArticle> savedArticlesList, int index) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Stack(
+            children: [
+              InkWell(
+                borderRadius: BorderRadius.circular(8),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ArticleView(
+                        isArchived: false,
+                        userArticle: userArticle,
+                      ),
+                    ),
+                  );
+                },
+                child: Column(
+                  children: [
+                    Hero(
+                      tag: userArticle.title,
+                      child: Container(
+                        height: 100,
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: CachedNetworkImage(
+                            imageUrl: savedArticlesList[index].imageUrl!,
+                            placeholder: (context, url) =>
+                                const Center(child: LoadingAnimation()),
+                            errorWidget: (context, url, error) => const Center(
+                              child: Icon(
+                                Icons.image_search_outlined,
+                                size: 80,
+                              ),
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      child: Text(
+                        savedArticlesList[index].title,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: GoogleFonts.roboto(fontSize: 15),
+                      ),
+                    ),
+                    Text(
+                      savedArticlesList[index].bodyText,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            "${calculateReadingTime(savedArticlesList[index].bodyText.trim()).toString()} min read  •  ${savedArticlesList[index].bodyText.trim().split(" ").length.toString()} words",
+                            style: const TextStyle(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                top: 0,
+                right: 0,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.bookmark_border,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
