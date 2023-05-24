@@ -11,13 +11,30 @@ class SocialWallComment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: Column(
-        children: [
-          // comment
-          Text(comment),
-          //user,time
-          Text("$user $time")
-        ],
+      child: Container(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                leading: CircleAvatar(
+                  child: Text(user.split("@")[0]),
+                ),
+                subtitle: Text(comment),
+                title: Text(
+                  "${user.split("@")[0]} • $time",
+                  style: const TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ),
+            const Divider()
+          ],
+        ),
       ),
     );
   }

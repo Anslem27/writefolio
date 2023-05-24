@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../editor/create_article.dart';
 import '../../../services/auth_service.dart';
 import '../../../utils/widgets/loader.dart';
+//import 'auth.dart';
 
 /// Capture whether user wants to connect medium account in precending steps
 /// And then optionally create account or use Google sign-in preferably
@@ -80,7 +81,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
         logger.wtf("Passwords do not match");
       }
-      Navigator.pop(context); //pop to loading animation
+      Navigator.pop(context); //pop out loading animation
+      // push to auth page
+      /* Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => const AuthPage()),
+          (route) => false); */
     } on FirebaseAuthException {
       Navigator.pop(context); //pop to loading animation
       AnimatedSnackBar.material(

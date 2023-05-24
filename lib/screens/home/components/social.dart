@@ -3,8 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:writefolio/screens/library/components/library_draft_view.dart';
+import 'package:writefolio/utils/tools/timeStamp_helper.dart';
 import 'package:writefolio/utils/widgets/home/social_wall_post.dart';
 import 'package:writefolio/utils/widgets/loader.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 class Social extends StatefulWidget {
   const Social({super.key});
@@ -83,7 +85,7 @@ class _SocialState extends State<Social> {
                       ),
                       IconButton(
                         onPressed: postWriting,
-                        icon: const Icon(PhosphorIcons.chat_circle),
+                        icon: const Icon(FluentIcons.send_24_filled),
                       ),
                     ],
                   ),
@@ -124,6 +126,7 @@ class _SocialState extends State<Social> {
                         user: post["UserEmail"],
                         postId: post.id,
                         likes: List<String>.from(post["Likes"] ?? []),
+                        time: formatTimeStamp(post["TimeStamp"]),
                       );
                     },
                   );
