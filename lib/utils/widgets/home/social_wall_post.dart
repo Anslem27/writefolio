@@ -1,7 +1,6 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/utils/widgets/home/social_wall_item_likebutton.dart';
@@ -10,6 +9,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 import '../../tools/timeStamp_helper.dart';
 import '../loader.dart';
+import 'increment_animated_text.dart';
 import 'social_wall_comment.dart';
 
 class SocialWallPost extends StatefulWidget {
@@ -207,52 +207,29 @@ class _SocialWallPostState extends State<SocialWallPost> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: AvatarComponent(radius: 17),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(widget.user.split("@")[0]),
+              ),
+              Text(
+                "• ${widget.time}",
+                style: GoogleFonts.roboto(
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: AvatarComponent(radius: 17),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(widget.user.split("@")[0]),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        //TODO: https://pub.dev/packages/like_button
-                        WallComponentLikeButton(
-                          isLiked: isLiked,
-                          ontap: toggleLike,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          "${widget.likes.length}",
-                          style: const TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-
-                        const SizedBox(width: 3),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(FluentIcons.share_24_filled),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -319,6 +296,30 @@ class _SocialWallPostState extends State<SocialWallPost> {
                             ),
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        //TODO: https://pub.dev/packages/like_button
+                        WallComponentLikeButton(
+                          isLiked: isLiked,
+                          ontap: toggleLike,
+                        ),
+                        const SizedBox(width: 6),
+                        IncrementAnimatedText(
+                          value: widget.likes.length,
+                          textStyle: const TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
                         IconButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
@@ -331,7 +332,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
                               .collection("User Posts")
                               .doc(widget.postId)
                               .collection("Comments")
-                              .orderBy("CommentedAt", descending: true)
+                              .orderBy("CommentedAt",descending: true)
                               .snapshots(),
                           builder: (_, snapshot) {
                             if (!snapshot.hasData) {
@@ -345,14 +346,32 @@ class _SocialWallPostState extends State<SocialWallPost> {
                             );
                           },
                         ),
+
+                        const SizedBox(width: 3),
+                        Container(
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Theme.of(context).cardColor,
+                          ),
+                          child: Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(FluentIcons.share_24_filled),
+                              ),
+                              const Text("Share")
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
-          //const Divider(),
+          const Divider(),
         ],
       ),
     );
