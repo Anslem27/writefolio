@@ -265,7 +265,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
                   ],
                 ),
               ),
-              Padding(
+              /*  Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Card(
                   child: Container(
@@ -300,7 +300,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
                     ),
                   ),
                 ),
-              ),
+              ), */
               Row(
                 children: [
                   Padding(
@@ -332,7 +332,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
                               .collection("User Posts")
                               .doc(widget.postId)
                               .collection("Comments")
-                              .orderBy("CommentedAt",descending: true)
+                              .orderBy("CommentedAt", descending: true)
                               .snapshots(),
                           builder: (_, snapshot) {
                             if (!snapshot.hasData) {
@@ -346,7 +346,13 @@ class _SocialWallPostState extends State<SocialWallPost> {
                             );
                           },
                         ),
-
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            showCommentSheet();
+                          },
+                          icon: const Icon(FluentIcons.comment_add_20_regular),
+                        ),
                         const SizedBox(width: 3),
                         Container(
                           padding: const EdgeInsets.all(3),
