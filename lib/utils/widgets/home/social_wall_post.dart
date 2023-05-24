@@ -32,6 +32,7 @@ class SocialWallPost extends StatefulWidget {
 class _SocialWallPostState extends State<SocialWallPost> {
   final currentUser = FirebaseAuth.instance.currentUser!;
   final commentEditingController = TextEditingController();
+
   bool isLiked = false;
 
   @override
@@ -320,14 +321,29 @@ class _SocialWallPostState extends State<SocialWallPost> {
                         ),
                         IconButton(
                           padding: EdgeInsets.zero,
-                          onPressed: () {},
+                          onPressed: () {
+                            showComments();
+                          },
                           icon: const Icon(FluentIcons.comment_24_regular),
                         ),
-                        const Text(
-                          "2",
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
+                        StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection("User Posts")
+                              .doc(widget.postId)
+                              .collection("Comments")
+                              .orderBy("CommentedAt", descending: true)
+                              .snapshots(),
+                          builder: (_, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const SizedBox.shrink();
+                            }
+                            return Text(
+                              "${snapshot.data!.docs.length}",
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),

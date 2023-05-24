@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class SocialWallComment extends StatelessWidget {
   final String comment, user, time;
+
   const SocialWallComment(
       {super.key,
       required this.comment,
