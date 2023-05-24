@@ -3,8 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:writefolio/screens/library/components/library_draft_view.dart';
+import 'package:writefolio/utils/tools/timeStamp_helper.dart';
 import 'package:writefolio/utils/widgets/home/social_wall_post.dart';
 import 'package:writefolio/utils/widgets/loader.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 class Social extends StatefulWidget {
   const Social({super.key});
@@ -26,7 +28,8 @@ class _SocialState extends State<Social> {
         FirebaseFirestore.instance.collection("User Posts").add({
           "UserEmail": currentUser.email,
           "Writing": textEditingController.text.trim(),
-          "TimeStamp": Timestamp.now()
+          "TimeStamp": Timestamp.now(),
+          "Likes": []
         });
         Navigator.pop(context);
       }
@@ -36,7 +39,7 @@ class _SocialState extends State<Social> {
     setState(() {
       textEditingController.clear();
     });
-    Navigator.pop(context);
+    // Navigator.pop(context);
   }
 
   @override
@@ -72,6 +75,7 @@ class _SocialState extends State<Social> {
                       Expanded(
                         child: TextField(
                           controller: textEditingController,
+                          maxLines: null,
                           decoration: InputDecoration(
                             labelText: "Share writing",
                             border: OutlineInputBorder(
@@ -82,7 +86,7 @@ class _SocialState extends State<Social> {
                       ),
                       IconButton(
                         onPressed: postWriting,
-                        icon: const Icon(PhosphorIcons.chat_circle),
+                        icon: const Icon(FluentIcons.send_24_filled),
                       ),
                     ],
                   ),
@@ -121,6 +125,9 @@ class _SocialState extends State<Social> {
                       return SocialWallPost(
                         message: post["Writing"],
                         user: post["UserEmail"],
+                        postId: post.id,
+                        likes: List<String>.from(post["Likes"] ?? []),
+                        time: formatTimeStamp(post["TimeStamp"]),
                       );
                     },
                   );

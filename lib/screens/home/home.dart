@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     Tab(
       child: Text(
         "Social wall",
-        style: GoogleFonts.roboto(
+        style: GoogleFonts.ubuntu(
           fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     Tab(
       child: Text(
         "Read",
-        style: GoogleFonts.roboto(
+        style: GoogleFonts.ubuntu(
           fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     Tab(
       child: Text(
         "Poetry",
-        style: GoogleFonts.roboto(
+        style: GoogleFonts.ubuntu(
           fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     Tab(
       child: Text(
         "Saved",
-        style: GoogleFonts.roboto(
+        style: GoogleFonts.ubuntu(
           fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
