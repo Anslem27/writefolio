@@ -5,6 +5,7 @@ import 'package:writefolio/utils/widgets/loader.dart';
 import '../../models/articles/article.dart';
 import '../../screens/library/components/article_view.dart';
 import '../tools/reading_time_approximator.dart';
+import '../tools/timeStamp_helper.dart';
 
 class ArticleHomeCard extends StatelessWidget {
   final UserArticle userArticle;
@@ -67,7 +68,7 @@ class ArticleHomeCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 5),
                         Text(
-                          userArticle.updateDate,
+                          formatTimeDifference(userArticle.updateDate),
                         ),
                         const SizedBox(width: 8),
                         const Text("|"),

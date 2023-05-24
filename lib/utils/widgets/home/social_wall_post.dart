@@ -156,7 +156,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(
                 'Comments',
                 style: GoogleFonts.ubuntu(
@@ -241,35 +241,12 @@ class _SocialWallPostState extends State<SocialWallPost> {
                             color: Colors.grey,
                           ),
                         ),
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          icon: const Icon(FluentIcons.comment_24_regular),
-                        ),
-                        const Text(
-                          "2",
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
+
                         const SizedBox(width: 3),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                          margin: const EdgeInsets.all(5),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(FluentIcons.share_24_filled),
-                                SizedBox(width: 5),
-                                Text("Share")
-                              ],
-                            ),
-                          ),
-                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(FluentIcons.share_24_filled),
+                        )
                       ],
                     ),
                   ),
@@ -322,61 +299,36 @@ class _SocialWallPostState extends State<SocialWallPost> {
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                'Comments',
-                                style: GoogleFonts.ubuntu(fontSize: 16),
+                        /* const AvatarComponent(radius: 17),
+                              const SizedBox(width: 10), */
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              showCommentSheet();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.surface,
+                                borderRadius: BorderRadius.circular(5),
                               ),
-                              const SizedBox(width: 5),
-                              const Text(
-                                '10',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              const Spacer(),
-                              IconButton(
-                                onPressed: () {
-                                  showComments();
-                                },
-                                icon: const Icon(
-                                  CupertinoIcons.chevron_down,
-                                  size: 19,
-                                ),
-                              ),
-                            ],
+                              child: const Text("Share your thought..."),
+                            ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              /* const AvatarComponent(radius: 17),
-                              const SizedBox(width: 10), */
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    showCommentSheet();
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color:
-                                          Theme.of(context).colorScheme.surface,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: const Text("Share your thought..."),
-                                  ),
-                                ),
-                              ),
-                            ],
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {},
+                          icon: const Icon(FluentIcons.comment_24_regular),
+                        ),
+                        const Text(
+                          "2",
+                          style: TextStyle(
+                            color: Colors.grey,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

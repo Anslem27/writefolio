@@ -22,3 +22,24 @@ String formatTimeStamp(Timestamp timestamp) {
     return formatter.format(timestamp.toDate());
   }
 }
+
+String formatTimeDifference(String formattedDate) {
+  final date = DateFormat.yMMMd().parse(formattedDate);
+  final now = DateTime.now();
+  final difference = now.difference(date);
+
+  if (difference.inSeconds < 60) {
+    return '${difference.inSeconds}s ago';
+  } else if (difference.inMinutes < 60) {
+    return '${difference.inMinutes}m ago';
+  } else if (difference.inHours < 24 && date.day == now.day) {
+    return 'today';
+  } else if (difference.inHours < 24 && date.day == now.day - 1) {
+    return 'yesterday';
+  } else if (difference.inDays < 30) {
+    final daysAgo = difference.inDays;
+    return '$daysAgo ${(daysAgo == 1) ? 'day' : 'days'} ago';
+  } else {
+    return formattedDate;
+  }
+}

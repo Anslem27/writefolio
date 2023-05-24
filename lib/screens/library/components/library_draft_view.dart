@@ -10,6 +10,7 @@ import 'package:writefolio/models/articles/article.dart';
 import 'package:writefolio/screens/library/tools/view_type.dart';
 import 'package:writefolio/utils/tools/reading_time_approximator.dart';
 import '../../../data/user_article_datastore.dart';
+import '../../../utils/tools/timeStamp_helper.dart';
 import '../../../utils/widgets/article_home_card.dart';
 import '../../../utils/widgets/loader.dart';
 import 'article_view.dart';
@@ -233,7 +234,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               'Poems',
-              style: GoogleFonts.roboto(fontSize: 20),
+              style: GoogleFonts.roboto(fontSize: 18),
             ),
           ),
           ListView.builder(
@@ -295,21 +296,21 @@ class _LibraryFilesState extends State<LibraryFiles> {
   }
 
   poemCard(BuildContext context, UserArticle userArticle) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(8),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => ArticleView(
-              isArchived: false,
-              userArticle: userArticle,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ArticleView(
+                isArchived: false,
+                userArticle: userArticle,
+              ),
             ),
-          ),
-        );
-      },
-      child: SizedBox(
-        height: 150.0,
+          );
+        },
         child: Row(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -352,7 +353,7 @@ class _LibraryFilesState extends State<LibraryFiles> {
                     ),
                   ),
                   Text(
-                    "Last editted • ${userArticle.updateDate}",
+                    "Last editted • ${formatTimeDifference(userArticle.updateDate)}",
                     style: TextStyle(
                       fontSize: 13.0,
                       color: Theme.of(context).textTheme.bodySmall!.color,
