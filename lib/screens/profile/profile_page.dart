@@ -70,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
                               "Your Profile",
-                              style: GoogleFonts.urbanist(
+                              style: GoogleFonts.ubuntu(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 25,
                               ),

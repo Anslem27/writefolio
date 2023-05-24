@@ -166,7 +166,7 @@ class _LibraryScreenState extends State<LibraryScreen>
               padding: const EdgeInsets.only(top: 20.0),
               child: Text(
                 "Your Library",
-                style: GoogleFonts.urbanist(
+                style: GoogleFonts.ubuntu(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
                 ),
@@ -174,6 +174,7 @@ class _LibraryScreenState extends State<LibraryScreen>
             ),
             actions: [
               // bool to override debug parameters
+              // button for bypassing auth internet stream
               if (kDebugMode)
                 IconButton(
                     onPressed: () {
@@ -182,7 +183,7 @@ class _LibraryScreenState extends State<LibraryScreen>
                           MaterialPageRoute(
                               builder: (_) => const Navigation()));
                     },
-                    icon: const Icon(Icons.houseboat_outlined))
+                    icon: const Icon(Icons.home_filled))
             ],
             pinned: true,
             centerTitle: false,
