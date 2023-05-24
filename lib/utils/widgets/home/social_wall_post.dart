@@ -1,7 +1,6 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/utils/widgets/home/social_wall_item_likebutton.dart';
@@ -10,6 +9,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 import '../../tools/timeStamp_helper.dart';
 import '../loader.dart';
+import 'increment_animated_text.dart';
 import 'social_wall_comment.dart';
 
 class SocialWallPost extends StatefulWidget {
@@ -32,6 +32,7 @@ class SocialWallPost extends StatefulWidget {
 class _SocialWallPostState extends State<SocialWallPost> {
   final currentUser = FirebaseAuth.instance.currentUser!;
   final commentEditingController = TextEditingController();
+
   bool isLiked = false;
 
   @override
@@ -156,7 +157,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(
                 'Comments',
                 style: GoogleFonts.ubuntu(
@@ -206,75 +207,29 @@ class _SocialWallPostState extends State<SocialWallPost> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: AvatarComponent(radius: 17),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(widget.user.split("@")[0]),
+              ),
+              Text(
+                "• ${widget.time}",
+                style: GoogleFonts.roboto(
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: AvatarComponent(radius: 17),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(widget.user.split("@")[0]),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        //TODO: https://pub.dev/packages/like_button
-                        WallComponentLikeButton(
-                          isLiked: isLiked,
-                          ontap: toggleLike,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          "${widget.likes.length}",
-                          style: const TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          icon: const Icon(FluentIcons.comment_24_regular),
-                        ),
-                        const Text(
-                          "2",
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const SizedBox(width: 3),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                          margin: const EdgeInsets.all(5),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(FluentIcons.share_24_filled),
-                                SizedBox(width: 5),
-                                Text("Share")
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -322,69 +277,101 @@ class _SocialWallPostState extends State<SocialWallPost> {
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                'Comments',
-                                style: GoogleFonts.ubuntu(fontSize: 16),
+                        /* const AvatarComponent(radius: 17),
+                              const SizedBox(width: 10), */
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              showCommentSheet();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.surface,
+                                borderRadius: BorderRadius.circular(5),
                               ),
-                              const SizedBox(width: 5),
-                              const Text(
-                                '10',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              const Spacer(),
-                              IconButton(
-                                onPressed: () {
-                                  showComments();
-                                },
-                                icon: const Icon(
-                                  CupertinoIcons.chevron_down,
-                                  size: 19,
-                                ),
-                              ),
-                            ],
+                              child: const Text("Share your thought..."),
+                            ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        //TODO: https://pub.dev/packages/like_button
+                        WallComponentLikeButton(
+                          isLiked: isLiked,
+                          ontap: toggleLike,
+                        ),
+                        const SizedBox(width: 6),
+                        IncrementAnimatedText(
+                          value: widget.likes.length,
+                          textStyle: const TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            showComments();
+                          },
+                          icon: const Icon(FluentIcons.comment_24_regular),
+                        ),
+                        StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection("User Posts")
+                              .doc(widget.postId)
+                              .collection("Comments")
+                              .orderBy("CommentedAt",descending: true)
+                              .snapshots(),
+                          builder: (_, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const SizedBox.shrink();
+                            }
+                            return Text(
+                              "${snapshot.data!.docs.length}",
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                            );
+                          },
+                        ),
+
+                        const SizedBox(width: 3),
+                        Container(
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Theme.of(context).cardColor,
+                          ),
                           child: Row(
                             children: [
-                              /* const AvatarComponent(radius: 17),
-                              const SizedBox(width: 10), */
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    showCommentSheet();
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color:
-                                          Theme.of(context).colorScheme.surface,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: const Text("Share your thought..."),
-                                  ),
-                                ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(FluentIcons.share_24_filled),
                               ),
+                              const Text("Share")
                             ],
                           ),
                         )
                       ],
                     ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
-          //const Divider(),
+          const Divider(),
         ],
       ),
     );
