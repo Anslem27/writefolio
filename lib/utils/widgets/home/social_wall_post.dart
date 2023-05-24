@@ -140,6 +140,64 @@ class _SocialWallPostState extends State<SocialWallPost> {
     );
   }
 
+  // comment bottom sheet
+  void showComments() {
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Comments',
+                style: GoogleFonts.ubuntu(
+                  fontSize: 19,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("User Posts")
+                  .doc(widget.postId)
+                  .collection("Comments")
+                  .orderBy("CommentedAt", descending: true)
+                  .snapshots(),
+              builder: (_, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: LoadingAnimation(),
+                  );
+                }
+                return ListView(
+                    shrinkWrap: true,
+                    children: snapshot.data!.docs.map((doc) {
+                      // get comment from firstore
+                      final commentData = doc.data() as Map<String, dynamic>;
+
+                      return SocialWallComment(
+                        comment: commentData["CommentText"],
+                        user: commentData["CommentedBy"],
+                        time: formatTimeStamp(commentData["CommentedAt"]),
+                      );
+                    }).toList());
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -194,9 +252,23 @@ class _SocialWallPostState extends State<SocialWallPost> {
                             color: Colors.grey,
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(FluentIcons.share_24_filled),
+                        const SizedBox(width: 3),
+                        Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          margin: const EdgeInsets.all(5),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(FluentIcons.share_24_filled),
+                                SizedBox(width: 5),
+                                Text("Share")
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -221,6 +293,8 @@ class _SocialWallPostState extends State<SocialWallPost> {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.start,
+                      style:
+                          GoogleFonts.roboto(fontSize: 14, color: Colors.grey),
                     ),
                     const Material(
                       type: MaterialType.transparency,
@@ -267,7 +341,9 @@ class _SocialWallPostState extends State<SocialWallPost> {
                               ),
                               const Spacer(),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showComments();
+                                },
                                 icon: const Icon(
                                   CupertinoIcons.chevron_down,
                                   size: 19,
@@ -294,7 +370,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
                                           Theme.of(context).colorScheme.surface,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
-                                    child: const Text("Add a comment..."),
+                                    child: const Text("Share your thought..."),
                                   ),
                                 ),
                               ),
@@ -309,33 +385,6 @@ class _SocialWallPostState extends State<SocialWallPost> {
             ],
           ),
           //const Divider(),
-          StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("User Posts")
-                .doc(widget.postId)
-                .collection("Comments")
-                .orderBy("CommentedAt", descending: true)
-                .snapshots(),
-            builder: (_, snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: LoadingAnimation(),
-                );
-              }
-              return ListView(
-                  shrinkWrap: true,
-                  children: snapshot.data!.docs.map((doc) {
-                    // get comment from firstore
-                    final commentData = doc.data() as Map<String, dynamic>;
-
-                    return SocialWallComment(
-                      comment: commentData["CommentText"],
-                      user: commentData["CommentedBy"],
-                      time: formatTimeStamp(commentData["CommentedAt"]),
-                    );
-                  }).toList());
-            },
-          )
         ],
       ),
     );

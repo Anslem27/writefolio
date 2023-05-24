@@ -75,6 +75,7 @@ class _SocialState extends State<Social> {
                       Expanded(
                         child: TextField(
                           controller: textEditingController,
+                          maxLines: null,
                           decoration: InputDecoration(
                             labelText: "Share writing",
                             border: OutlineInputBorder(
