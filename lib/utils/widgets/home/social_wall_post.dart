@@ -2,12 +2,13 @@ import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:multiavatar/multiavatar.dart';
 import 'package:writefolio/utils/widgets/home/social_wall_item_likebutton.dart';
-import '../../../screens/settings/components/avatar_picker.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-
 import '../../tools/timeStamp_helper.dart';
+import '../animated_icon.dart';
 import '../loader.dart';
 import 'increment_animated_text.dart';
 import 'social_wall_comment.dart';
@@ -124,7 +125,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
                       ),
                     ),
                   ),
-                  IconButton(
+                  AnimatedIconButton(
                     onPressed: () {
                       addComment(commentEditingController.text.trim());
                       commentEditingController.clear();
@@ -201,6 +202,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
 
   @override
   Widget build(BuildContext context) {
+    var multiAvatarSvg = multiavatar(widget.user.toString());
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -210,9 +212,11 @@ class _SocialWallPostState extends State<SocialWallPost> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: AvatarComponent(radius: 17),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: SvgPicture.string(multiAvatarSvg, height: 27, width: 27),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -346,8 +350,8 @@ class _SocialWallPostState extends State<SocialWallPost> {
                             );
                           },
                         ),
-                        IconButton(
-                          padding: EdgeInsets.zero,
+                        const SizedBox(width: 10),
+                        AnimatedIconButton(
                           onPressed: () {
                             showCommentSheet();
                           },

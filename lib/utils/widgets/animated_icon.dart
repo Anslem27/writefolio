@@ -3,37 +3,36 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class WallComponentLikeButton extends StatefulWidget {
-  final Function()? ontap;
-  final bool isLiked;
+class AnimatedIconButton extends StatefulWidget {
+  final Function()? onPressed;
+  final Icon icon;
 
-  const WallComponentLikeButton({
+  const AnimatedIconButton({
     Key? key,
-    this.ontap,
-    required this.isLiked,
+    this.onPressed,
+    required this.icon,
   }) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _WallComponentLikeButtonState createState() =>
-      _WallComponentLikeButtonState();
+  _AnimatedIconButtonState createState() => _AnimatedIconButtonState();
 }
 
-class _WallComponentLikeButtonState extends State<WallComponentLikeButton>
+class _AnimatedIconButtonState extends State<AnimatedIconButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
 
-  final List<Widget> _floatingHearts = [];
+  final List<Widget> _floatingIcons = [];
 
-  final List<Color?> _heartColors = [
+  final List<Color> _iconColors = [
     Colors.red,
-    Colors.red[600],
-    Colors.red[600],
-    Colors.orange[800],
+    Colors.blue,
+    Colors.green,
+    Colors.orange,
     Colors.purple,
-    Colors.yellow[800],
-    Colors.teal[800],
+    Colors.yellow,
+    Colors.teal,
     Colors.pink,
   ];
 
@@ -62,22 +61,22 @@ class _WallComponentLikeButtonState extends State<WallComponentLikeButton>
     HapticFeedback.mediumImpact();
   }
 
-  void _addFloatingHearts() {
+  void _addFloatingIcons() {
     setState(() {
       for (int i = 0; i < 8; i++) {
-        _floatingHearts.add(_buildFloatingHeart());
+        _floatingIcons.add(_buildFloatingIcon());
       }
     });
   }
 
-  Widget _buildFloatingHeart() {
+  Widget _buildFloatingIcon() {
     final random = Random();
     final size = random.nextDouble() * 30 + 10; // Random size between 10 and 40
     final xOffset =
         random.nextDouble() * 50 - 25; // Random x offset between -25 and 25
     final yOffset =
         random.nextDouble() * 100 - 50; // Random y offset between -50 and 50
-    final color = _heartColors[random.nextInt(_heartColors.length)];
+    final color = _iconColors[random.nextInt(_iconColors.length)];
 
     return Positioned(
       top: 0,
@@ -98,9 +97,9 @@ class _WallComponentLikeButtonState extends State<WallComponentLikeButton>
           );
         },
         child: Icon(
-          Icons.favorite,
+          widget.icon.icon,
           color: color,
-          size: 20,
+          size: widget.icon.size,
         ),
       ),
     );
@@ -110,16 +109,17 @@ class _WallComponentLikeButtonState extends State<WallComponentLikeButton>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (widget.ontap != null) {
-          widget.ontap!();
+        if (widget.onPressed != null) {
+          widget.onPressed!();
           _playHapticFeedback();
           _animationController.forward().then((_) {
             _animationController.reverse();
           });
-          _addFloatingHearts();
+          _addFloatingIcons();
         }
       },
       child: Stack(
+        alignment: Alignment.center,
         children: [
           AnimatedBuilder(
             animation: _animation,
@@ -129,14 +129,9 @@ class _WallComponentLikeButtonState extends State<WallComponentLikeButton>
                 child: child,
               );
             },
-            child: widget.isLiked
-                ? Icon(
-                    Icons.favorite,
-                    color: Colors.red[800],
-                  )
-                : const Icon(Icons.favorite_outline),
+            child: widget.icon,
           ),
-          ..._floatingHearts,
+          ..._floatingIcons,
         ],
       ),
     );
