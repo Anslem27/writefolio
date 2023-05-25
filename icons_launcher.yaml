@@ -1,7 +1,8 @@
 icons_launcher:
-  image_path: "assets/logo/logo.png"
+  image_path: "assets/logo/logo_plain.png"
   platforms:
     android:
       enable: true
     ios:
       enable: true
+# flutter pub run icons_launcher:create

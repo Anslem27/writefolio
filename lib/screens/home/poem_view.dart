@@ -53,6 +53,7 @@ class _PoemViewState extends State<PoemView> {
               ListView.builder(
                 physics: const ScrollPhysics(),
                 shrinkWrap: true,
+                padding: EdgeInsets.zero,
                 itemCount: snapshot.data!.poem!.length,
                 itemBuilder: (_, index) {
                   return FloatInAnimation(
@@ -86,6 +87,7 @@ class _PoemViewState extends State<PoemView> {
                     }
 
                     return ListView.builder(
+                      padding: EdgeInsets.zero,
                       physics: const ScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: sonnetSnapshot.data!.poem!.length,

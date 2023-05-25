@@ -89,10 +89,10 @@ flutter:
     - assets/avatars/  
     - assets/illustrations/
   
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Chomsky
+      fonts:
+        - asset: fonts/Chomsky.otf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
 

@@ -80,7 +80,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
     Navigator.pop(context); // close dialog
     //show success to comment
     AnimatedSnackBar.material(
-      "👍",
+      "👍 Comment shared",
       type: AnimatedSnackBarType.success,
       mobileSnackBarPosition: MobileSnackBarPosition.bottom,
     ).show(context);
@@ -373,7 +373,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
                               const Text("Share")
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

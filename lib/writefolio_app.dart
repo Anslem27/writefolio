@@ -43,16 +43,7 @@ class MyApp extends StatelessWidget {
                       ? darkTheme(theme!.colorValue)
                       : lightTheme(theme!.colorValue),
               home: const WriteFolioApp(),
-              routes: {
-                "/onboarding": (_) => const IntroductionAnimationScreen(),
-                "/signIn": (_) => const SignInPage(),
-                "/auth": (_) => const AuthPage(),
-                "/createAccount": (_) => const CreateAccountPage(),
-                "/home": (_) => const HomeScreen(),
-                "/library": (context) => const LibraryScreen(),
-                "/navigation": (_) => const Navigation(),
-                "settings": (_) => const SettingsPage()
-              },
+              routes: _routes,
             );
           },
         );
@@ -60,8 +51,22 @@ class MyApp extends StatelessWidget {
     );
   }
 
+  Map<String, WidgetBuilder> get _routes {
+    return {
+      "/onboarding": (_) => const IntroductionAnimationScreen(),
+      "/signIn": (_) => const SignInPage(),
+      "/auth": (_) => const AuthPage(),
+      "/createAccount": (_) => const CreateAccountPage(),
+      "/home": (_) => const HomeScreen(),
+      "/library": (context) => const LibraryScreen(),
+      "/navigation": (_) => const Navigation(),
+      "settings": (_) => const SettingsPage()
+    };
+  }
+
   ThemeData lightTheme(int selectedColor) {
     return ThemeData(
+      // fontFamily:"Chomsky",
       brightness: Brightness.light,
       useMaterial3: true,
       colorSchemeSeed: Color(selectedColor),

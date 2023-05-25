@@ -28,25 +28,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           SliverAppBar(
             automaticallyImplyLeading: false,
             expandedHeight: 110,
-            title: Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Text(
-                "Writefolio",
-                style: GoogleFonts.roboto(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                ),
+            leading: IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: PoemQuerySearch());
+              },
+              icon: const Icon(PhosphorIcons.magnifying_glass),
+            ),
+            title: const Text(
+              "Writefolio",
+              style: TextStyle(
+                fontFamily: "Chomsky",
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
               ),
             ),
             pinned: true,
-            centerTitle: false,
+            centerTitle: true,
             actions: [
               IconButton(
-                onPressed: () {
-                  showSearch(context: context, delegate: PoemQuerySearch());
-                },
-                icon: const Icon(PhosphorIcons.magnifying_glass),
-              ),
+                onPressed: () {},
+                icon: const Icon(Icons.notifications),
+              )
             ],
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(40),
@@ -99,36 +101,36 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final List<Tab> _tabs = [
     Tab(
       child: Text(
-        "Social wall",
+        "SOCIAL WALL",
         style: GoogleFonts.ubuntu(
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
       ),
     ),
     Tab(
       child: Text(
-        "Read",
+        "BOOKS",
         style: GoogleFonts.ubuntu(
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
       ),
     ),
     Tab(
       child: Text(
-        "Poetry",
+        "POETRY",
         style: GoogleFonts.ubuntu(
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
       ),
     ),
     Tab(
       child: Text(
-        "Saved",
+        "SAVED",
         style: GoogleFonts.ubuntu(
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
       ),
