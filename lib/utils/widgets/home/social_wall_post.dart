@@ -89,6 +89,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
   // add comment sheet
   void showCommentSheet() {
     showModalBottomSheet(
+      backgroundColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -97,46 +98,60 @@ class _SocialWallPostState extends State<SocialWallPost> {
       builder: (context) => Padding(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Share your thought?',
-                style: GoogleFonts.ubuntu(
-                  fontSize: 19,
-                ),
-              ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
-            Padding(
+            child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: commentEditingController,
-                      decoration: InputDecoration(
-                        labelText: "Share comment",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Share your thought?',
+                      style: GoogleFonts.ubuntu(
+                        fontSize: 19,
                       ),
                     ),
                   ),
-                  AnimatedIconButton(
-                    onPressed: () {
-                      addComment(commentEditingController.text.trim());
-                      commentEditingController.clear();
-                    },
-                    icon: const Icon(FluentIcons.send_24_filled),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: commentEditingController,
+                            decoration: InputDecoration(
+                              labelText: "Share comment",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: AnimatedIconButton(
+                            onPressed: () {
+                              addComment(commentEditingController.text.trim());
+                              commentEditingController.clear();
+                            },
+                            icon: const Icon(FluentIcons.send_24_filled),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
-            const SizedBox(height: 10),
-          ],
+          ),
         ),
       ),
     );
@@ -145,6 +160,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
   // comment bottom sheet
   void showComments() {
     showModalBottomSheet(
+      backgroundColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -153,48 +169,61 @@ class _SocialWallPostState extends State<SocialWallPost> {
       builder: (context) => Padding(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Comments',
-                style: GoogleFonts.ubuntu(
-                  fontSize: 19,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection("User Posts")
-                  .doc(widget.postId)
-                  .collection("Comments")
-                  .orderBy("CommentedAt", descending: true)
-                  .snapshots(),
-              builder: (_, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: LoadingAnimation(),
-                  );
-                }
-                return ListView(
-                    shrinkWrap: true,
-                    children: snapshot.data!.docs.map((doc) {
-                      // get comment from firstore
-                      final commentData = doc.data() as Map<String, dynamic>;
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("User Posts")
+                .doc(widget.postId)
+                .collection("Comments")
+                .orderBy("CommentedAt", descending: true)
+                .snapshots(),
+            builder: (_, snapshot) {
+              if (!snapshot.hasData) {
+                return const LoadingAnimation();
+              }
+              final comments = snapshot.data!.docs;
+              final commentCount = comments.length;
 
-                      return SocialWallComment(
-                        comment: commentData["CommentText"],
-                        user: commentData["CommentedBy"],
-                        time: formatTimeStamp(commentData["CommentedAt"]),
-                      );
-                    }).toList());
-              },
-            ),
-          ],
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Comments ($commentCount)',
+                            style: GoogleFonts.ubuntu(
+                              fontSize: 19,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    ListView(
+                      shrinkWrap: true,
+                      children: comments.map((doc) {
+                        final commentData = doc.data() as Map<String, dynamic>;
+
+                        return SocialWallComment(
+                          comment: commentData["CommentText"],
+                          user: commentData["CommentedBy"],
+                          time: formatTimeStamp(commentData["CommentedAt"]),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

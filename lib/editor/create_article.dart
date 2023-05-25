@@ -80,70 +80,81 @@ class _ArticleEditorState extends State<ArticleEditor> {
           onPressed: () {
             if (_titleController.text.isNotEmpty) {
               showModalBottomSheet(
+                backgroundColor: Colors.transparent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
                 context: context,
                 builder: (_) => Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: SizedBox(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Are you sure you want to\nquit creating?",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 17),
-                          ),
-                        ),
-                        Row(
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.pushAndRemoveUntil<void>(
-                                    context,
-                                    MaterialPageRoute<void>(
-                                        builder: (BuildContext context) =>
-                                            const Navigation()),
-                                    ModalRoute.withName('/navigation'),
-                                  ).then((value) => AnimatedSnackBar.material(
-                                        "You've quit creating",
-                                        type: AnimatedSnackBarType.info,
-                                        duration: const Duration(seconds: 4),
-                                        mobileSnackBarPosition:
-                                            MobileSnackBarPosition.bottom,
-                                      ).show(context));
-                                },
-                                child: const Text("Yes"),
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                "Are you sure you want to\nquit creating?",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 17),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pushAndRemoveUntil<void>(
+                                        context,
+                                        MaterialPageRoute<void>(
+                                            builder: (BuildContext context) =>
+                                                const Navigation()),
+                                        ModalRoute.withName('/navigation'),
+                                      ).then((value) =>
+                                          AnimatedSnackBar.material(
+                                            "You've quit creating",
+                                            type: AnimatedSnackBarType.info,
+                                            duration:
+                                                const Duration(seconds: 4),
+                                            mobileSnackBarPosition:
+                                                MobileSnackBarPosition.bottom,
+                                          ).show(context));
+                                    },
+                                    child: const Text("Yes"),
                                   ),
                                 ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("No"),
-                              ),
-                            ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("No"),
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
-                        )
-                      ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -181,92 +192,111 @@ class _ArticleEditorState extends State<ArticleEditor> {
           IconButton(
               onPressed: () {
                 showModalBottomSheet(
+                  backgroundColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   context: context,
                   builder: (BuildContext context) {
-                    return FutureBuilder(
-                      future: fetchImages(),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        if (snapshot.hasData) {
-                          // images = snapshot.data;
-                          return SizedBox(
-                            height: 400,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.all(16.0),
-                                  child: Text(
-                                    'Pick cover Image',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: GridView.count(
-                                    crossAxisCount: 3,
-                                    children: List.generate(
-                                      images.length,
-                                      (index) {
-                                        return Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: InkWell(
-                                            onTap: () {
-                                              logger.i(
-                                                  "Added ${images[index].downloadUrl} as image url");
-                                              setState(() {
-                                                selectedImageUrl =
-                                                    images[index].downloadUrl;
-                                              });
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    images[index].downloadUrl,
-                                                progressIndicatorBuilder:
-                                                    (_, string, progress) {
-                                                  return const Center(
-                                                    child: LoadingAnimation(),
-                                                  );
-                                                },
-                                              ),
-                                            ),
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FutureBuilder(
+                            future: fetchImages(),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasData) {
+                                // images = snapshot.data;
+                                return SizedBox(
+                                  height: 400,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.all(16.0),
+                                        child: Text(
+                                          'Pick cover Image',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                        );
-                                      },
-                                    ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: GridView.count(
+                                          crossAxisCount: 3,
+                                          children: List.generate(
+                                            images.length,
+                                            (index) {
+                                              return Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    logger.i(
+                                                        "Added ${images[index].downloadUrl} as image url");
+                                                    setState(() {
+                                                      selectedImageUrl =
+                                                          images[index]
+                                                              .downloadUrl;
+                                                    });
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: images[index]
+                                                          .downloadUrl,
+                                                      progressIndicatorBuilder:
+                                                          (_, string,
+                                                              progress) {
+                                                        return const Center(
+                                                          child:
+                                                              LoadingAnimation(),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                "assets/illustrations/no-connection.svg",
-                                height: 150,
-                              ),
-                              const SizedBox(height: 5),
-                              Text(
-                                '${snapshot.error}\nYou need Internet for this feature',
-                              ),
-                            ],
-                          );
-                        } else {
-                          return const Center(
-                            child: LoadingAnimation(),
-                          );
-                        }
-                      },
+                                );
+                              } else if (snapshot.hasError) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/illustrations/no-connection.svg",
+                                      height: 150,
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      '${snapshot.error}\nYou need Internet for this feature',
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                return const Center(
+                                  child: LoadingAnimation(),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                      ),
                     );
                   },
                 );
@@ -281,107 +311,126 @@ class _ArticleEditorState extends State<ArticleEditor> {
             if (_titleController.text.isNotEmpty &&
                 _controller.document.toPlainText().isNotEmpty) {
               showModalBottomSheet(
-                elevation: 5,
+                backgroundColor: Colors.transparent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 context: context,
                 builder: (_) => SizedBox(
                   height: MediaQuery.of(context).size.height / 4,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "You are creating\n'${_titleController.text.trim()}'",
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 20,
-                        ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      Padding(
+                      child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Row(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text(
-                                  "Keep Editting",
-                                  style: TextStyle(fontSize: 16),
-                                ),
+                            Text(
+                              "You are creating\n'${_titleController.text.trim()}'",
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 20,
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: OutlinedButton.icon(
-                                icon: const Icon(PhosphorIcons.quotes),
-                                style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        "Keep Editting",
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                onPressed: () async {
-                                  var bodyJson = jsonEncode(
-                                      _controller.document.toDelta().toJson());
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: OutlinedButton.icon(
+                                      icon: const Icon(PhosphorIcons.quotes),
+                                      style: OutlinedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        var bodyJson = jsonEncode(_controller
+                                            .document
+                                            .toDelta()
+                                            .toJson());
 
-                                  // create article object
-                                  var userArticle = UserArticle.create(
-                                    title: _titleController.text.trim(),
-                                    body: bodyJson,
-                                    bodyText:
-                                        _controller.document.toPlainText(),
-                                    updateDate: formattedDate,
-                                    type: widget.articleType,
-                                    imageUrl: selectedImageUrl == ""
-                                        ? defaultImage
-                                        : selectedImageUrl,
-                                  );
+                                        // create article object
+                                        var userArticle = UserArticle.create(
+                                          title: _titleController.text.trim(),
+                                          body: bodyJson,
+                                          bodyText: _controller.document
+                                              .toPlainText(),
+                                          updateDate: formattedDate,
+                                          type: widget.articleType,
+                                          imageUrl: selectedImageUrl == ""
+                                              ? defaultImage
+                                              : selectedImageUrl,
+                                        );
 
-                                  logger.i(
-                                    "${userArticle.body}\n${userArticle.updateDate}\n${userArticle.id}\n${userArticle.bodyText}\n${userArticle.imageUrl}",
-                                  );
-                                  logger.wtf(userArticle.type);
-                                  //create article object
-                                  await articleDataStore
-                                      .saveArticle(userArticle: userArticle)
-                                      .then((value) {
-                                    AnimatedSnackBar.material(
-                                      "${userArticle.title} has been saved",
-                                      type: AnimatedSnackBarType.success,
-                                      duration: const Duration(seconds: 4),
-                                      mobileSnackBarPosition:
-                                          MobileSnackBarPosition.bottom,
-                                    ).show(context).then((value) {
-                                      Navigator.pop(context);
-                                    });
-                                  });
+                                        logger.i(
+                                          "${userArticle.body}\n${userArticle.updateDate}\n${userArticle.id}\n${userArticle.bodyText}\n${userArticle.imageUrl}",
+                                        );
+                                        logger.wtf(userArticle.type);
+                                        //create article object
+                                        await articleDataStore
+                                            .saveArticle(
+                                                userArticle: userArticle)
+                                            .then((value) {
+                                          AnimatedSnackBar.material(
+                                            "${userArticle.title} has been saved",
+                                            type: AnimatedSnackBarType.success,
+                                            duration:
+                                                const Duration(seconds: 4),
+                                            mobileSnackBarPosition:
+                                                MobileSnackBarPosition.bottom,
+                                          ).show(context).then((value) {
+                                            Navigator.pop(context);
+                                          });
+                                        });
 
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context, "/navigation", (route) => false);
-                                },
-                                label: const Text(
-                                  "Save Article",
-                                  style: TextStyle(fontSize: 16),
-                                ),
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            "/navigation",
+                                            (route) => false);
+                                      },
+                                      label: const Text(
+                                        "Save Article",
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                            )
                           ],
                         ),
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 ),
               );

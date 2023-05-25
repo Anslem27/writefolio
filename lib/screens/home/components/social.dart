@@ -47,6 +47,7 @@ class _SocialState extends State<Social> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () => showModalBottomSheet(
+          backgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -55,44 +56,54 @@ class _SocialState extends State<Social> {
           builder: (context) => Padding(
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'What do you want to share?',
-                    style: TextStyle(
-                      fontSize: 19,
-                    ),
-                  ),
-                ),
-                Padding(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(  shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+                child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: textEditingController,
-                          maxLines: null,
-                          decoration: InputDecoration(
-                            labelText: "Share writing",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'What do you want to share?',
+                          style: TextStyle(
+                            fontSize: 19,
                           ),
                         ),
                       ),
-                      IconButton(
-                        onPressed: postWriting,
-                        icon: const Icon(FluentIcons.send_24_filled),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: textEditingController,
+                                maxLines: null,
+                                decoration: InputDecoration(
+                                  labelText: "Share writing",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: postWriting,
+                              icon: const Icon(FluentIcons.send_24_filled),
+                            ),
+                          ],
+                        ),
                       ),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
-              ],
+              ),
             ),
           ),
         ),

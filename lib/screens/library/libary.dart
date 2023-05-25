@@ -33,121 +33,125 @@ class _LibraryScreenState extends State<LibraryScreen>
         onPressed: () {
           // logger.wtf("Wtf");
           showModalBottomSheet(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
+            backgroundColor: Colors.transparent,
             context: context,
             builder: (_) {
-              return Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: SizedBox(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "What do you want to create?",
-                          style: GoogleFonts.roboto(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.secondary,
+              return Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: SizedBox(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "What do you want to create?",
+                            style: GoogleFonts.roboto(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
                           ),
                         ),
-                      ),
-                      Wrap(
-                        alignment: WrapAlignment.center,
-                        spacing: 5,
-                        children: [
-                          for (var articleType in articleType)
-                            InkWell(
-                              borderRadius: BorderRadius.circular(8),
-                              onTap: () {
-                                articleType == "shortStory"
-                                    ? Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) => const ArticleEditor(
-                                            articleType: "ShortStory",
-                                          ),
-                                        ),
-                                      )
-                                    : articleType == "poem"
-                                        ? Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (_) =>
-                                                  const ArticleEditor(
-                                                articleType: "Poem",
-                                              ),
+                        Wrap(
+                          alignment: WrapAlignment.spaceEvenly,
+                          spacing: 5,
+                          children: [
+                            for (var articleType in articleType)
+                              InkWell(
+                                borderRadius: BorderRadius.circular(8),
+                                onTap: () {
+                                  articleType == "shortStory"
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) =>
+                                                const ArticleEditor(
+                                              articleType: "ShortStory",
                                             ),
-                                          )
-                                        : articleType == "quote"
-                                            ? Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      const ArticleEditor(
-                                                    articleType: "Quote",
-                                                  ),
+                                          ),
+                                        )
+                                      : articleType == "poem"
+                                          ? Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (_) =>
+                                                    const ArticleEditor(
+                                                  articleType: "Poem",
                                                 ),
-                                              )
-                                            : Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      const ArticleEditor(
-                                                    articleType: "Article",
+                                              ),
+                                            )
+                                          : articleType == "quote"
+                                              ? Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        const ArticleEditor(
+                                                      articleType: "Quote",
+                                                    ),
                                                   ),
-                                                ),
-                                              );
-                              },
-                              child: Card(
-                                  child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Container(
-                                      height: 100,
-                                      width: 90,
-                                      padding: const EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                      child: SvgPicture.asset(
-                                        articleType == "shortStory"
-                                            ? "assets/illustrations/french.svg"
-                                            : articleType == "poem"
-                                                ? "assets/illustrations/gimlet.svg"
-                                                : articleType == "quote"
-                                                    ? "assets/illustrations/bulb.svg"
-                                                    : "assets/illustrations/bag.svg",
-                                        height: 60,
+                                                )
+                                              : Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        const ArticleEditor(
+                                                      articleType: "Article",
+                                                    ),
+                                                  ),
+                                                );
+                                },
+                                child: Card(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(
+                                        height: 100,
+                                        width: 90,
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        child: SvgPicture.asset(
+                                          articleType == "shortStory"
+                                              ? "assets/illustrations/french.svg"
+                                              : articleType == "poem"
+                                                  ? "assets/illustrations/gimlet.svg"
+                                                  : articleType == "quote"
+                                                      ? "assets/illustrations/bulb.svg"
+                                                      : "assets/illustrations/bag.svg",
+                                          height: 60,
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        articleType == "shortStory"
-                                            ? "ShortStory"
-                                            : articleType == "poem"
-                                                ? "Poem"
-                                                : articleType == "quote"
-                                                    ? "Quote"
-                                                    : "Article",
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          articleType == "shortStory"
+                                              ? "ShortStory"
+                                              : articleType == "poem"
+                                                  ? "Poem"
+                                                  : articleType == "quote"
+                                                      ? "Quote"
+                                                      : "Article",
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )),
-                            ),
-                        ],
-                      ),
-                    ],
+                                    ],
+                                  ),
+                                )),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
