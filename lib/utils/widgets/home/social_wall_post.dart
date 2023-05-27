@@ -2,6 +2,7 @@ import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:multiavatar/multiavatar.dart';
@@ -257,6 +258,49 @@ class _SocialWallPostState extends State<SocialWallPost> {
                   color: Colors.grey,
                 ),
               ),
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  PopupMenuButton<String>(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    onSelected: (value) {
+                      // Do something when an item is selected
+                    },
+                    itemBuilder: (BuildContext context) => [
+                      const PopupMenuItem(
+                        value: 'save',
+                        child: Row(
+                          children: [
+                            Icon(PhosphorIcons.bookmark, size: 20),
+                            SizedBox(width: 2),
+                            SizedBox(width: 3),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text('Save'),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const PopupMenuItem(
+                        value: 'delete',
+                        child: Row(
+                          children: [
+                            Icon(PhosphorIcons.trash, size: 20),
+                            SizedBox(width: 2),
+                            SizedBox(width: 3),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text('Delete'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              )
             ],
           ),
           Column(
@@ -264,26 +308,53 @@ class _SocialWallPostState extends State<SocialWallPost> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(3.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Post Heading',
-                      style: GoogleFonts.ubuntu(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Theme.of(context).colorScheme.outline,
+                            width: 0.8,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Text(
+                                    'Post Heading',
+                                    style: GoogleFonts.ubuntu(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  widget.message,
+                                  maxLines: 5,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.start,
+                                  style: GoogleFonts.roboto(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ]),
+                        ),
                       ),
                     ),
-                    Text(
-                      widget.message,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.start,
-                      style:
-                          GoogleFonts.roboto(fontSize: 14, color: Colors.grey),
-                    ),
+                    const SizedBox(height: 3),
                     const Material(
                       type: MaterialType.transparency,
                       child: Text(

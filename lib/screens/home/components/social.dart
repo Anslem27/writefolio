@@ -1,6 +1,8 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:writefolio/screens/library/components/library_draft_view.dart';
 import 'package:writefolio/utils/tools/timeStamp_helper.dart';
@@ -42,6 +44,9 @@ class _SocialState extends State<Social> {
     // Navigator.pop(context);
   }
 
+  // Define a ScrollController
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,9 +63,10 @@ class _SocialState extends State<Social> {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Card(  shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -128,19 +134,35 @@ class _SocialState extends State<Social> {
                     child: Text("Error ${snapshot.error}"),
                   );
                 } else if (snapshot.hasData) {
-                  return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (_, index) {
-                      final post = snapshot.data!.docs[index];
-                      return SocialWallPost(
-                        message: post["Writing"],
-                        user: post["UserEmail"],
-                        postId: post.id,
-                        likes: List<String>.from(post["Likes"] ?? []),
-                        time: formatTimeStamp(post["TimeStamp"]),
-                      );
+                  return NotificationListener<ScrollNotification>(
+                    onNotification: (scrollNotification) {
+                      if (scrollNotification is ScrollEndNotification &&
+                          _scrollController.position.extentAfter == 0) {
+                        // User has reached the end of the list, show the notification
+                        HapticFeedback.vibrate();
+                        AnimatedSnackBar.material(
+                          "Thats all for now",
+                          type: AnimatedSnackBarType.success,
+                          mobileSnackBarPosition: MobileSnackBarPosition.top,
+                        ).show(context);
+                      }
+                      return false;
                     },
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      padding: EdgeInsets.zero,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (_, index) {
+                        final post = snapshot.data!.docs[index];
+                        return SocialWallPost(
+                          message: post["Writing"],
+                          user: post["UserEmail"],
+                          postId: post.id,
+                          likes: List<String>.from(post["Likes"] ?? []),
+                          time: formatTimeStamp(post["TimeStamp"]),
+                        );
+                      },
+                    ),
                   );
                 }
                 return const SizedBox.shrink();
