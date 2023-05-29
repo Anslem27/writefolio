@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: Hive.box("settingsBox").listenable(),
       builder: (_, settingsBox, __) {
-        final isDarkMode = settingsBox.get('isDarkMode', defaultValue: false);
+        final themeType = ThemeMode.values[settingsBox.get('themeValue',
+            defaultValue: ThemeMode.system.index)];
         return ValueListenableBuilder(
           valueListenable: Hive.box<Theme>("themes").listenable(),
           builder: (_, themeBox, __) {
@@ -33,15 +34,9 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               title: 'WriteFolio',
               debugShowCheckedModeBanner: false,
-              theme: isDarkMode == null
-                  ? ThemeData(
-                      brightness:
-                          // ignore: deprecated_member_use
-                          WidgetsBinding.instance.window.platformBrightness,
-                    )
-                  : isDarkMode
-                      ? darkTheme(theme!.colorValue)
-                      : lightTheme(theme!.colorValue),
+              themeMode: themeType,
+              theme: lightTheme(theme!.colorValue),
+              darkTheme: darkTheme(theme.colorValue),
               home: const WriteFolioApp(),
               routes: _routes,
             );

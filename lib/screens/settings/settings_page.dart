@@ -2,12 +2,14 @@
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:writefolio/editor/create_article.dart';
+import '../../models/app/toggler.dart';
 import '../../models/user/medium_user_model.dart';
 import '../../models/user/reddit_user_model.dart';
 import '../../onboarding/onboard/screens/get_user_prefs.dart';
@@ -26,14 +28,29 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  final settingsBox = Hive.box("settingsBox");
+  late int value;
+
+  @override
+  void initState() {
+    value = settingsBox.get('themeValue', defaultValue: ThemeMode.system.index);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final settingsBox = Hive.box("settingsBox");
     TextEditingController mediumUsernameController = TextEditingController();
     TextEditingController redditUsernameController = TextEditingController();
     Future<MediumUser?>? future;
     Future<Data?>? redditFuture;
     final loggedInWritefolioUser = FirebaseAuth.instance.currentUser!;
+
+    void updateTheme(int newValue) {
+      setState(() {
+        value = newValue;
+        settingsBox.put('themeValue', value);
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -86,7 +103,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       );
                     },
                   ),
-                  _CustomListTile(
+                  /*  _CustomListTile(
                     title: "dark mode",
                     icon: PhosphorIcons.moon,
                     trailing: Switch(
@@ -99,19 +116,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         logger.i(value); //value to be stored.
                       },
                     ),
-                  ),
-                  _CustomListTile(
-                    title: "theme color",
-                    icon: PhosphorIcons.drop,
-                    ontap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const ThemePage(),
-                        ),
-                      );
-                    },
-                  ),
+                  ), */
+
                   _CustomListTile(
                     title: "writefolio avatar",
                     icon: Icons.person,
@@ -383,6 +389,33 @@ class _SettingsPageState extends State<SettingsPage> {
               ]),
               _SingleSection(title: "Preferances", children: [
                 _CustomListTile(
+                  title: "theme color",
+                  icon: PhosphorIcons.drop,
+                  ontap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ThemePage(),
+                      ),
+                    );
+                  },
+                ),
+                ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  title: const Text("Theme"),
+                  leading: const Icon(FluentIcons.paint_brush_24_regular),
+                  trailing: ToggleButtons(
+                    borderRadius: BorderRadius.circular(1000),
+                    onPressed: (int index) {
+                      updateTheme(options[index].value);
+                    },
+                    isSelected:
+                        options.map((option) => value == option.value).toList(),
+                    children: options.map((option) => option.widget).toList(),
+                  ),
+                ),
+                _CustomListTile(
                   title: "hide navbar labels",
                   icon: PhosphorIcons.eye_closed,
                   trailing: Switch(
@@ -532,6 +565,15 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
   }
+
+  List<ToggleButtonsOption> options = [
+    ToggleButtonsOption(ThemeMode.system.index,
+        const Icon(Icons.brightness_auto, semanticLabel: "System")),
+    ToggleButtonsOption(ThemeMode.light.index,
+        const Icon(Icons.light_mode, semanticLabel: "Light")),
+    ToggleButtonsOption(ThemeMode.dark.index,
+        const Icon(Icons.dark_mode, semanticLabel: "Dark")),
+  ];
 }
 
 class _CustomListTile extends StatelessWidget {
