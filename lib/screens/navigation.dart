@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -41,8 +42,8 @@ class _NavigationState extends State<Navigation> {
             },
             destinations: const [
               NavigationDestination(
-                selectedIcon: Icon(PhosphorIcons.house_fill),
-                icon: Icon(PhosphorIcons.house),
+                selectedIcon: Icon(FluentIcons.home_28_filled),
+                icon: Icon(FluentIcons.home_28_regular),
                 tooltip: "Home",
                 label: "Home",
               ),

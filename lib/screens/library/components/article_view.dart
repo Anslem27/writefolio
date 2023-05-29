@@ -209,6 +209,7 @@ class _ArticleViewState extends State<ArticleView> {
                               borderRadius: BorderRadius.circular(8)),
                           onSelected: (value) {
                             // Do something when an item is selected
+                            if (value == "share") {}
                           },
                           itemBuilder: (BuildContext context) => [
                             const PopupMenuItem(

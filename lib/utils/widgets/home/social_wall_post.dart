@@ -6,6 +6,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:multiavatar/multiavatar.dart';
+import 'package:writefolio/screens/settings/components/avatar_picker.dart';
 import 'package:writefolio/utils/widgets/home/social_wall_item_likebutton.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import '../../tools/timeStamp_helper.dart';
@@ -91,9 +92,6 @@ class _SocialWallPostState extends State<SocialWallPost> {
   void showCommentSheet() {
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
       context: context,
       isScrollControlled: true,
       builder: (context) => Padding(
@@ -207,7 +205,18 @@ class _SocialWallPostState extends State<SocialWallPost> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
+                    const Divider(),
+                    ListTile(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      onTap: () {
+                        showCommentSheet();
+                      },
+                      leading: const AvatarComponent(radius: 14),
+                      title: const Text("Share your thought..."),
+                    ),
+                    const Divider(),
                     ListView(
                       shrinkWrap: true,
                       children: comments.map((doc) {
@@ -233,124 +242,118 @@ class _SocialWallPostState extends State<SocialWallPost> {
   @override
   Widget build(BuildContext context) {
     var multiAvatarSvg = multiavatar(widget.user.toString());
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
+    return GestureDetector(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                // title
+                Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: Text(
+                    'Post Heading',
+                    style: GoogleFonts.urbanist(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-                child: SvgPicture.string(multiAvatarSvg, height: 27, width: 27),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(widget.user.split("@")[0]),
-              ),
-              Text(
-                "• ${widget.time}",
-                style: GoogleFonts.roboto(
-                  color: Colors.grey,
-                ),
-              ),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  PopupMenuButton<String>(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    onSelected: (value) {
-                      // Do something when an item is selected
-                    },
-                    itemBuilder: (BuildContext context) => [
-                      const PopupMenuItem(
-                        value: 'save',
-                        child: Row(
-                          children: [
-                            Icon(PhosphorIcons.bookmark, size: 20),
-                            SizedBox(width: 2),
-                            SizedBox(width: 3),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('Save'),
-                            ),
-                          ],
+                const Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    PopupMenuButton<String>(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      onSelected: (value) {
+                        // Do something when an item is selected
+                      },
+                      itemBuilder: (BuildContext context) => [
+                        const PopupMenuItem(
+                          value: 'share',
+                          child: Row(
+                            children: [
+                              Icon(FluentIcons.share_24_filled, size: 20),
+                              SizedBox(width: 2),
+                              SizedBox(width: 3),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('Share'),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      const PopupMenuItem(
-                        value: 'delete',
-                        child: Row(
-                          children: [
-                            Icon(PhosphorIcons.trash, size: 20),
-                            SizedBox(width: 2),
-                            SizedBox(width: 3),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('Delete'),
-                            ),
-                          ],
+                        const PopupMenuItem(
+                          value: 'save',
+                          child: Row(
+                            children: [
+                              Icon(PhosphorIcons.bookmark, size: 20),
+                              SizedBox(width: 2),
+                              SizedBox(width: 3),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('Save'),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
-              )
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(3.0),
-                child: Column(
+                        const PopupMenuItem(
+                          value: 'delete',
+                          child: Row(
+                            children: [
+                              Icon(PhosphorIcons.trash, size: 20),
+                              SizedBox(width: 2),
+                              SizedBox(width: 3),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('Delete'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                )
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: double.maxFinite,
-                      child: Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
+                      child: SizedBox(
+                        // padding: const EdgeInsets.all(5),
+                        /*  decoration: BoxDecoration(
                           border: Border.all(
                             color: Theme.of(context).colorScheme.outline,
                             width: 0.8,
                           ),
                           borderRadius: BorderRadius.circular(8),
-                        ),
+                        ), */
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(3.0),
-                                  child: Text(
-                                    'Post Heading',
-                                    style: GoogleFonts.ubuntu(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  widget.message,
-                                  maxLines: 5,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.start,
-                                  style: GoogleFonts.roboto(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ]),
+                          child: Text(
+                            widget.message,
+                            maxLines: 5,
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.urbanist(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -368,121 +371,99 @@ class _SocialWallPostState extends State<SocialWallPost> {
                     ),
                   ],
                 ),
-              ),
-              /*  Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Card(
-                  child: Container(
-                    padding: const EdgeInsets.all(5.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Theme.of(context).colorScheme.outline,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      children: [
-                        /* const AvatarComponent(radius: 17),
-                              const SizedBox(width: 10), */
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              showCommentSheet();
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.surface,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: const Text("Share your thought..."),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ), */
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        //TODO: https://pub.dev/packages/like_button
-                        WallComponentLikeButton(
-                          isLiked: isLiked,
-                          ontap: toggleLike,
-                        ),
-                        const SizedBox(width: 6),
-                        IncrementAnimatedText(
-                          value: widget.likes.length,
-                          textStyle: const TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {
-                            showComments();
-                          },
-                          icon: const Icon(FluentIcons.comment_24_regular),
-                        ),
-                        StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance
-                              .collection("User Posts")
-                              .doc(widget.postId)
-                              .collection("Comments")
-                              .orderBy("CommentedAt", descending: true)
-                              .snapshots(),
-                          builder: (_, snapshot) {
-                            if (!snapshot.hasData) {
-                              return const SizedBox.shrink();
-                            }
-                            return Text(
-                              "${snapshot.data!.docs.length}",
-                              style: const TextStyle(
-                                color: Colors.grey,
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(width: 10),
-                        AnimatedIconButton(
-                          onPressed: () {
-                            showCommentSheet();
-                          },
-                          icon: const Icon(FluentIcons.comment_add_20_regular),
-                        ),
-                        const SizedBox(width: 3),
-                        Container(
-                          padding: const EdgeInsets.all(3),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Theme.of(context).cardColor,
-                          ),
-                          child: Row(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Row(
                             children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(FluentIcons.share_24_filled),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: SvgPicture.string(multiAvatarSvg,
+                                    height: 27, width: 27),
                               ),
-                              const Text("Share")
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(widget.user.split("@")[0]),
+                              ),
+                              Text(
+                                "• ${widget.time}",
+                                style: GoogleFonts.roboto(
+                                  color: Colors.grey,
+                                ),
+                              ),
                             ],
                           ),
-                        ),
-                      ],
+                          // const Spacer(),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const Divider(),
-        ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          //TODO: https://pub.dev/packages/like_button
+                          WallComponentLikeButton(
+                            isLiked: isLiked,
+                            ontap: toggleLike,
+                          ),
+                          const SizedBox(width: 6),
+                          IncrementAnimatedText(
+                            value: widget.likes.length,
+                            textStyle: const TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              showComments();
+                            },
+                            icon: const Icon(FluentIcons.comment_24_regular),
+                          ),
+                          StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection("User Posts")
+                                .doc(widget.postId)
+                                .collection("Comments")
+                                .orderBy("CommentedAt", descending: true)
+                                .snapshots(),
+                            builder: (_, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const SizedBox.shrink();
+                              }
+                              return Text(
+                                "${snapshot.data!.docs.length}",
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              );
+                            },
+                          ),
+                          /* const SizedBox(width: 10),
+                          AnimatedIconButton(
+                            onPressed: () {
+                              showCommentSheet();
+                            },
+                            icon: const Icon(FluentIcons.comment_add_20_regular),
+                          ), */
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+            const Divider(),
+          ],
+        ),
       ),
     );
   }

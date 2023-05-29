@@ -22,8 +22,7 @@ class _ThemePageState extends State<ThemePage> {
   void _saveThemeToDatabase() {
     final theme = Theme(_selectedColorName, _selectedColor.value);
     themeBox.put('selected_theme', theme);
-    logger.i(
-        "theme color changed to $_selectedColorName and ${_selectedColor.value}");
+    logger.i("theme color changed to $_selectedColorName}");
   }
 
   @override
