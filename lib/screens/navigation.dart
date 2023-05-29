@@ -55,7 +55,7 @@ class _NavigationState extends State<Navigation> {
               ),
               NavigationDestination(
                 selectedIcon: AvatarComponent(radius: 15),
-                icon: AvatarComponent(radius: 17),
+                icon: AvatarComponent(radius: 15),
                 tooltip: "Profile",
                 label: "Profile",
               ),

@@ -29,7 +29,7 @@ class _LibraryScreenState extends State<LibraryScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           // logger.wtf("Wtf");
           showModalBottomSheet(
@@ -157,8 +157,8 @@ class _LibraryScreenState extends State<LibraryScreen>
             },
           );
         },
-        label: const Text("Create"),
-        icon: const Icon(FluentIcons.pen_24_regular),
+        
+        child: const Icon(FluentIcons.pen_24_regular),
       ),
       body: CustomScrollView(
         slivers: [
