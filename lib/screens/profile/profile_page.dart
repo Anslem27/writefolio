@@ -13,6 +13,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 import 'package:linkfy_text/linkfy_text.dart';
 import '../../animations/fade_in_animation.dart';
+import '../../utils/widgets/user_alert_dialog.dart';
 import 'components/profile_containers.dart';
 import '../../editor/create_article.dart';
 import '../../models/user/medium_user_model.dart';
@@ -89,7 +90,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                             ),
                             IconButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, "settings");
+                                // Navigator.pushNamed(context, "settings");
+                                showDialog(
+                                    context: context,
+                                    builder: (_) =>  AccountDialog(
+                                          user: loggedInWritefolioUser,
+                                        ));
                               },
                               icon: const Icon(
                                 EvaIcons.settings2Outline,

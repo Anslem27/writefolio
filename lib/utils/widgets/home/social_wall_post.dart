@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:multiavatar/multiavatar.dart';
@@ -16,7 +19,9 @@ import 'increment_animated_text.dart';
 import 'social_wall_comment.dart';
 
 class SocialWallPost extends StatefulWidget {
-  final String message, user, time;
+  final String message;
+  final List<String> tags;
+  final String user, title, time;
   final String postId;
   final List<String> likes;
   const SocialWallPost({
@@ -26,6 +31,8 @@ class SocialWallPost extends StatefulWidget {
     required this.postId,
     required this.likes,
     required this.time,
+    required this.title,
+    required this.tags,
   });
 
   @override
@@ -242,6 +249,12 @@ class _SocialWallPostState extends State<SocialWallPost> {
   @override
   Widget build(BuildContext context) {
     var multiAvatarSvg = multiavatar(widget.user.toString());
+    var bodyJson = jsonDecode(widget.message);
+    ScrollController scrollController = ScrollController();
+    final QuillController controller = QuillController(
+      document: Document.fromJson(bodyJson),
+      selection: const TextSelection.collapsed(offset: 0),
+    );
     return GestureDetector(
       onTap: () {},
       child: Padding(
@@ -257,7 +270,7 @@ class _SocialWallPostState extends State<SocialWallPost> {
                 Padding(
                   padding: const EdgeInsets.all(3.0),
                   child: Text(
-                    'Post Heading',
+                    widget.title,
                     style: GoogleFonts.urbanist(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -332,8 +345,23 @@ class _SocialWallPostState extends State<SocialWallPost> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: double.maxFinite,
-                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: SizedBox(
+                            child: QuillEditor(
+                              controller: controller,
+                              scrollController: scrollController,
+                              scrollable: false,
+                              autoFocus: true,
+                              focusNode: FocusNode(),
+                              expands: false,
+                              showCursor: false,
+                              padding: EdgeInsets.zero,
+                              readOnly: true, // true for view only mode
+                            ),
+                          ),
+                        ) /* SizedBox(
                         // padding: const EdgeInsets.all(5),
                         /*  decoration: BoxDecoration(
                           border: Border.all(
@@ -355,8 +383,8 @@ class _SocialWallPostState extends State<SocialWallPost> {
                             ),
                           ),
                         ),
-                      ),
-                    ),
+                      ), */
+                        ),
                     const SizedBox(height: 3),
                     const Material(
                       type: MaterialType.transparency,

@@ -92,6 +92,8 @@ class _SocialState extends State<Social> {
                               postId: post.id,
                               likes: List<String>.from(post["Likes"] ?? []),
                               time: formatTimeStamp(post["TimeStamp"]),
+                              title: post["Title"],
+                              tags: List<String>.from(post["Tags"] ?? []),
                             );
                           },
                         ),

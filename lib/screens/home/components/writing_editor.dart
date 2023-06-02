@@ -1,4 +1,7 @@
 // import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'dart:convert';
+
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,18 +28,30 @@ class _WritingEditorState extends State<WritingEditor> {
 
   void postWriting() async {
     try {
-      final doc = _controller.getPlainText();
+      var bodyJson = jsonEncode(_controller.document.toDelta().toJson());
       //TODO: get quill json
-      if (doc.isNotEmpty && tags.isNotEmpty) {
+      if (bodyJson.isNotEmpty && tags.isNotEmpty) {
         FirebaseFirestore.instance.collection("User Posts").add({
           "UserEmail": currentUser.email,
           "Title": titleController.text.trim(),
-          "Writing": doc,
+          "Writing": bodyJson,
           "Tags": tags,
           "TimeStamp": Timestamp.now(),
           "Likes": [],
         });
         Navigator.pop(context);
+        AnimatedSnackBar.material(
+          "Shared successfully",
+          type: AnimatedSnackBarType.success,
+          mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+        ).show(context);
+      }
+      if (tags.isEmpty) {
+        AnimatedSnackBar.material(
+          "Tags must not be empty",
+          type: AnimatedSnackBarType.warning,
+          mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+        ).show(context);
       }
     } catch (e) {
       logger.i(e.toString());
@@ -86,7 +101,7 @@ class _WritingEditorState extends State<WritingEditor> {
             child: TextField(
               controller: titleController,
               style: GoogleFonts.urbanist(fontSize: 22),
-              decoration: const InputDecoration.collapsed(
+              decoration: const InputDecoration(
                 hintText: "Enter heading",
               ),
             ),
@@ -100,13 +115,15 @@ class _WritingEditorState extends State<WritingEditor> {
                     controller: _controller,
                     scrollController: scrollController,
                     scrollable: true,
-                    autoFocus: false,
+                    autoFocus: true,
                     focusNode: FocusNode(),
                     readOnly: false,
                     expands: true,
+                    placeholder: "Write your content here.",
+                    showCursor: true,
                     padding: EdgeInsets.zero,
                   ),
-                  if (showHintText)
+                  /*  if (showHintText)
                     Positioned(
                       top: 12.0,
                       left: 2.0,
@@ -116,7 +133,7 @@ class _WritingEditorState extends State<WritingEditor> {
                           color: Colors.grey,
                         ),
                       ),
-                    ),
+                    ), */
                 ],
               ),
             ),
