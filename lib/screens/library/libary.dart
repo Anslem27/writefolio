@@ -1,6 +1,6 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:writefolio/editor/create_article.dart' hide logger;
@@ -29,7 +29,7 @@ class _LibraryScreenState extends State<LibraryScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           // logger.wtf("Wtf");
           showModalBottomSheet(
@@ -69,8 +69,7 @@ class _LibraryScreenState extends State<LibraryScreen>
                                       ? Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (_) =>
-                                                const ArticleEditor(
+                                            builder: (_) => const ArticleEditor(
                                               articleType: "ShortStory",
                                             ),
                                           ),
@@ -158,8 +157,8 @@ class _LibraryScreenState extends State<LibraryScreen>
             },
           );
         },
-        label: const Text("Create"),
-        icon: const Icon(PhosphorIcons.pencil),
+        
+        child: const Icon(FluentIcons.pen_24_regular),
       ),
       body: CustomScrollView(
         slivers: [
@@ -228,18 +227,18 @@ class _LibraryScreenState extends State<LibraryScreen>
   final List<Tab> _tabs = [
     Tab(
       child: Text(
-        "Drafts",
-        style: GoogleFonts.roboto(
-          fontSize: 14,
+        "DRAFTS",
+        style: GoogleFonts.ubuntu(
+          fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
       ),
     ),
     Tab(
       child: Text(
-        "Archived",
-        style: GoogleFonts.roboto(
-          fontSize: 14,
+        "ARCHIVED",
+        style: GoogleFonts.ubuntu(
+          fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
       ),
